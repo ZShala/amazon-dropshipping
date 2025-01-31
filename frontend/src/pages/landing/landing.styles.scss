@@ -1,0 +1,40 @@
+.landing-page {
+    padding: 2rem;
+    min-height: calc(100vh - 150px); // Duke zbritur lartësinë e header/footer
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+    }
+
+    .trending-section,
+    .personalized-recommendations,
+    .category-recommendations {
+        margin: 2rem 0;
+        
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 1rem 0;
+    }
+
+    .category-section {
+        margin: 2rem 0;
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 1rem 0;
+            color: #34495e;
+        }
+    }
+} 

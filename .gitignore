@@ -4,4 +4,4 @@ backend/__pycache__
 backend/amazon-beauty-recommendation.csv
 /venv
 /amazon-beauty-recommendation.csv
-/frontend/node_modules
+/frontend/node_modules/

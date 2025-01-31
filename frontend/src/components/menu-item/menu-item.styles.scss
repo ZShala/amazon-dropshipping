@@ -1,0 +1,140 @@
+.menu-item {
+  min-width: 30%;
+  height: 330px;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  margin: 0 5px 10px;
+  overflow: hidden;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+
+    & .background-image {
+      transform: scale(1.1);
+      transition: transform 1s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+    }
+
+    & .content {
+      opacity: 0.9;
+    }
+  }
+
+  &.large {
+    height: 380px;
+  }
+
+  &:first-child {
+    margin-right: 7.5px;
+  }
+
+  &:last-child {
+    margin-left: 7.5px;
+  }
+
+  .background-image {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    z-index: 2;
+  }
+
+  .menu-button {
+    height: auto;
+    padding: 12px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    background-color: white;
+    opacity: 0.7;
+    position: absolute;
+    z-index: 3;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    color: #4a4a4a;
+  }
+
+  @media screen and (max-width: 1234px) {
+    height: 200px;
+
+    &.large {
+      height: 250px;
+    }
+  }
+
+  @media screen and (max-width: 1085px) {
+    .content {
+      width: 20%;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    min-width: 50%;
+
+    &.large {
+      height: 200px;
+    }
+
+    &:first-child {
+      margin-right: 7px;
+    }
+
+    &:last-child {
+      margin-left: 7px;
+    }
+
+    .content {
+      padding: 0 1px;
+      width: 50%;
+
+      .title {
+        margin: 6px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    min-width: 50%;
+
+    &.large {
+      height: 200px;
+    }
+
+    &:first-child {
+      margin-right: 7px;
+    }
+
+    &:last-child {
+      margin-left: 7px;
+    }
+
+    .content {
+      padding: 0 1px;
+      width: 63%;
+
+      .title {
+        margin: 6px;
+        font-size: 12px;
+      }
+    }
+  }
+}

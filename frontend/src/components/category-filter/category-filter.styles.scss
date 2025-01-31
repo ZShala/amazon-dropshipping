@@ -1,0 +1,43 @@
+.category-filter {
+    padding: 1rem;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    .filter-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+
+        .filter-option {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+
+            &:hover {
+                background: #f8f9fa;
+                border-color: #adb5bd;
+            }
+
+            &.active {
+                background: #F5F0EB;
+                color: black;
+                border-color: #F5F0EB;
+            }
+
+            .count {
+                font-size: 0.8rem;
+                margin-left: 0.5rem;
+                opacity: 0.8;
+            }
+        }
+    }
+} 
