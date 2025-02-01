@@ -454,155 +454,137 @@ def get_and_save_image_url(conn, url, asin):
         print(f"Major error in get_and_save_image_url: {str(e)}")
         return f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
 
-def get_image_url_with_scraping(url, asin):
-    """Merr URL-në e imazhit duke përdorur BeautifulSoup"""
+def get_image_url_with_scraping(url):
+    """Merr URL-në e imazhit nga Amazon.in URL"""
     try:
-        print(f"\nDuke bërë scrape URL: {url}")
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Connection': 'keep-alive',
-        }
+        # Nxjerr ASIN nga URL (B06WGZP21B në rastin tuaj)
+        url_parts = url.split('/')
+        asin = next((part for part in url_parts 
+                    if part.startswith('B0') or part.startswith('A0')), None)
         
-        response = requests.get(url, headers=headers, timeout=10)
-        print(f"Response status: {response.status_code}")
-        
-        if response.status_code != 200:
-            print("Duke përdorur URL default për shkak të status kodit")
-            return f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
+        if not asin:
+            print(f"Nuk u gjet ASIN në URL: {url}")
+            return None
             
-        soup = BeautifulSoup(response.content, 'html.parser')
-        
-        # Lista e të gjitha metodave për të gjetur imazhin
-        image_selectors = [
-            # Metoda 1: data-old-hires
-            lambda: soup.find('img', {'data-old-hires': True})['data-old-hires'],
-            
-            # Metoda 2: landingImage
-            lambda: soup.find('img', {'id': 'landingImage'})['src'],
-            
-            # Metoda 3: imgBlkFront
-            lambda: soup.find('img', {'id': 'imgBlkFront'})['src'],
-            
-            # Metoda 4: main-image-container
-            lambda: soup.find('div', {'id': 'main-image-container'}).find('img')['src'],
-            
-            # Metoda 5: image në main
-            lambda: soup.find('main').find('img')['src'],
-            
-            # Metoda 6: të gjitha imazhet që përmbajnë ASIN
-            lambda: next(img['src'] for img in soup.find_all('img') 
-                        if img.get('src') and asin in img['src']),
-            
-            # Metoda 7: imazhi i parë në faqe
-            lambda: soup.find('img')['src']
+        # Lista e formateve të mundshme të imazheve për Amazon.in
+        image_formats = [
+            f"https://m.media-amazon.com/images/I/{asin}.jpg",
+            f"https://m.media-amazon.com/images/I/{asin}._SL1500_.jpg",
+            f"https://m.media-amazon.com/images/I/{asin}._SX522_.jpg",
+            f"https://m.media-amazon.com/images/I/{asin}._SX425_.jpg",
+            f"https://images-eu.ssl-images-amazon.com/images/I/{asin}.jpg",
+            f"https://images-eu.ssl-images-amazon.com/images/I/{asin}._SL1500_.jpg"
         ]
         
-        # Provo çdo metodë
-        for i, selector in enumerate(image_selectors, 1):
-            try:
-                image_url = selector()
-                if image_url:
-                    print(f"U gjet imazhi me metodën {i}: {image_url}")
-                    
-                    # Kontrollo nëse URL është relative
-                    if image_url.startswith('//'):
-                        image_url = 'https:' + image_url
-                    
-                    # Kontrollo nëse është imazh valid
-                    if any(ext in image_url.lower() for ext in ['.jpg', '.jpeg', '.png', '.gif']):
-                        return image_url
-            except Exception as e:
-                print(f"Metoda {i} dështoi: {str(e)}")
-                continue
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'Accept': 'image/webp,image/apng,image/*,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Referer': 'https://www.amazon.in/'
+        }
         
-        # Nëse asnjë metodë nuk funksionon, përdor formatin default
-        print("Duke përdorur URL default pasi asnjë metodë nuk funksionoi")
-        return f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
+        print(f"Checking image URLs for ASIN: {asin}")
+        
+        # Provo çdo format derisa të gjesh një që funksionon
+        for img_url in image_formats:
+            try:
+                print(f"Trying URL: {img_url}")
+                response = requests.head(img_url, headers=headers, timeout=3)
+                if response.status_code == 200:
+                    print(f"Found working image: {img_url}")
+                    return img_url
+            except Exception as e:
+                print(f"Failed trying {img_url}: {str(e)}")
+                continue
+                
+        # Nëse asnjë nuk funksionon, kthe një URL default
+        default_url = f"https://images-eu.ssl-images-amazon.com/images/I/{asin}._SX300_.jpg"
+        print(f"Using default URL: {default_url}")
+        return default_url
         
     except Exception as e:
-        print(f"Error kryesor në scraping: {str(e)}")
-        return f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
+        print(f"Error në scraping: {str(e)}")
+        return None
 
-def get_category_products(engine, category_type, page=1, per_page=None):
-    """Merr produktet për një kategori specifike"""
+def extract_asin_from_url(url):
+    """Nxjerr ASIN nga URL-ja e Amazon"""
     try:
-        # Mapping i kategorive me termat e kërkimit
-        category_mapping = {
-            'makeup': [
-                '%Eyeliner%',
-                '%Kajal%',
-                '%Lipstick%',
-                '%Foundation%',
-                '%Mascara%',
-                '%Eye Shadow%',
-                '%Concealer%',
-                '%Blush%',
-                '%Compact%',
-                '%Powder%',
-                '%Nail%',
-                '%Makeup%'
-            ],
-            'skincare': [
-                '%Face%',
-                '%Skin%',
-                '%Cream%',
-                '%Moisturizer%',
-                '%Serum%',
-                '%Mask%',
-                '%Facial%',
-                '%Cleanser%',
-                '%Toner%',
-                '%Lotion%'
-            ],
-            'haircare': [
-                '%Hair%',
-                '%Shampoo%',
-                '%Conditioner%',
-                '%Scalp%'
-            ],
-            'fragrance': [
-                '%Perfume%',
-                '%Fragrance%',
-                '%Body Spray%',
-                '%Deodorant%',
-                '%Scent%'
-            ],
-            'miscellaneous': [
-                '%Tool%',
-                '%Kit%',
-                '%Accessory%',
-                '%Accessories%',
-                '%Brush%',
-                '%Applicator%',
-                '%Beauty Tool%',
-                '%Makeup Tool%'
-            ]
+        # Ndaj URL-në në pjesë
+        parts = url.split('/')
+        
+        # Gjej indeksin e 'dp' ose 'gp/product'
+        dp_index = -1
+        for i, part in enumerate(parts):
+            if part == 'dp' or part == 'gp' or part == 'product':
+                dp_index = i
+                break
+        
+        # ASIN është zakonisht pas 'dp' ose 'gp/product'
+        if dp_index != -1 and dp_index + 1 < len(parts):
+            asin = parts[dp_index + 1].split('?')[0]  # Heq parametrat e query
+            # Pastro ASIN nga karakteret e panevojshme
+            asin = ''.join(c for c in asin if c.isalnum())
+            if len(asin) == 10 and (asin.startswith('B') or asin.startswith('A')):
+                return asin
+                
+        return None
+    except Exception as e:
+        print(f"Error extracting ASIN from URL {url}: {str(e)}")
+        return None
+
+def get_amazon_image_url(product_url):
+    """Merr URL-në e imazhit nga Amazon"""
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5'
         }
 
-        search_terms = category_mapping.get(category_type.lower(), [])
+        # Nxjerr ASIN nga URL-ja e produktit
+        asin = None
+        for part in product_url.split('/'):
+            if part.startswith('B0') or part.startswith('A0'):
+                asin = part.split('?')[0]  # Heq parametrat query
+                break
         
-        if not search_terms:
-            print(f"Nuk u gjetën terma kërkimi për kategorinë: {category_type}")
-            return {"products": [], "total": 0, "page": page, "per_page": per_page, "total_pages": 0}
+        if not asin:
+            print(f"Nuk u gjet ASIN për URL: {product_url}")
+            return None
 
-        conditions = " OR ".join([
-            "LOWER(p.ProductType) LIKE LOWER(:term" + str(i) + ")"
-            for i in range(len(search_terms))
-        ])
+        # Formati i preferuar i URL-së së imazhit
+        image_url = f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
+        
+        # Verifiko nëse imazhi ekziston
+        response = requests.head(image_url, headers=headers, timeout=5)
+        if response.status_code == 200:
+            print(f"U gjet imazhi: {image_url}")
+            return image_url
+            
+        # Nëse jo, provo të marrësh nga faqja
+        response = requests.get(product_url, headers=headers, timeout=10)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'html.parser')
+            
+            # Provo të gjesh URL-në e imazhit nga HTML
+            img = soup.select_one('#landingImage, #imgBlkFront')
+            if img and img.get('data-old-hires'):
+                image_id = img['data-old-hires'].split('/I/')[1].split('._')[0]
+                image_url = f"https://m.media-amazon.com/images/I/{image_id}._SX300_SY300_QL70_ML2_.jpg"
+                print(f"U gjet imazhi nga HTML: {image_url}")
+                return image_url
+        
+        print(f"Nuk u gjet imazh për ASIN: {asin}")
+        return None
 
-        # Query për të marrë totalin e produkteve
-        count_query = text(f"""
-            SELECT COUNT(DISTINCT p.ProductId) as total
-            FROM amazon_beauty p
-            WHERE ({conditions})
-                AND p.ProductId IS NOT NULL
-                AND p.URL IS NOT NULL
-        """)
+    except Exception as e:
+        print(f"Gabim gjatë marrjes së imazhit: {str(e)}")
+        return None
 
-        # Query kryesore pa pagination
-        query = text(f"""
+def get_category_products(engine, category_type, page=1, per_page=None):
+    try:
+        # Modifikojmë query-n për të marrë më pak produkte
+        query = text("""
             SELECT DISTINCT 
                 p.ProductId,
                 p.ProductType,
@@ -611,45 +593,41 @@ def get_category_products(engine, category_type, page=1, per_page=None):
                 COUNT(*) as review_count,
                 AVG(p.Rating) as avg_rating
             FROM amazon_beauty p
-            WHERE ({conditions})
+            WHERE p.ProductType LIKE :term0
                 AND p.ProductId IS NOT NULL
                 AND p.URL IS NOT NULL
+                AND p.Rating >= 4.5
             GROUP BY p.ProductId, p.ProductType, p.Rating, p.URL
-            ORDER BY p.Rating DESC
+            ORDER BY avg_rating DESC, review_count DESC
+            LIMIT 5  -- Limitojmë në 5 produkte për testim
         """)
 
         with engine.connect() as conn:
-            params = {f"term{i}": term for i, term in enumerate(search_terms)}
-            
-            result = conn.execute(query, params)
+            result = conn.execute(query, {"term0": f"%{category_type}%"})
             
             products = []
             for row in result:
                 try:
                     url = row.URL
-                    url_parts = url.split('/')
-                    asin = next((part for part in url_parts 
-                               if part.startswith('B0') or part.startswith('A0')), None)
+                    print(f"\nDuke procesuar: {url}")
                     
-                    # Krijo URL-në e imazhit
-                    image_url = f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
-                    
-                    print(f"Processing product: {asin} -> {image_url}")  # Shto logging
-                    
-                    products.append({
-                        "ProductId": row.ProductId,
-                        "ProductType": row.ProductType,
-                        "Rating": float(row.avg_rating),
-                        "URL": row.URL,
-                        "ReviewCount": row.review_count,
-                        "ImageURL": image_url,
-                        "ASIN": asin  # Shto ASIN në response
-                    })
+                    image_url = get_amazon_image_url(url)
+                    if image_url:
+                        products.append({
+                            "ProductId": row.ProductId,
+                            "ProductType": row.ProductType,
+                            "Rating": float(row.avg_rating),
+                            "URL": row.URL,
+                            "ReviewCount": row.review_count,
+                            "image_url": image_url
+                        })
+                        print(f"U shtua produkti {row.ProductId} me imazh: {image_url}")
                     
                 except Exception as e:
-                    print(f"Error creating product: {str(e)}")
+                    print(f"Gabim për produktin {row.ProductId}: {str(e)}")
                     continue
-            
+
+            print(f"\nTotal produkte të procesuara: {len(products)}")
             return {
                 "products": products,
                 "total": len(products),
@@ -659,7 +637,7 @@ def get_category_products(engine, category_type, page=1, per_page=None):
             }
 
     except Exception as e:
-        print(f"Error in get_category_products: {str(e)}")
+        print(f"Gabim në get_category_products: {str(e)}")
         return {
             "products": [],
             "total": 0,
@@ -726,6 +704,50 @@ def check_image_cache(engine):
             
     except Exception as e:
         print(f"Error checking image cache: {str(e)}")
+
+def extract_image_id_from_url(url):
+    """Nxjerr ID-në e imazhit nga URL-ja e Amazon"""
+    try:
+        # Provo të gjej ID-në e imazhit direkt nga URL
+        if '/images/I/' in url:
+            image_part = url.split('/images/I/')[1].split('._')[0]
+            if image_part:
+                return image_part
+        
+        # Nëse s'gjendet në URL, provo të marrësh nga ASIN
+        url_parts = url.split('/')
+        asin = next((part for part in url_parts 
+                    if part.startswith('B0') or part.startswith('A0')), None)
+                    
+        if asin:
+            # Provo të marrësh imazhin me ASIN
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+            }
+            
+            # Lista e formateve të mundshme
+            test_urls = [
+                f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg",
+                f"https://m.media-amazon.com/images/I/{asin}._AC_SX466_.jpg",
+                f"https://m.media-amazon.com/images/I/{asin}._AC_SY300_.jpg"
+            ]
+            
+            for test_url in test_urls:
+                try:
+                    response = requests.head(test_url, headers=headers, timeout=2)
+                    if response.status_code == 200:
+                        # Nxjerr ID-në nga URL që funksionon
+                        if '/images/I/' in test_url:
+                            return test_url.split('/images/I/')[1].split('._')[0]
+                except:
+                    continue
+                    
+        return None
+        
+    except Exception as e:
+        print(f"Error extracting image ID: {str(e)}")
+        return None
 
 if __name__ == "__main__":
     engine = create_engine('mysql+mysqlconnector://root:mysqlZ97*@localhost/dataset_db')
