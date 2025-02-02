@@ -1,7 +1,72 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Build files
+/build
+/dist
+*.egg-info/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Database
+*.sqlite
+*.db
+
+# Cache
+.cache/
+.pytest_cache/
+__pycache__/
+
+# Dataset files
+*.csv
+*.xlsx
+*.xls
+!amazon-beauty-recommendation.csv  # Përjashto dataset-in kryesor
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Development process files
+development_process/
+thesis_documentation/
+
+# Testing
+coverage/
+.coverage
+htmlcov/
+
+# Backend
 backend/venv/
 backend/newenv/
 backend/__pycache__
 backend/amazon-beauty-recommendation.csv
-/venv
-/amazon-beauty-recommendation.csv
-/frontend/node_modules/

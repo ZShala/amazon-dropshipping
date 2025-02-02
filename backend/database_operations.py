@@ -349,235 +349,35 @@ def get_cart_recommendations(engine, product_ids):
         print(f"Ndodhi një gabim gjatë marrjes së rekomandimeve për cart: {str(e)}")
         return {"crossSell": [], "upSell": []}
 
-def get_and_save_image_url(conn, url, asin):
-    try:
-        # Kontrollo nëse tabela ekziston
-        check_table = text("""
-            SELECT COUNT(*) 
-            FROM information_schema.tables 
-            WHERE table_schema = 'dataset_db' 
-            AND table_name = 'product_images'
-        """)
-        table_exists = conn.execute(check_table).scalar()
-        print(f"Table exists: {table_exists}")
-
-        if not table_exists:
-            print("Creating product_images table...")
-            conn.execute(text("""
-                CREATE TABLE IF NOT EXISTS product_images (
-                    asin VARCHAR(20) PRIMARY KEY,
-                    image_url VARCHAR(500) NOT NULL,
-                    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                    INDEX idx_last_updated (last_updated)
-                ) ENGINE=InnoDB
-            """))
-
-        # Kontrollo nëse imazhi ekziston në databazë
-        query = text("SELECT image_url, last_updated FROM product_images WHERE asin = :asin")
-        result = conn.execute(query, {"asin": asin}).fetchone()
-        
-        if result:
-            print(f"Found cached image for ASIN {asin} from {result.last_updated}")
-            return result.image_url
-
-        print(f"Trying to find image for ASIN: {asin}")
-        
-        # Lista e formateve të mundshme të imazheve Amazon
-        image_formats = [
-            f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg",
-            f"https://m.media-amazon.com/images/I/{asin}._AC_SX466_.jpg",
-            f"https://m.media-amazon.com/images/I/{asin}._AC_SX425_.jpg",
-            f"https://m.media-amazon.com/images/I/{asin}._AC_SX522_.jpg",
-            f"https://m.media-amazon.com/images/I/{asin}._AC_SL1500_.jpg",
-            f"https://m.media-amazon.com/images/I/{asin}._AC_SY300_.jpg",
-            f"https://m.media-amazon.com/images/I/{asin}.jpg"
-        ]
-
-        # Testo secilin format
-        for image_url in image_formats:
-            try:
-                print(f"Trying URL: {image_url}")
-                response = requests.head(image_url, timeout=2)
-                print(f"Response status: {response.status_code}")
-                
-                if response.status_code == 200:
-                    print(f"Found working image URL: {image_url}")
-                    
-                    # Ruaj URL-në që funksionon në databazë
-                    insert_query = text("""
-                        INSERT INTO product_images (asin, image_url, last_updated)
-                        VALUES (:asin, :image_url, NOW())
-                        ON DUPLICATE KEY UPDATE 
-                            image_url = :image_url,
-                            last_updated = NOW()
-                    """)
-                    
-                    try:
-                        conn.execute(insert_query, {
-                            "asin": asin,
-                            "image_url": image_url
-                        })
-                        print(f"Successfully saved image URL to database for ASIN {asin}")
-                    except Exception as e:
-                        print(f"Error saving to database: {str(e)}")
-                    
-                    return image_url
-                    
-            except Exception as e:
-                print(f"Error checking URL {image_url}: {str(e)}")
-                continue
-
-        # Default URL nëse asnjë format nuk funksionon
-        default_url = f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
-        print(f"Using default URL: {default_url}")
-        
-        try:
-            insert_query = text("""
-                INSERT INTO product_images (asin, image_url, last_updated)
-                VALUES (:asin, :image_url, NOW())
-                ON DUPLICATE KEY UPDATE 
-                    image_url = :image_url,
-                    last_updated = NOW()
-            """)
-            
-            conn.execute(insert_query, {
-                "asin": asin,
-                "image_url": default_url
-            })
-            print(f"Saved default URL to database for ASIN {asin}")
-        except Exception as e:
-            print(f"Error saving default URL: {str(e)}")
-        
-        return default_url
-        
-    except Exception as e:
-        print(f"Major error in get_and_save_image_url: {str(e)}")
-        return f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
-
-def get_image_url_with_scraping(url, asin):
-    """Merr URL-në e imazhit duke përdorur BeautifulSoup"""
-    try:
-        print(f"\nDuke bërë scrape URL: {url}")
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Connection': 'keep-alive',
-        }
-        
-        response = requests.get(url, headers=headers, timeout=10)
-        print(f"Response status: {response.status_code}")
-        
-        if response.status_code != 200:
-            print("Duke përdorur URL default për shkak të status kodit")
-            return f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
-            
-        soup = BeautifulSoup(response.content, 'html.parser')
-        
-        # Lista e të gjitha metodave për të gjetur imazhin
-        image_selectors = [
-            # Metoda 1: data-old-hires
-            lambda: soup.find('img', {'data-old-hires': True})['data-old-hires'],
-            
-            # Metoda 2: landingImage
-            lambda: soup.find('img', {'id': 'landingImage'})['src'],
-            
-            # Metoda 3: imgBlkFront
-            lambda: soup.find('img', {'id': 'imgBlkFront'})['src'],
-            
-            # Metoda 4: main-image-container
-            lambda: soup.find('div', {'id': 'main-image-container'}).find('img')['src'],
-            
-            # Metoda 5: image në main
-            lambda: soup.find('main').find('img')['src'],
-            
-            # Metoda 6: të gjitha imazhet që përmbajnë ASIN
-            lambda: next(img['src'] for img in soup.find_all('img') 
-                        if img.get('src') and asin in img['src']),
-            
-            # Metoda 7: imazhi i parë në faqe
-            lambda: soup.find('img')['src']
-        ]
-        
-        # Provo çdo metodë
-        for i, selector in enumerate(image_selectors, 1):
-            try:
-                image_url = selector()
-                if image_url:
-                    print(f"U gjet imazhi me metodën {i}: {image_url}")
-                    
-                    # Kontrollo nëse URL është relative
-                    if image_url.startswith('//'):
-                        image_url = 'https:' + image_url
-                    
-                    # Kontrollo nëse është imazh valid
-                    if any(ext in image_url.lower() for ext in ['.jpg', '.jpeg', '.png', '.gif']):
-                        return image_url
-            except Exception as e:
-                print(f"Metoda {i} dështoi: {str(e)}")
-                continue
-        
-        # Nëse asnjë metodë nuk funksionon, përdor formatin default
-        print("Duke përdorur URL default pasi asnjë metodë nuk funksionoi")
-        return f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
-        
-    except Exception as e:
-        print(f"Error kryesor në scraping: {str(e)}")
-        return f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
-
 def get_category_products(engine, category_type, page=1, per_page=None):
     """Merr produktet për një kategori specifike"""
     try:
-        # Mapping i kategorive me termat e kërkimit
+        # Zgjerojmë termat e kërkimit për çdo kategori
         category_mapping = {
             'makeup': [
-                '%Eyeliner%',
-                '%Kajal%',
-                '%Lipstick%',
-                '%Foundation%',
-                '%Mascara%',
-                '%Eye Shadow%',
-                '%Concealer%',
-                '%Blush%',
-                '%Compact%',
-                '%Powder%',
-                '%Nail%',
-                '%Makeup%'
+                '%Eyeliner%', '%Kajal%', '%Lipstick%', '%Foundation%',
+                '%Mascara%', '%Eye Shadow%', '%Concealer%', '%Blush%',
+                '%Compact%', '%Powder%', '%Nail%', '%Makeup%', 
+                '%Eye%', '%Lip%', '%Face%'  # Shtojmë terme më të gjera
             ],
             'skincare': [
-                '%Face%',
-                '%Skin%',
-                '%Cream%',
-                '%Moisturizer%',
-                '%Serum%',
-                '%Mask%',
-                '%Facial%',
-                '%Cleanser%',
-                '%Toner%',
-                '%Lotion%'
+                '%Face%', '%Skin%', '%Cream%', '%Moisturizer%',
+                '%Serum%', '%Mask%', '%Facial%', '%Cleanser%',
+                '%Toner%', '%Lotion%', '%Care%', '%Treatment%',  # Shtojmë terme
+                '%Beauty%', '%Anti%'  # Terme shtesë për skincare
             ],
             'haircare': [
-                '%Hair%',
-                '%Shampoo%',
-                '%Conditioner%',
-                '%Scalp%'
+                '%Hair%', '%Shampoo%', '%Conditioner%', '%Scalp%',
+                '%Treatment%', '%Style%', '%Care%'  # Shtojmë terme për hair
             ],
             'fragrance': [
-                '%Perfume%',
-                '%Fragrance%',
-                '%Body Spray%',
-                '%Deodorant%',
-                '%Scent%'
+                '%Perfume%', '%Fragrance%', '%Body Spray%',
+                '%Deodorant%', '%Scent%', '%Cologne%', '%Mist%'  # Shtojmë terme
             ],
             'miscellaneous': [
-                '%Tool%',
-                '%Kit%',
-                '%Accessory%',
-                '%Accessories%',
-                '%Brush%',
-                '%Applicator%',
-                '%Beauty Tool%',
-                '%Makeup Tool%'
+                '%Tool%', '%Kit%', '%Accessory%', '%Accessories%',
+                '%Brush%', '%Applicator%', '%Beauty Tool%', '%Makeup Tool%',
+                '%Set%', '%Collection%'  # Shtojmë terme
             ]
         }
 
@@ -592,16 +392,6 @@ def get_category_products(engine, category_type, page=1, per_page=None):
             for i in range(len(search_terms))
         ])
 
-        # Query për të marrë totalin e produkteve
-        count_query = text(f"""
-            SELECT COUNT(DISTINCT p.ProductId) as total
-            FROM amazon_beauty p
-            WHERE ({conditions})
-                AND p.ProductId IS NOT NULL
-                AND p.URL IS NOT NULL
-        """)
-
-        # Query kryesore pa pagination
         query = text(f"""
             SELECT DISTINCT 
                 p.ProductId,
@@ -620,7 +410,6 @@ def get_category_products(engine, category_type, page=1, per_page=None):
 
         with engine.connect() as conn:
             params = {f"term{i}": term for i, term in enumerate(search_terms)}
-            
             result = conn.execute(query, params)
             
             products = []
@@ -631,10 +420,7 @@ def get_category_products(engine, category_type, page=1, per_page=None):
                     asin = next((part for part in url_parts 
                                if part.startswith('B0') or part.startswith('A0')), None)
                     
-                    # Krijo URL-në e imazhit
                     image_url = f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
-                    
-                    print(f"Processing product: {asin} -> {image_url}")  # Shto logging
                     
                     products.append({
                         "ProductId": row.ProductId,
@@ -643,7 +429,7 @@ def get_category_products(engine, category_type, page=1, per_page=None):
                         "URL": row.URL,
                         "ReviewCount": row.review_count,
                         "ImageURL": image_url,
-                        "ASIN": asin  # Shto ASIN në response
+                        "ASIN": asin
                     })
                     
                 except Exception as e:
@@ -699,33 +485,6 @@ def get_all_product_types(engine):
     except Exception as e:
         print(f"Ndodhi një gabim gjatë marrjes së product types: {str(e)}")
         return []
-
-def check_image_cache(engine):
-    """Kontrollon përmbajtjen e cache-it të imazheve"""
-    try:
-        query = text("""
-            SELECT asin, image_url, last_updated 
-            FROM product_images 
-            ORDER BY last_updated DESC 
-            LIMIT 10
-        """)
-        
-        with engine.connect() as conn:
-            result = conn.execute(query)
-            print("\nMost recent cached images:")
-            for row in result:
-                print(f"ASIN: {row.asin}")
-                print(f"Image URL: {row.image_url}")
-                print(f"Last Updated: {row.last_updated}")
-                print("-" * 50)
-            
-            # Numri total i imazheve të ruajtura
-            count_query = text("SELECT COUNT(*) as total FROM product_images")
-            total = conn.execute(count_query).scalar()
-            print(f"\nTotal cached images: {total}")
-            
-    except Exception as e:
-        print(f"Error checking image cache: {str(e)}")
 
 if __name__ == "__main__":
     engine = create_engine('mysql+mysqlconnector://root:mysqlZ97*@localhost/dataset_db')
