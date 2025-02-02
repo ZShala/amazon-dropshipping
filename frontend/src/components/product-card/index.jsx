@@ -16,33 +16,12 @@ const ProductCard = ({
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [showToast, setShowToast] = useState(false);
     
-    // Lista e formateve të ndryshme të imazheve
-    const getImageFormats = (asin) => [
-        product.ImageURL, // Vendos URL-në kryesore të parën
-        `https://m.media-amazon.com/images/I/${asin}._AC_SX466_.jpg`,
-        `https://m.media-amazon.com/images/I/${asin}._AC_SL1500_.jpg`,
-        `https://m.media-amazon.com/images/I/${asin}._AC_SX425_.jpg`,
-        `https://m.media-amazon.com/images/I/${asin}._AC_SX522_.jpg`,
-        `https://m.media-amazon.com/images/I/${asin}.jpg`,
-        "https://via.placeholder.com/300x300?text=No+Image"
-    ];
-
+    const defaultImage = "https://via.placeholder.com/300x300?text=Beauty+Product";
+    
     const handleImageError = () => {
-        console.log('Image error for:', product.ImageURL); // Shto logging
-        const imageFormats = getImageFormats(product.ASIN);
-        if (currentImageIndex < imageFormats.length - 1) {
-            console.log('Trying next format:', imageFormats[currentImageIndex + 1]);
-            setCurrentImageIndex(currentImageIndex + 1);
-        } else {
-            console.log('All formats failed, using placeholder');
-            setImageError(true);
-        }
+        console.log('Image failed to load:', product.image_url);
+        setImageError(true);
     };
-
-    const imageFormats = getImageFormats(product.ASIN);
-    const currentImageUrl = !imageError ? imageFormats[currentImageIndex] : imageFormats[imageFormats.length - 1];
-
-    console.log('Current image URL:', currentImageUrl); // Shto logging
 
     const handleAddToCart = () => {
         const cart = JSON.parse(localStorage.getItem('cart') || '[]');
@@ -77,10 +56,11 @@ const ProductCard = ({
                 <Link to={`/product/${product.ProductId}`} className="product-link">
                     <div className="image-container">
                         <img 
-                            src={currentImageUrl}
+                            src={imageError ? defaultImage : (product.image_url || defaultImage)}
                             alt={product.ProductType}
                             className="product-image"
                             onError={handleImageError}
+                            loading="lazy"
                         />
                         <div className="view-details">
                             <span>View Details</span>
