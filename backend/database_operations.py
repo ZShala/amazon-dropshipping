@@ -352,39 +352,96 @@ def get_cart_recommendations(engine, product_ids):
 def get_category_products(engine, category_type, page=1, per_page=None):
     """Merr produktet për një kategori specifike"""
     try:
-        # Zgjerojmë termat e kërkimit për çdo kategori
+        # Mapping i kategorive me termat e kërkimit
         category_mapping = {
             'makeup': [
                 '%Eyeliner%', '%Kajal%', '%Lipstick%', '%Foundation%',
                 '%Mascara%', '%Eye Shadow%', '%Concealer%', '%Blush%',
-                '%Compact%', '%Powder%', '%Nail%', '%Makeup%', 
-                '%Eye%', '%Lip%', '%Face%'  # Shtojmë terme më të gjera
+                '%Compact%', '%Powder%', '%Nail%', '%Makeup%'
             ],
             'skincare': [
                 '%Face%', '%Skin%', '%Cream%', '%Moisturizer%',
                 '%Serum%', '%Mask%', '%Facial%', '%Cleanser%',
-                '%Toner%', '%Lotion%', '%Care%', '%Treatment%',  # Shtojmë terme
-                '%Beauty%', '%Anti%'  # Terme shtesë për skincare
+                '%Toner%', '%Lotion%'
             ],
             'haircare': [
-                '%Hair%', '%Shampoo%', '%Conditioner%', '%Scalp%',
-                '%Treatment%', '%Style%', '%Care%'  # Shtojmë terme për hair
+                '%Hair%', '%Shampoo%', '%Conditioner%', '%Scalp%'
             ],
             'fragrance': [
                 '%Perfume%', '%Fragrance%', '%Body Spray%',
-                '%Deodorant%', '%Scent%', '%Cologne%', '%Mist%'  # Shtojmë terme
+                '%Deodorant%', '%Scent%'
             ],
             'miscellaneous': [
                 '%Tool%', '%Kit%', '%Accessory%', '%Accessories%',
-                '%Brush%', '%Applicator%', '%Beauty Tool%', '%Makeup Tool%',
-                '%Set%', '%Collection%'  # Shtojmë terme
+                '%Brush%', '%Applicator%', '%Beauty Tool%', '%Makeup Tool%'
             ]
         }
 
-        # ... pjesa tjetër e kodit
+        search_terms = category_mapping.get(category_type.lower(), [])
+        
+        if not search_terms:
+            print(f"Nuk u gjetën terma kërkimi për kategorinë: {category_type}")
+            return {"products": [], "total": 0, "page": page, "per_page": per_page, "total_pages": 0}
+
+        conditions = " OR ".join([
+            "LOWER(p.ProductType) LIKE LOWER(:term" + str(i) + ")"
+            for i in range(len(search_terms))
+        ])
+
+        query = text(f"""
+            SELECT DISTINCT 
+                p.ProductId,
+                p.ProductType,
+                p.Rating,
+                p.URL,
+                COUNT(*) as review_count,
+                AVG(p.Rating) as avg_rating
+            FROM amazon_beauty p
+            WHERE ({conditions})
+                AND p.ProductId IS NOT NULL
+                AND p.URL IS NOT NULL
+            GROUP BY p.ProductId, p.ProductType, p.Rating, p.URL
+            ORDER BY p.Rating DESC
+        """)
+
+        with engine.connect() as conn:
+            params = {f"term{i}": term for i, term in enumerate(search_terms)}
+            result = conn.execute(query, params)
+            
+            products = []
+            for row in result:
+                try:
+                    url = row.URL
+                    url_parts = url.split('/')
+                    asin = next((part for part in url_parts 
+                               if part.startswith('B0') or part.startswith('A0')), None)
+                    
+                    image_url = f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
+                    
+                    products.append({
+                        "ProductId": row.ProductId,
+                        "ProductType": row.ProductType,
+                        "Rating": float(row.avg_rating),
+                        "URL": row.URL,
+                        "ReviewCount": row.review_count,
+                        "ImageURL": image_url,
+                        "ASIN": asin
+                    })
+                    
+                except Exception as e:
+                    print(f"Error creating product: {str(e)}")
+                    continue
+            
+            return {
+                "products": products,
+                "total": len(products),
+                "page": 1,
+                "per_page": len(products),
+                "total_pages": 1
+            }
 
     except Exception as e:
-        print(f"Gabim në get_category_products: {str(e)}")
+        print(f"Error in get_category_products: {str(e)}")
         return {
             "products": [],
             "total": 0,
@@ -424,77 +481,6 @@ def get_all_product_types(engine):
     except Exception as e:
         print(f"Ndodhi një gabim gjatë marrjes së product types: {str(e)}")
         return []
-
-def check_image_cache(engine):
-    """Kontrollon përmbajtjen e cache-it të imazheve"""
-    try:
-        query = text("""
-            SELECT asin, image_url, last_updated 
-            FROM product_images 
-            ORDER BY last_updated DESC 
-            LIMIT 10
-        """)
-        
-        with engine.connect() as conn:
-            result = conn.execute(query)
-            print("\nMost recent cached images:")
-            for row in result:
-                print(f"ASIN: {row.asin}")
-                print(f"Image URL: {row.image_url}")
-                print(f"Last Updated: {row.last_updated}")
-                print("-" * 50)
-            
-            # Numri total i imazheve të ruajtura
-            count_query = text("SELECT COUNT(*) as total FROM product_images")
-            total = conn.execute(count_query).scalar()
-            print(f"\nTotal cached images: {total}")
-            
-    except Exception as e:
-        print(f"Error checking image cache: {str(e)}")
-
-def extract_image_id_from_url(url):
-    """Nxjerr ID-në e imazhit nga URL-ja e Amazon"""
-    try:
-        # Provo të gjej ID-në e imazhit direkt nga URL
-        if '/images/I/' in url:
-            image_part = url.split('/images/I/')[1].split('._')[0]
-            if image_part:
-                return image_part
-        
-        # Nëse s'gjendet në URL, provo të marrësh nga ASIN
-        url_parts = url.split('/')
-        asin = next((part for part in url_parts 
-                    if part.startswith('B0') or part.startswith('A0')), None)
-                    
-        if asin:
-            # Provo të marrësh imazhin me ASIN
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-            }
-            
-            # Lista e formateve të mundshme
-            test_urls = [
-                f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg",
-                f"https://m.media-amazon.com/images/I/{asin}._AC_SX466_.jpg",
-                f"https://m.media-amazon.com/images/I/{asin}._AC_SY300_.jpg"
-            ]
-            
-            for test_url in test_urls:
-                try:
-                    response = requests.head(test_url, headers=headers, timeout=2)
-                    if response.status_code == 200:
-                        # Nxjerr ID-në nga URL që funksionon
-                        if '/images/I/' in test_url:
-                            return test_url.split('/images/I/')[1].split('._')[0]
-                except:
-                    continue
-                    
-        return None
-        
-    except Exception as e:
-        print(f"Error extracting image ID: {str(e)}")
-        return None
 
 if __name__ == "__main__":
     engine = create_engine('mysql+mysqlconnector://root:mysqlZ97*@localhost/dataset_db')
