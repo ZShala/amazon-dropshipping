@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Directory from "../../components/directory";
+import CounterAnimation from '../../components/counter-animation';
 import "./landing.styles.scss";
 
 const LandingPage = () => {
@@ -49,7 +50,8 @@ const LandingPage = () => {
                     <p>30-day return policy</p>
                 </div>
             </section>
-                <Directory />
+            
+            <Directory />
 
             <section className="benefits-section">
                 <h2>Why Choose Us</h2>
@@ -81,19 +83,27 @@ const LandingPage = () => {
             <section className="trust-section">
                 <div className="trust-content">
                     <div className="trust-item">
-                        <div className="number">50K+</div>
+                        <div className="number">
+                            <CounterAnimation end={50} suffix="K+" />
+                        </div>
                         <div className="label">Happy Customers</div>
                     </div>
                     <div className="trust-item">
-                        <div className="number">10K+</div>
+                        <div className="number">
+                            <CounterAnimation end={10} suffix="K+" />
+                        </div>
                         <div className="label">Amazon Products</div>
                     </div>
                     <div className="trust-item">
-                        <div className="number">4.8</div>
+                        <div className="number">
+                            <CounterAnimation end={4.8} />
+                        </div>
                         <div className="label">Average Rating</div>
                     </div>
                     <div className="trust-item">
-                        <div className="number">99%</div>
+                        <div className="number">
+                            <CounterAnimation end={99} suffix="%" />
+                        </div>
                         <div className="label">On-time Delivery</div>
                     </div>
                 </div>

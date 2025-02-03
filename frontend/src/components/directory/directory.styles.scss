@@ -1,9 +1,11 @@
 .directory-menu {
     width: 100%;
+    max-width: 1200px;
     height: 600px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     padding-top: 0;
+    margin: 0 auto;
     margin-bottom: 50px;
   }
