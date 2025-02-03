@@ -3,10 +3,49 @@
     min-height: 60vh;
     
     h2 {
-        font-size: 2rem;
-        color: #2c3e50;
+        font-size: 2.5rem;
+        color: #2C1810;
         margin-bottom: 2rem;
         text-transform: capitalize;
+        text-align: center;
+        position: relative;
+        padding-bottom: 1rem;
+        font-weight: 600;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, #2C1810, #5C3D2E);
+            border-radius: 2px;
+        }
+
+        &::before {
+            content: attr(data-category);
+            position: absolute;
+            top: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: #AF946F;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0.8;
+        }
+
+        &[data-category="makeup"],
+        &[data-category="skincare"],
+        &[data-category="haircare"],
+        &[data-category="fragrance"],
+        &[data-category="miscellaneous"] {
+            &::after { 
+                background: linear-gradient(to right, #2C1810, #5C3D2E);
+            }
+        }
     }
 
     .products-grid {

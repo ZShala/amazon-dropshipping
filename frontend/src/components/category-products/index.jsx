@@ -386,7 +386,9 @@ const CategoryProducts = ({ categoryType }) => {
                     </div>
                 </div> */}
 
-                <h2>{categoryType} Products</h2>
+                <h2 data-category={categoryType.toLowerCase()}>
+                    {categoryType} Products
+                </h2>
                 
                 <CategoryFilter 
                     productTypes={productTypes}
