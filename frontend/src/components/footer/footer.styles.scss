@@ -1,10 +1,192 @@
 .footer {
-    border-top: 1px solid rgba(128, 128, 128, 0.3);
-    width: 100%;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #AF9470;
-    margin-top: 50px;
+    background: #f5e6d353;
+    margin-top: 80px;
+    color: #2C1810;
+    padding: 3rem 0 1rem;
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+
+        .footer-section {
+            h3 {
+                color: #2C1810;
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+                position: relative;
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    bottom: -0.5rem;
+                    width: 0px;
+                    height: 2px;
+                    background: #AF946F;
+                }
+            }
+
+            p {
+                color: #5C3D2E;
+                line-height: 1.6;
+                margin-bottom: 1rem;
+            }
+
+            .amazon-partnership {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: #8B4513;
+                font-weight: 500;
+
+                i {
+                    font-size: 1.5rem;
+                    color: #AF946F;
+                }
+            }
+
+            ul {
+                list-style: none;
+                padding: 0;
+
+                li {
+                    margin-bottom: 0.75rem;
+
+                    a, span {
+                        color: #5C3D2E;
+                        text-decoration: none;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        transition: color 0.2s;
+
+                        &:hover {
+                            color: #AF946F;
+                        }
+                    }
+
+                    i {
+                        color: #8B4513;
+                        width: 20px;
+                    }
+                }
+            }
+
+            .social-links {
+                display: flex;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+
+                .social-link {
+                    background: rgba(139, 69, 19, 0.1);
+                    color: #5C3D2E;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        background: #AF946F;
+                        color: #F5E6D3;
+                        transform: translateY(-2px);
+                    }
+                }
+            }
+
+            .payment-methods {
+                h4 {
+                    color: #5C3D2E;
+                    font-size: 1rem;
+                    margin-bottom: 0.75rem;
+                }
+
+                .payment-icons {
+                    display: flex;
+                    gap: 1rem;
+                    align-items: center;
+                    justify-content: center;
+
+                    img {
+                        height: 20px;
+                        width: auto;
+                        opacity: 0.8;
+                        transition: opacity 0.2s;
+
+                        &:hover {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .footer-bottom {
+        max-width: 1200px;
+        margin: 2rem auto 0;
+        padding: 2rem 1rem 0;
+        border-top: 1px solid rgba(139, 69, 19, 0.2);
+
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+
+            .badge {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                color: #5C3D2E;
+
+                i {
+                    color: #8B4513;
+                }
+            }
+        }
+
+        .copyright {
+            text-align: center;
+            color: #5C3D2E;
+            font-size: 0.9rem;
+
+            .legal-links {
+                margin-top: 0.5rem;
+
+                a {
+                    color: #5C3D2E;
+                    text-decoration: none;
+                    margin: 0 0.5rem;
+
+                    &:hover {
+                        color: #AF946F;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .footer {
+        .footer-content {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-bottom {
+            .trust-badges {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+    }
 }

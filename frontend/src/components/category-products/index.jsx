@@ -369,7 +369,7 @@ const CategoryProducts = ({ categoryType }) => {
     if (displayedProducts.length > 0) {
         return (
             <div className="category-products">
-                <div className="subheader">
+                {/* <div className="subheader">
                     <div className="filters">
                         <button 
                             className={`filter-button ${selectedFilter === 'rating' ? 'selected' : ''}`}
@@ -384,7 +384,7 @@ const CategoryProducts = ({ categoryType }) => {
                             Most Reviewed
                         </button>
                     </div>
-                </div>
+                </div> */}
 
                 <h2>{categoryType} Products</h2>
                 

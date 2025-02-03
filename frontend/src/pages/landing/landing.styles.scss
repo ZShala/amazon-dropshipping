@@ -1,12 +1,272 @@
 .landing-page {
-    padding: 2rem;
-    min-height: calc(100vh - 150px); // Duke zbritur lartësinë e header/footer
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    min-height: calc(100vh - 150px);
+    width: 100%;
+    overflow-x: hidden;
 
     @media (max-width: 768px) {
-        padding: 1rem;
+        padding: 0;
+    }
+
+    .hero-section {
+        width: 100%;
+        background: linear-gradient(45deg, #f5e6d3, #dab8ab);
+        padding: 4rem 2rem;
+        text-align: center;
+        margin-bottom: 3rem;
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+
+            h1 {
+                font-size: 3rem;
+                color: #2C1810;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+                color: #5C3D2E;
+                margin-bottom: 2rem;
+            }
+
+            .hero-badges {
+                display: flex;
+                justify-content: center;
+                gap: 2rem;
+                flex-wrap: wrap;
+
+                .badge {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    background: white;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 8px;
+                    color: #5C3D2E;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+                    i {
+                        color: #AF946F;
+                    }
+                }
+            }
+        }
+    }
+
+    .features-section {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto 3rem;
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s;
+
+            &:hover {
+                transform: translateY(-5px);
+            }
+
+            i {
+                font-size: 2rem;
+                color: #AF946F;
+                margin-bottom: 1rem;
+            }
+
+            h3 {
+                color: #2C1810;
+                margin-bottom: 0.5rem;
+            }
+
+            p {
+                color: #5C3D2E;
+            }
+        }
+    }
+
+    .directory-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 2rem;
+
+        .directory {
+            border: 1px solid red;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            width: 100%;
+            justify-content: center;
+
+            @media (max-width: 1200px) {
+                grid-template-columns: repeat(2, minmax(280px, 1fr));
+            }
+
+            @media (max-width: 768px) {
+                grid-template-columns: minmax(280px, 400px);
+                justify-content: center;
+            }
+
+            .directory-item {
+                height: 380px;
+                position: relative;
+                overflow: hidden;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: translateY(-5px);
+
+                    .background-image {
+                        transform: scale(1.1);
+                    }
+
+                    .directory-item-body {
+                        background: rgba(44, 24, 16, 0.8);
+                    }
+                }
+
+                .background-image {
+                    width: 100%;
+                    height: 100%;
+                    background-size: cover;
+                    background-position: center;
+                    transition: transform 0.3s ease;
+                }
+
+                .directory-item-body {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    background: rgba(44, 24, 16, 0.6);
+                    transition: background 0.3s ease;
+                    padding: 2rem;
+                    text-align: center;
+
+                    h2 {
+                        color: #F5E6D3;
+                        font-size: 2rem;
+                        margin-bottom: 0.5rem;
+                        text-transform: uppercase;
+                    }
+
+                    p {
+                        color: #F5E6D3;
+                        font-size: 1.1rem;
+                        margin-bottom: 1.5rem;
+                    }
+
+                    .shop-now {
+                        background: #AF946F;
+                        color: white;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: 6px;
+                        text-decoration: none;
+                        font-weight: 500;
+                        transition: all 0.2s;
+
+                        &:hover {
+                            background: darken(#AF946F, 10%);
+                            transform: translateY(-2px);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .benefits-section {
+        width: 100%;
+        padding: 4rem 2rem;
+        background: #f5e6d353;
+        margin: 3rem 0;
+
+        h2 {
+            text-align: center;
+            color: #2C1810;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    }
+
+    .trust-section {
+        width: 100%;
+        padding: 4rem 2rem;
+        background: white;
+
+        .trust-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    }
+
+    .cta-section {
+        width: 100%;
+        padding: 4rem 2rem;
+        background: linear-gradient(45deg, #f5e6d3, #dab8ab);
+        text-align: center;
+
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+
+            h2 {
+                font-size: 2rem;
+                color: #2C1810;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                color: #5C3D2E;
+                margin-bottom: 2rem;
+            }
+
+            .cta-button {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                background: #AF946F;
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: 500;
+                transition: all 0.2s;
+
+                &:hover {
+                    background: darken(#AF946F, 10%);
+                    transform: translateY(-2px);
+                }
+            }
+        }
     }
 
     .trending-section,
@@ -35,6 +295,55 @@
             font-size: 1.4rem;
             margin: 1rem 0;
             color: #34495e;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .landing-page {
+        .hero-section,
+        .features-section,
+        .benefits-section,
+        .trust-section,
+        .cta-section {
+            padding: 2rem 1rem;
+        }
+
+        .directory-container {
+            padding: 0 1rem;
+        }
+
+        .hero-section {
+            padding: 3rem 1rem;
+
+            .hero-content {
+                h1 {
+                    font-size: 2rem;
+                }
+            }
+        }
+
+        .hero-badges {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .directory-container {
+            .directory {
+                .directory-item {
+                    height: 300px;
+
+                    .directory-item-body {
+                        h2 {
+                            font-size: 1.5rem;
+                        }
+
+                        p {
+                            font-size: 1rem;
+                        }
+                    }
+                }
+            }
         }
     }
 } 
