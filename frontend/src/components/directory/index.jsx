@@ -11,13 +11,15 @@ import "./directory.styles.scss";
 
 const Directory = () => {
     return (
-        <div className="directory-menu">
-            <MenuItem imageUrl={miscellaneousBg} productCategory={"Miscellaneous"} linkUrl={'/miscellaneous'} />
-            <MenuItem imageUrl={makeupBg} productCategory={"Makeup"} linkUrl={'/makeup'} />
-            <MenuItem imageUrl={skincareBg} productCategory={"Skincare"} linkUrl={'/skincare'} />
-            <MenuItem imageUrl={haircareBg} productCategory={"Haircare"} linkUrl={'/haircare'} />
-            <MenuItem imageUrl={fragranceBg} productCategory={"Fragrance"} linkUrl={'/fragrance'} />
-        </div>
+        <section id="categories-section" className="directory-container">
+            <div className="directory-menu">
+                <MenuItem imageUrl={miscellaneousBg} productCategory={"Miscellaneous"} linkUrl={'/miscellaneous'} />
+                <MenuItem imageUrl={makeupBg} productCategory={"Makeup"} linkUrl={'/makeup'} />
+                <MenuItem imageUrl={skincareBg} productCategory={"Skincare"} linkUrl={'/skincare'} />
+                <MenuItem imageUrl={haircareBg} productCategory={"Haircare"} linkUrl={'/haircare'} />
+                <MenuItem imageUrl={fragranceBg} productCategory={"Fragrance"} linkUrl={'/fragrance'} />
+            </div>
+        </section>
     )
 }
 

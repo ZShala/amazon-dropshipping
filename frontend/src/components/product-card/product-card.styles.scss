@@ -22,7 +22,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #f8f9fa;
+        background: #fff;
         margin-bottom: 1rem;
         position: relative;
         overflow: hidden;
@@ -70,6 +70,20 @@
     }
 
     .product-info {
+        padding: 1rem;
+        
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-size: 1rem;
+            color: #e44d26;
+            font-weight: 500;
+        }
+
         h3 {
             margin: 0 0 0.5rem;
             font-size: 1rem;
@@ -110,6 +124,37 @@
 
         button {
             margin-top: 10px;
+        }
+
+        .price-section {
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            
+            .current-price {
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: #B12704;
+                
+                .currency {
+                    font-size: 0.9rem;
+                    vertical-align: top;
+                }
+            }
+            
+            .original-price {
+                font-size: 0.9rem;
+                color: #565959;
+                text-decoration: line-through;
+                margin-top: 2px;
+            }
+            
+            .discount {
+                font-size: 0.9rem;
+                color: #007600;
+                margin-top: 2px;
+            }
         }
     }
 

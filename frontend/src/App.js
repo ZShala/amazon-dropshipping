@@ -12,11 +12,13 @@ import Haircare from './pages/haircare';
 import ProductDetail from './pages/product-detail';
 import CartPage from './pages/cart-page';
 import { CartProvider } from './contexts/cart.context';
+import ScrollToTop from './components/scroll-to-top';
 
 function App() {
   return (
     <CartProvider>
       <Router>
+        <ScrollToTop />
         <div>
           <Header />
           <Cursor />

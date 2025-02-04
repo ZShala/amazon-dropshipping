@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import Toast from '../../components/toast';
 import './product-detail.styles.scss';
 
 const ProductDetail = () => {
     const { productId } = useParams();
+    const location = useLocation();
+    const imageUrl = location.state?.imageUrl;
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -53,6 +55,10 @@ const ProductDetail = () => {
             calculateDeliveryDate();
         }
     }, [productId]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const handleAddToCart = () => {
         if (!product) return;
@@ -126,7 +132,7 @@ const ProductDetail = () => {
                     <div className="product-image-section">
                         <div className="main-image">
                             <img 
-                                src={images[selectedImage]} 
+                                src={imageUrl || images[selectedImage]} 
                                 alt={product.ProductType}
                                 onError={(e) => {
                                     if (selectedImage < images.length - 1) {

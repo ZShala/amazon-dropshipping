@@ -22,28 +22,20 @@ const Footer = () => {
                     <h3>Customer Service</h3>
                     <ul>
                         <li>
-                            <Link to="/shipping">
-                                <i className="fas fa-truck"></i>
-                                Shipping Information
-                            </Link>
+                            <i className="fas fa-truck"></i>
+                            Shipping Information
                         </li>
                         <li>
-                            <Link to="/returns">
-                                <i className="fas fa-undo"></i>
-                                Returns & Refunds
-                            </Link>
+                            <i className="fas fa-undo"></i>
+                            Returns & Refunds
                         </li>
                         <li>
-                            <Link to="/faq">
-                                <i className="fas fa-question-circle"></i>
-                                FAQ
-                            </Link>
+                            <i className="fas fa-question-circle"></i>
+                            FAQ
                         </li>
                         <li>
-                            <Link to="/track-order">
-                                <i className="fas fa-box"></i>
-                                Track Your Order
-                            </Link>
+                            <i className="fas fa-box"></i>
+                            Track Your Order
                         </li>
                     </ul>
                 </div>
@@ -86,9 +78,9 @@ const Footer = () => {
                     <div className="payment-methods">
                         <h4>We Accept</h4>
                         <div className="payment-icons">
-                           <img src={visaLogo} alt="visa" />
-                           <img src={mastercardLogo} alt="mastercard" />
-                           <img src={paypalLogo} alt="paypal" />
+                            <img src={visaLogo} alt="visa" />
+                            <img src={mastercardLogo} alt="mastercard" />
+                            <img src={paypalLogo} alt="paypal" />
                         </div>
                     </div>
                 </div>
@@ -110,7 +102,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className="copyright">
-                    <p>&copy; 2025 Your Store. All rights reserved. Not affiliated with Amazon.com</p>
+                    <p>&copy; 2025 GlowAura. All rights reserved. Not affiliated with Amazon.com</p>
                     <div className="legal-links">
                         <Link to="/privacy">Privacy Policy</Link>
                         <Link to="/terms">Terms of Service</Link>

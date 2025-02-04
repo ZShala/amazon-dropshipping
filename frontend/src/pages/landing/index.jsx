@@ -6,6 +6,16 @@ import SEO from '../../components/seo';
 import "./landing.styles.scss";
 
 const LandingPage = () => {
+    const scrollToCategories = () => {
+        const categoriesSection = document.getElementById('categories-section');
+        if (categoriesSection) {
+            categoriesSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    };
+
     return (
         <>
             <SEO 
@@ -57,7 +67,9 @@ const LandingPage = () => {
                     </div>
                 </section>
                 
-                <Directory />
+                <div id="categories-section">
+                    <Directory />
+                </div>
 
                 <section className="benefits-section">
                     <h2>Why Choose Us</h2>
@@ -119,10 +131,13 @@ const LandingPage = () => {
                     <div className="cta-content">
                         <h2>Start Shopping Today</h2>
                         <p>Browse our curated selection of Amazon beauty products</p>
-                        <Link to="/products" className="cta-button">
+                        <button 
+                            className="cta-button"
+                            onClick={scrollToCategories}
+                        >
                             Explore Products
                             <i className="fas fa-arrow-right"></i>
-                        </Link>
+                        </button>
                     </div>
                 </section>
             </div>

@@ -53,10 +53,13 @@ const ProductCard = ({
     return (
         <>
             <div className="product-card">
-                <Link to={`/product/${product.ProductId}`} className="product-link">
+                <Link 
+                    to={`/product/${product.ProductId}`}
+                    state={{ imageUrl: product.ImageURL }}
+                >
                     <div className="image-container">
                         <img 
-                            src={imageError ? defaultImage : (product.image_url || defaultImage)}
+                            src={imageError ? defaultImage : (product.ImageURL || defaultImage)}
                             alt={product.ProductType}
                             className="product-image"
                             onError={handleImageError}

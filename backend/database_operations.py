@@ -349,10 +349,28 @@ def get_cart_recommendations(engine, product_ids):
         print(f"Ndodhi një gabim gjatë marrjes së rekomandimeve për cart: {str(e)}")
         return {"crossSell": [], "upSell": []}
 
+def fetch_image(product_url):
+    """Merr URL-në e imazhit nga faqja e produktit në Amazon"""
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
+    }
+    try:
+        response = requests.get(product_url, headers=headers)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        image_tag = soup.find("img", {"id": "landingImage"})
+        if image_tag:
+            return image_tag.get("src")
+    except Exception as e:
+        print(f"Gabim gjatë marrjes së imazhit për URL {product_url}: {e}")
+    return "https://via.placeholder.com/150"  # Imazh rezervë
+
 def get_category_products(engine, category_type, page=1, per_page=None):
     """Merr produktet për një kategori specifike"""
     try:
         # Mapping i kategorive me termat e kërkimit
+            # https://www.amazon.in/Biotique-White-Advanced-Fairness-Transparent/dp/B07QF7LNVD/ref=sr_1_14?pf_rd_i=1355016031&pf_rd_m=A1VBAL9TL5WCBF&pf_rd_p=1f9b873b-851b-4ef7-9137-1a1dc23c575a&pf_rd_r=76BM2ADV9TQD1B275FZF&pf_rd_s=merchandised-search-11&qid=1680068570&refinements=p_72%3A1318477031&s=beauty&sr=1-14&th=1
+            # https://m.media-amazon.com/images/I/51ym8rbYGrL._SX522_.jpg
+        
         category_mapping = {
             'makeup': [
                 '%Eyeliner%', '%Kajal%', '%Lipstick%', '%Foundation%',
@@ -402,21 +420,19 @@ def get_category_products(engine, category_type, page=1, per_page=None):
                 AND p.URL IS NOT NULL
             GROUP BY p.ProductId, p.ProductType, p.Rating, p.URL
             ORDER BY p.Rating DESC
+            LIMIT 30
         """)
 
         with engine.connect() as conn:
             params = {f"term{i}": term for i, term in enumerate(search_terms)}
-            result = conn.execute(query, params)
+            result = conn.execute(query, params)=
             
             products = []
             for row in result:
                 try:
                     url = row.URL
-                    url_parts = url.split('/')
-                    asin = next((part for part in url_parts 
-                               if part.startswith('B0') or part.startswith('A0')), None)
-                    
-                    image_url = f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
+                    # Merr imazhin nga faqja e produktit
+                    image_url = fetch_image(url)
                     
                     products.append({
                         "ProductId": row.ProductId,
@@ -424,12 +440,11 @@ def get_category_products(engine, category_type, page=1, per_page=None):
                         "Rating": float(row.avg_rating),
                         "URL": row.URL,
                         "ReviewCount": row.review_count,
-                        "ImageURL": image_url,
-                        "ASIN": asin
+                        "ImageURL": image_url
                     })
                     
                 except Exception as e:
-                    print(f"Error creating product: {str(e)}")
+                    print(f"Gabim gjatë krijimit të produktit: {str(e)}")
                     continue
             
             return {
@@ -481,6 +496,7 @@ def get_all_product_types(engine):
     except Exception as e:
         print(f"Ndodhi një gabim gjatë marrjes së product types: {str(e)}")
         return []
+
 
 if __name__ == "__main__":
     engine = create_engine('mysql+mysqlconnector://root:mysqlZ97*@localhost/dataset_db')
