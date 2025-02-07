@@ -4,12 +4,18 @@ import Directory from "../../components/directory";
 import CounterAnimation from '../../components/counter-animation';
 import SEO from '../../components/seo';
 import "./landing.styles.scss";
+import { 
+    FaTruck, 
+    FaShieldAlt, 
+    FaAward,
+    FaUndo, 
+} from 'react-icons/fa';
 
 const LandingPage = () => {
-    const scrollToCategories = () => {
-        const categoriesSection = document.getElementById('categories-section');
-        if (categoriesSection) {
-            categoriesSection.scrollIntoView({ 
+    const scrollToDirectory = () => {
+        const directorySection = document.getElementById('directory-section');
+        if (directorySection) {
+            directorySection.scrollIntoView({ 
                 behavior: 'smooth',
                 block: 'start'
             });
@@ -22,6 +28,7 @@ const LandingPage = () => {
                 title="Beauty Products | Premium Amazon Beauty Collection"
                 description="Discover our curated collection of premium Amazon beauty products. Shop makeup, skincare, haircare and fragrances with Prime shipping."
             />
+            
             <div className="landing-page">
                 <section className="hero-section">
                     <div className="hero-content">
@@ -29,16 +36,13 @@ const LandingPage = () => {
                         <p>Discover Amazon's Best Beauty Products with Prime Shipping</p>
                         <div className="hero-badges">
                             <div className="badge">
-                                <i className="fab fa-amazon"></i>
-                                Amazon Direct
+                                <span>Amazon Direct</span>
                             </div>
                             <div className="badge">
-                                <i className="fas fa-truck-fast"></i>
-                                Prime Delivery
+                                <span>Prime Delivery</span>
                             </div>
                             <div className="badge">
-                                <i className="fas fa-shield-alt"></i>
-                                Secure Shopping
+                                <span>Secure Shopping</span>
                             </div>
                         </div>
                     </div>
@@ -46,28 +50,29 @@ const LandingPage = () => {
 
                 <section className="features-section">
                     <div className="feature-card">
-                        <i className="fab fa-amazon"></i>
+                        <FaAward />
                         <h3>Amazon's Choice</h3>
                         <p>Handpicked premium products</p>
                     </div>
                     <div className="feature-card">
-                        <i className="fas fa-truck"></i>
+                        <FaTruck />
                         <h3>Fast Shipping</h3>
                         <p>2-5 day Prime delivery</p>
                     </div>
                     <div className="feature-card">
-                        <i className="fas fa-shield-alt"></i>
+                        <FaShieldAlt />
                         <h3>Secure Shopping</h3>
                         <p>Protected by Amazon</p>
                     </div>
                     <div className="feature-card">
-                        <i className="fas fa-undo"></i>
+                        <FaUndo />
                         <h3>Easy Returns</h3>
                         <p>30-day return policy</p>
                     </div>
                 </section>
                 
-                <div id="categories-section">
+
+                <div id="directory-section">
                     <Directory />
                 </div>
 
@@ -75,23 +80,14 @@ const LandingPage = () => {
                     <h2>Why Choose Us</h2>
                     <div className="benefits-grid">
                         <div className="benefit-item">
-                            <div className="icon">
-                                <i className="fas fa-box"></i>
-                            </div>
                             <h3>Amazon Direct</h3>
                             <p>All products shipped directly from Amazon warehouses</p>
                         </div>
                         <div className="benefit-item">
-                            <div className="icon">
-                                <i className="fas fa-check-circle"></i>
-                            </div>
                             <h3>Authentic Products</h3>
                             <p>100% genuine products with Amazon guarantee</p>
                         </div>
                         <div className="benefit-item">
-                            <div className="icon">
-                                <i className="fas fa-tag"></i>
-                            </div>
                             <h3>Best Prices</h3>
                             <p>Competitive prices with regular Amazon deals</p>
                         </div>
@@ -131,12 +127,8 @@ const LandingPage = () => {
                     <div className="cta-content">
                         <h2>Start Shopping Today</h2>
                         <p>Browse our curated selection of Amazon beauty products</p>
-                        <button 
-                            className="cta-button"
-                            onClick={scrollToCategories}
-                        >
+                        <button onClick={scrollToDirectory} className="cta-button">
                             Explore Products
-                            <i className="fas fa-arrow-right"></i>
                         </button>
                     </div>
                 </section>

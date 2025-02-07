@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import visaLogo from '../../assets/visa-logo.webp';
 import mastercardLogo from '../../assets/mastercard-logo.png';
 import paypalLogo from '../../assets/paypal-logo.png';
+import { FaFacebookF, FaInstagram, FaTiktok } from 'react-icons/fa';
 import './footer.styles.scss';
 
 const Footer = () => {
@@ -64,15 +65,15 @@ const Footer = () => {
 
                 <div className="footer-section">
                     <h3>Connect With Us</h3>
-                    <div className="social-links">
-                        <a href="#" className="social-link">
-                            <i className="fab fa-facebook"></i>
+                    <div className="social-icons">
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                            <FaFacebookF />
                         </a>
-                        <a href="#" className="social-link">
-                            <i className="fab fa-instagram"></i>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                            <FaInstagram />
                         </a>
-                        <a href="#" className="social-link">
-                            <i className="fab fa-twitter"></i>
+                        <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="social-icon">
+                            <FaTiktok />
                         </a>
                     </div>
                     <div className="payment-methods">

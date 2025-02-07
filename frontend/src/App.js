@@ -13,12 +13,41 @@ import ProductDetail from './pages/product-detail';
 import CartPage from './pages/cart-page';
 import { CartProvider } from './contexts/cart.context';
 import ScrollToTop from './components/scroll-to-top';
+import { FaTruck, FaBolt, FaGift } from 'react-icons/fa';
 
 function App() {
   return (
     <CartProvider>
       <Router>
         <ScrollToTop />
+        <div className="promo-banner">
+          <div className="promo-scroll">
+            <div className="promo-item">
+              <FaTruck />
+              <span>FREE Prime Shipping on Orders $25+</span>
+            </div>
+            <div className="promo-item">
+              <FaBolt />
+              <span>Flash Sale: Up to 70% OFF</span>
+            </div>
+            <div className="promo-item">
+              <FaGift />
+              <span>New Customers: Get 10% OFF</span>
+            </div>
+            <div className="promo-item">
+              <FaTruck />
+              <span>FREE Prime Shipping on Orders $25+</span>
+            </div>
+            <div className="promo-item">
+              <FaBolt />
+              <span>Flash Sale: Up to 70% OFF</span>
+            </div>
+            <div className="promo-item">
+              <FaGift />
+              <span>New Customers: Get 10% OFF</span>
+            </div>
+          </div>
+        </div>
         <div>
           <Header />
           <Cursor />
@@ -32,7 +61,6 @@ function App() {
             <Route path="/product/:productId" element={<ProductDetail />} />
             <Route path="/cart" element={<CartPage />} />
           </Routes>
-          {/* <Recommendations /> */}
           <Footer />
         </div>
       </Router>

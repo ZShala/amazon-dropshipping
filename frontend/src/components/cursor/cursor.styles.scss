@@ -1,5 +1,3 @@
-
-
 /* play with vars for different effets */
 :root {
   --color-cursor: 223, 211, 195;
@@ -20,7 +18,7 @@ body * {
 
 #cursor-dot,
 #cursor-dot-outline {
-  z-index: 999;
+  z-index: 99999;
   pointer-events: none;
   position: absolute;
   top: 50%;
@@ -41,5 +39,33 @@ body * {
   width: var(--cursor-outline-size);
   height: var(--cursor-outline-size);
   background-color: rgba(var(--color-cursor), var(--cursor-outline-shade));
+}
+
+.cursor {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #AF946F;
+    border-radius: 100%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: all 150ms ease;
+    transition-property: background-color, opacity, transform, mix-blend-mode;
+    mix-blend-mode: difference;
+    z-index: 99999;
+    
+    &.cursor--hidden {
+        opacity: 0;
+    }
+
+    &.cursor--clicked {
+        transform: translate(-50%, -50%) scale(0.9);
+        background-color: #AF946F;
+    }
+
+    &.cursor--link-hovered {
+        transform: translate(-50%, -50%) scale(1.25);
+        background-color: #AF946F;
+    }
 }
 

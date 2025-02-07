@@ -425,7 +425,7 @@ def get_category_products(engine, category_type, page=1, per_page=None):
 
         with engine.connect() as conn:
             params = {f"term{i}": term for i, term in enumerate(search_terms)}
-            result = conn.execute(query, params)=
+            result = conn.execute(query, params)
             
             products = []
             for row in result:

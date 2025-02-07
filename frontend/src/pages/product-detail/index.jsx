@@ -63,21 +63,32 @@ const ProductDetail = () => {
     const handleAddToCart = () => {
         if (!product) return;
 
-        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-        const existingProduct = cart.find(item => item.ProductId === product.ProductId);
-        
-        if (existingProduct) {
-            existingProduct.quantity += selectedQuantity;
-        } else {
-            cart.push({
-                ...product,
-                quantity: selectedQuantity
-            });
+        const cartItem = {
+            ProductId: productId,
+            ProductType: product.ProductType,
+            quantity: selectedQuantity,
+            price: product.price,
+            imageUrl: product.ImageURL,
+            Rating: product.Rating,
+            ReviewCount: product.ReviewCount
+        };
+
+        try {
+            const existingCart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const existingItemIndex = existingCart.findIndex(item => item.ProductId === productId);
+
+            if (existingItemIndex >= 0) {
+                existingCart[existingItemIndex].quantity += selectedQuantity;
+            } else {
+                existingCart.push(cartItem);
+            }
+
+            localStorage.setItem('cart', JSON.stringify(existingCart));
+            window.dispatchEvent(new Event('cartUpdated'));
+            setShowToast(true);
+        } catch (error) {
+            console.error('Error adding to cart:', error);
         }
-        
-        localStorage.setItem('cart', JSON.stringify(cart));
-        window.dispatchEvent(new Event('cartUpdated'));
-        setShowToast(true);
         
         setTimeout(() => {
             setShowToast(false);

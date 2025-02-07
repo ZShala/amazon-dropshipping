@@ -39,7 +39,6 @@
             .amazon-partnership {
                 display: flex;
                 align-items: center;
-                gap: 0.5rem;
                 color: #8B4513;
                 font-weight: 500;
 
@@ -76,26 +75,29 @@
                 }
             }
 
-            .social-links {
+            .social-icons {
                 display: flex;
-                gap: 1rem;
-                margin-bottom: 1.5rem;
+                justify-content: flex-start;
+                gap: 1.5rem;
+                margin: 1.5rem 0;
 
-                .social-link {
-                    background: rgba(139, 69, 19, 0.1);
-                    color: #5C3D2E;
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
+                .social-icon {
+                    width: 35px;
+                    height: 35px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    transition: all 0.2s;
+                    background: rgba(139, 69, 19, 0.3);
+                    color: white;
+                    border-radius: 50%;
+                    transition: all 0.3s ease;
+                    font-size: 1rem;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 
                     &:hover {
-                        background: #AF946F;
-                        color: #F5E6D3;
-                        transform: translateY(-2px);
+                        transform: translateY(-3px);
+                        background: rgba(92, 61, 46, 0.4);
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
                     }
                 }
             }
@@ -170,6 +172,41 @@
                         color: #AF946F;
                     }
                 }
+            }
+        }
+    }
+}
+
+.connect-section {
+    text-align: center;
+    margin-top: 2rem;
+
+    h3 {
+        color: #2C1810;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #AF946F;
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+
+            &:hover {
+                transform: translateY(-3px);
+                background: darken(#AF946F, 10%);
             }
         }
     }

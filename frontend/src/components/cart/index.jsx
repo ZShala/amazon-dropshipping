@@ -4,6 +4,7 @@ import visaLogo from '../../assets/visa-logo.webp';
 import mastercardLogo from '../../assets/mastercard-logo.png';
 import paypalLogo from '../../assets/paypal-logo.png';
 import './cart.styles.scss';
+import { FaBox, FaTruck, FaShieldAlt, FaShoppingCart, FaTrash, FaLock } from 'react-icons/fa';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -17,6 +18,7 @@ const Cart = () => {
     const loadCart = () => {
         try {
             const items = JSON.parse(localStorage.getItem('cart') || '[]');
+            console.log('Cart Items:', items);
             setCartItems(items);
             calculateTotals(items);
             setLoading(false);
@@ -91,61 +93,61 @@ const Cart = () => {
     return (
         <div className="cart-container">
             <div className="cart-header">
-                <h1>Your Shopping Cart</h1>
+                <h1>Shopping Cart</h1>
                 <div className="amazon-badges">
-                    <div className="amazon-prime">
-                        <i className="fab fa-amazon"></i>
-                        Prime Shipping
+                    <div className="badge">
+                        <FaBox />
+                        <span>Amazon Direct</span>
                     </div>
-                    <div className="delivery-time">
-                        <i className="fas fa-truck"></i>
-                        2-5 Day Delivery
+                    <div className="badge">
+                        <FaTruck />
+                        <span>Prime Shipping</span>
+                    </div>
+                    <div className="badge">
+                        <FaShieldAlt />
+                        <span>Secure Checkout</span>
                     </div>
                 </div>
             </div>
 
-            <div className="cart-content">
-                <div className="cart-main">
-                    {cartItems.length === 0 ? (
-                        <div className="empty-cart">
-                            <div className="empty-icon">🛒</div>
-                            <h2>Your cart is empty</h2>
-                            <p>Browse our AI-recommended Amazon products</p>
-                            <Link to="/" className="continue-shopping">
-                                Continue Shopping
-                            </Link>
-                        </div>
-                    ) : (
-                        <div className="cart-items">
-                            {cartItems.map(item => (
-                                <div key={item.ProductId} className="cart-item">
-                                    <div className="item-image">
-                                        <img 
-                                            src={getProductImage(item.ProductType)} 
-                                            alt={item.ProductType} 
-                                        />
-                                        <div className="amazon-tag">Amazon Product</div>
-                                    </div>
-                                    
-                                    <div className="item-details">
-                                        <h3>{item.ProductType}</h3>
-                                        <div className="item-meta">
-                                            <div className="rating">
-                                                <span className="stars">★</span> 
-                                                <span>{item.Rating}</span>
-                                                <span className="reviews">({item.ReviewCount} reviews)</span>
-                                            </div>
-                                            <div className="shipping-info">
-                                                <i className="fas fa-check"></i>
-                                                In Stock & Ready to Ship
-                                            </div>
+            {cartItems.length === 0 ? (
+                <div className="empty-cart">
+                    <FaShoppingCart />
+                    <p>Your cart is empty</p>
+                    <Link to="/" className="continue-shopping">Continue Shopping</Link>
+                </div>
+            ) : (
+                <div className="cart-content">
+                    <div className="cart-items">
+                        {cartItems.map((item) => (
+                            <div key={item.ProductId} className="cart-item">
+                                <div className="item-image">
+                                    <img 
+                                        src={item.ImageURL} 
+                                        alt={item.ProductType}
+                                        onError={(e) => {
+                                            e.target.onerror = null;
+                                            e.target.src = getProductImage(item.ProductType);
+                                        }}
+                                    />
+                                </div>
+                                <div className="item-details">
+                                    <h3>{item.ProductType}</h3>
+                                    <div className="item-meta">
+                                        <div className="rating">
+                                            <span className="stars">★</span> 
+                                            <span>{item.Rating}</span>
+                                            <span className="reviews">({item.ReviewCount} reviews)</span>
                                         </div>
-                                        <div className="amazon-prime-info">
-                                            <i className="fab fa-amazon"></i>
-                                            Prime Delivery Available
+                                        <div className="shipping-info">
+                                            <i className="fas fa-check"></i>
+                                            In Stock & Ready to Ship
                                         </div>
                                     </div>
-
+                                    <div className="amazon-prime-info">
+                                        <i className="fab fa-amazon"></i>
+                                        Prime Delivery Available
+                                    </div>
                                     <div className="item-actions">
                                         <div className="price-info">
                                             <span className="price">${(item.price || 29.99).toFixed(2)}</span>
@@ -176,81 +178,47 @@ const Cart = () => {
                                             className="remove-btn"
                                             onClick={() => removeItem(item.ProductId)}
                                         >
-                                            <i className="fas fa-trash"></i>
+                                            <FaTrash /> Remove
                                         </button>
                                     </div>
                                 </div>
-                            ))}
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="cart-summary">
+                        <h2>Order Summary</h2>
+                        <div className="summary-details">
+                            <div className="summary-row">
+                                <span>Subtotal:</span>
+                                <span>${subtotal.toFixed(2)}</span>
+                            </div>
+                            <div className="summary-row">
+                                <span>Prime Shipping:</span>
+                                <span className="free">FREE</span>
+                            </div>
+                            <div className="summary-row">
+                                <span>Estimated Tax:</span>
+                                <span>${(subtotal * 0.15).toFixed(2)}</span>
+                            </div>
                         </div>
-                    )}
-                </div>
 
-                {cartItems.length > 0 && (
-                    <div className="cart-sidebar">
-                        <div className="order-summary">
-                            <h2>Order Summary</h2>
-                            
-                            <div className="summary-rows">
-                                <div className="summary-row">
-                                    <span>Items ({cartItems.length}):</span>
-                                    <span>${subtotal.toFixed(2)}</span>
-                                </div>
-                                <div className="summary-row">
-                                    <span>Prime Shipping:</span>
-                                    <span className="free">FREE</span>
-                                </div>
-                                <div className="summary-row">
-                                    <span>Estimated Tax:</span>
-                                    <span>${(subtotal * 0.15).toFixed(2)}</span>
-                                </div>
-                            </div>
+                        <div className="total-row">
+                            <span>Order Total:</span>
+                            <span>${(subtotal + (subtotal * 0.15)).toFixed(2)}</span>
+                        </div>
 
-                            <div className="total-row">
-                                <span>Order Total:</span>
-                                <span>${(subtotal + (subtotal * 0.15)).toFixed(2)}</span>
-                            </div>
+                        <button className="checkout-btn">
+                            <FaLock /> Proceed to Checkout
+                        </button>
 
-                            <button className="checkout-btn">
-                                <i className="fas fa-lock"></i>
-                                Proceed to Checkout
-                            </button>
-
-                            <div className="dropship-info">
-                                <div className="info-item">
-                                    <i className="fab fa-amazon"></i>
-                                    <div>
-                                        <h4>Amazon Direct</h4>
-                                        <p>Ships directly from Amazon</p>
-                                    </div>
-                                </div>
-                                <div className="info-item">
-                                    <i className="fas fa-shield-alt"></i>
-                                    <div>
-                                        <h4>Secure Shopping</h4>
-                                        <p>Protected by Amazon</p>
-                                    </div>
-                                </div>
-                                <div className="info-item">
-                                    <i className="fas fa-undo"></i>
-                                    <div>
-                                        <h4>Easy Returns</h4>
-                                        <p>30-day return policy</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="payment-methods">
-                                <p>We Accept:</p>
-                                <div className="methods">
-                                    <img src={visaLogo} alt="Visa" />
-                                    <img src={mastercardLogo} alt="Mastercard" />
-                                    <img src={paypalLogo} alt="PayPal" />
-                                </div>
-                            </div>
+                        <div className="secure-checkout">
+                            <FaShieldAlt />
+                            <p>Secure Checkout with Amazon</p>
                         </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 };

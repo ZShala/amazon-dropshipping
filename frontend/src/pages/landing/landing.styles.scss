@@ -89,7 +89,15 @@
             }
 
             p {
-                color: #5C3D2E;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                justify-content: center;
+                
+                i {
+                    color: #AF946F;
+                    font-size: 0.9rem;
+                }
             }
         }
     }
@@ -199,10 +207,14 @@
         margin: 3rem 0;
 
         h2 {
-            text-align: center;
-            color: #2C1810;
-            margin-bottom: 3rem;
-            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            
+            i {
+                color: #AF946F;
+            }
         }
 
         .benefits-grid {
@@ -211,6 +223,22 @@
             gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .benefit-item {
+            text-align: center;
+
+            p {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                
+                i {
+                    color: #AF946F;
+                    font-size: 0.9rem;
+                }
+            }
         }
     }
 
@@ -325,6 +353,130 @@
             color: #34495e;
         }
     }
+
+    .promo-banner {
+        display: none;
+    }
+}
+
+.promo-banner {
+    background: #232f3e;
+    padding: 0.75rem 0;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+
+    .promo-scroll {
+        display: flex;
+        gap: 2rem;
+        animation: scroll 20s linear infinite;
+        white-space: nowrap;
+        padding: 0 1rem;
+
+        .promo-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            padding: 0.25rem 1rem;
+            flex-shrink: 0;
+
+            svg {
+                color: #AF946F;
+                font-size: 1.1rem;
+            }
+
+            span {
+                font-size: 0.9rem;
+            }
+        }
+
+        &:hover {
+            animation-play-state: paused;
+        }
+    }
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.trust-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 4rem 2rem;
+    background: #f8f9fa;
+    margin: 2rem 0;
+
+    .feature {
+        text-align: center;
+        padding: 2rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        transition: transform 0.2s;
+        
+        &:hover {
+            transform: translateY(-5px);
+        }
+        
+        i {
+            font-size: 2.5rem;
+            color: #AF946F;
+            margin-bottom: 1rem;
+        }
+        
+        h3 {
+            color: #2C1810;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        p {
+            color: #5C3D2E;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+    }
+}
+
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    padding: 4rem 2rem;
+    background: white;
+    margin: 2rem 0;
+
+    .stat-item {
+        text-align: center;
+        
+        i {
+            font-size: 2.5rem;
+            color: #AF946F;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-content {
+            .stat-number {
+                font-size: 2rem;
+                font-weight: bold;
+                color: #2C1810;
+                margin-bottom: 0.5rem;
+            }
+            
+            .stat-label {
+                color: #5C3D2E;
+                font-size: 1rem;
+            }
+        }
+    }
 }
 
 @media (max-width: 768px) {
@@ -374,4 +526,8 @@
             }
         }
     }
+}
+
+#directory-section {
+    scroll-margin-top: 100px; // Adjust based on your header height
 } 
