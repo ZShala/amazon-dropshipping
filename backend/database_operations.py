@@ -229,11 +229,15 @@ def get_product_details(engine, product_id):
         with engine.connect() as conn:
             result = conn.execute(query, {"product_id": product_id}).fetchone()
             if result:
+                # Marrim URL-në e imazhit për produktin
+                image_url = fetch_image(result.URL)
+                
                 return {
                     "ProductId": result.ProductId,
                     "ProductType": result.ProductType,
                     "Rating": float(result.Rating),
-                    "URL": result.URL
+                    "URL": result.URL,
+                    "ImageURL": image_url  # Shtojmë ImageURL në rezultat
                 }
             return None
             

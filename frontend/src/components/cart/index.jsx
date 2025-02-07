@@ -123,7 +123,7 @@ const Cart = () => {
                             <div key={item.ProductId} className="cart-item">
                                 <div className="item-image">
                                     <img 
-                                        src={item.ImageURL} 
+                                        src={item.ImageURL || getProductImage(item.ProductType)} 
                                         alt={item.ProductType}
                                         onError={(e) => {
                                             e.target.onerror = null;

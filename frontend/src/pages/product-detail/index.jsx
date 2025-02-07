@@ -66,12 +66,15 @@ const ProductDetail = () => {
         const cart = JSON.parse(localStorage.getItem('cart') || '[]');
         const existingProduct = cart.find(item => item.ProductId === product.ProductId);
         
+        const currentImage = imageUrl || images[selectedImage];
+        
         if (existingProduct) {
             existingProduct.quantity += selectedQuantity;
         } else {
             cart.push({
                 ...product,
-                quantity: selectedQuantity
+                quantity: selectedQuantity,
+                ImageURL: currentImage
             });
         }
         
