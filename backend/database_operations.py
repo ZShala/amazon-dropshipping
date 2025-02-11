@@ -3,11 +3,41 @@ from sqlalchemy import text, Table, Column, String, MetaData, create_engine
 from bs4 import BeautifulSoup
 import requests
 
+# Konfigurimet që ishin në config.py
+CATEGORY_MAPPING = {
+    'makeup': [
+        '%Eyeliner%', '%Kajal%', '%Lipstick%', '%Foundation%',
+        '%Mascara%', '%Eye Shadow%', '%Concealer%', '%Blush%',
+        '%Compact%', '%Powder%', '%Nail%', '%Makeup%'
+    ],
+    'skincare': [
+        '%Face%', '%Skin%', '%Cream%', '%Moisturizer%',
+        '%Serum%', '%Mask%', '%Facial%', '%Cleanser%',
+        '%Toner%', '%Lotion%'
+    ],
+    'haircare': [
+        '%Hair%', '%Shampoo%', '%Conditioner%', '%Scalp%'
+    ],
+    'fragrance': [
+        '%Perfume%', '%Fragrance%', '%Body Spray%',
+        '%Deodorant%', '%Scent%'
+    ],
+    'miscellaneous': [
+        '%Tool%', '%Kit%', '%Accessory%', '%Accessories%',
+        '%Brush%', '%Applicator%', '%Beauty Tool%', '%Makeup Tool%'
+    ]
+}
+
+DEFAULT_IMAGE_URL = "http://localhost:5001/static/images/product-placeholder.jpg"
+
+SCRAPING_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
+}
+
 def setup_database(engine):
     """Krijon tabelat dhe indekset e nevojshme në databazë"""
     try:
         with engine.connect() as conn:
-            # Krijojmë tabelën amazon_beauty
             conn.execute(text("""
                 CREATE TABLE IF NOT EXISTS amazon_beauty (
                     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,7 +55,6 @@ def setup_database(engine):
                 ) ENGINE=InnoDB
             """))
             
-            # Krijojmë tabelën product_images
             conn.execute(text("""
                 CREATE TABLE IF NOT EXISTS product_images (
                     asin VARCHAR(20) PRIMARY KEY,
@@ -37,23 +66,21 @@ def setup_database(engine):
             
             print("Tabelat dhe indekset u krijuan me sukses!")
             
-            # Kontrollo nëse tabelat u krijuan
             tables = conn.execute(text("""
-                SELECT table_name 
+                SELECT TABLE_NAME 
                 FROM information_schema.tables 
-                WHERE table_schema = 'dataset_db'
+                WHERE table_schema = DATABASE()
             """))
             print("\nTabelat e krijuara:")
-            for table in tables:
-                print(f"- {table.table_name}")
+            for row in tables:
+                print(f"- {row[0]}")
             
     except Exception as e:
         print(f"Ndodhi një gabim gjatë setup të databazës: {str(e)}")
 
 def get_data_from_db(engine):
-    """Merr të dhënat nga databaza duke përdorur engine-in e dhënë"""
+    """Merr të dhënat nga databaza"""
     try:
-        # Optimizojmë query-n duke marrë vetëm produktet më të mira
         query = text("""
             SELECT DISTINCT 
                 ProductId, 
@@ -65,10 +92,10 @@ def get_data_from_db(engine):
             FROM amazon_beauty 
             WHERE ProductId IS NOT NULL 
                 AND ProductType IS NOT NULL 
-                AND Rating >= 4.0  -- Vetëm produktet me rating të lartë
-            HAVING review_count >= 3  -- Vetëm produktet me mjaftueshëm reviews
+                AND Rating >= 4.0
+            HAVING review_count >= 3
             ORDER BY avg_rating DESC, review_count DESC
-            LIMIT 1000  -- Limitojmë numrin total të produkteve për performancë
+            LIMIT 1000
         """)
         
         with engine.connect() as conn:
@@ -174,7 +201,6 @@ def get_product_recommendations(engine, product_id):
             } for row in result]
             
             if not recommendations:
-                # Backup: Produktet më popullore nga e njëjta kategori
                 backup_query = text("""
                     WITH product_category AS (
                         SELECT SUBSTRING_INDEX(ProductType, ' ', 1) as category
@@ -229,7 +255,6 @@ def get_product_details(engine, product_id):
         with engine.connect() as conn:
             result = conn.execute(query, {"product_id": product_id}).fetchone()
             if result:
-                # Marrim URL-në e imazhit për produktin
                 image_url = fetch_image(result.URL)
                 
                 return {
@@ -237,7 +262,7 @@ def get_product_details(engine, product_id):
                     "ProductType": result.ProductType,
                     "Rating": float(result.Rating),
                     "URL": result.URL,
-                    "ImageURL": image_url  # Shtojmë ImageURL në rezultat
+                    "ImageURL": image_url 
                 }
             return None
             
@@ -248,7 +273,6 @@ def get_product_details(engine, product_id):
 def get_cart_recommendations(engine, product_ids):
     """Merr rekomandimet për produktet në cart"""
     try:
-        # Query për cross-sell (produkte komplementare)
         cross_sell_query = text("""
             WITH cart_products AS (
                 SELECT ProductType, Rating
@@ -282,7 +306,6 @@ def get_cart_recommendations(engine, product_ids):
             SELECT * FROM complementary_products
         """)
 
-        # Query për up-sell (produkte premium)
         up_sell_query = text("""
             WITH cart_products AS (
                 SELECT 
@@ -316,7 +339,6 @@ def get_cart_recommendations(engine, product_ids):
         """)
 
         with engine.connect() as conn:
-            # Ekzekuto queries
             cross_sell_result = conn.execute(
                 cross_sell_query, 
                 {"product_ids": tuple(product_ids)}
@@ -325,8 +347,7 @@ def get_cart_recommendations(engine, product_ids):
                 up_sell_query, 
                 {"product_ids": tuple(product_ids)}
             )
-
-            # Formato rezultatet
+            
             recommendations = {
                 "crossSell": [{
                     "ProductId": row.ProductId,
@@ -366,7 +387,7 @@ def fetch_image(product_url):
             return image_tag.get("src")
     except Exception as e:
         print(f"Gabim gjatë marrjes së imazhit për URL {product_url}: {e}")
-    return "https://via.placeholder.com/150"  # Imazh rezervë
+    return "http://localhost:5001/static/images/product-placeholder.jpg"
 
 def get_category_products(engine, category_type, page=1, per_page=None):
     """Merr produktet për një kategori specifike"""
@@ -375,31 +396,7 @@ def get_category_products(engine, category_type, page=1, per_page=None):
             # https://www.amazon.in/Biotique-White-Advanced-Fairness-Transparent/dp/B07QF7LNVD/ref=sr_1_14?pf_rd_i=1355016031&pf_rd_m=A1VBAL9TL5WCBF&pf_rd_p=1f9b873b-851b-4ef7-9137-1a1dc23c575a&pf_rd_r=76BM2ADV9TQD1B275FZF&pf_rd_s=merchandised-search-11&qid=1680068570&refinements=p_72%3A1318477031&s=beauty&sr=1-14&th=1
             # https://m.media-amazon.com/images/I/51ym8rbYGrL._SX522_.jpg
         
-        category_mapping = {
-            'makeup': [
-                '%Eyeliner%', '%Kajal%', '%Lipstick%', '%Foundation%',
-                '%Mascara%', '%Eye Shadow%', '%Concealer%', '%Blush%',
-                '%Compact%', '%Powder%', '%Nail%', '%Makeup%'
-            ],
-            'skincare': [
-                '%Face%', '%Skin%', '%Cream%', '%Moisturizer%',
-                '%Serum%', '%Mask%', '%Facial%', '%Cleanser%',
-                '%Toner%', '%Lotion%'
-            ],
-            'haircare': [
-                '%Hair%', '%Shampoo%', '%Conditioner%', '%Scalp%'
-            ],
-            'fragrance': [
-                '%Perfume%', '%Fragrance%', '%Body Spray%',
-                '%Deodorant%', '%Scent%'
-            ],
-            'miscellaneous': [
-                '%Tool%', '%Kit%', '%Accessory%', '%Accessories%',
-                '%Brush%', '%Applicator%', '%Beauty Tool%', '%Makeup Tool%'
-            ]
-        }
-
-        search_terms = category_mapping.get(category_type.lower(), [])
+        search_terms = CATEGORY_MAPPING.get(category_type.lower(), [])
         
         if not search_terms:
             print(f"Nuk u gjetën terma kërkimi për kategorinë: {category_type}")
@@ -435,7 +432,6 @@ def get_category_products(engine, category_type, page=1, per_page=None):
             for row in result:
                 try:
                     url = row.URL
-                    # Merr imazhin nga faqja e produktit
                     image_url = fetch_image(url)
                     
                     products.append({
