@@ -195,7 +195,9 @@ def get_product_details(product_id):
                     "Rating": float(result.avg_rating),
                     "URL": result.URL,
                     "ReviewCount": result.review_count,
-                    "ImageURL": product_details["image_url"]
+                    "ImageURL": product_details["image_url"],
+                    "price": product_details["price"],
+                    "currency": "EUR"
                 }
                 
                 return jsonify({"product": product})

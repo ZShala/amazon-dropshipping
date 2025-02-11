@@ -156,6 +156,21 @@
                 margin-top: 2px;
             }
         }
+
+        .price {
+            margin: 8px 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c2c2c;
+
+            .currency {
+                margin-right: 2px;
+            }
+
+            .amount {
+                color: #000;
+            }
+        }
     }
 
     .no-image {

@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import visaLogo from '../../assets/visa-logo.webp';
-import mastercardLogo from '../../assets/mastercard-logo.png';
-import paypalLogo from '../../assets/paypal-logo.png';
 import './cart.styles.scss';
 import { FaBox, FaTruck, FaShieldAlt, FaShoppingCart, FaTrash, FaLock } from 'react-icons/fa';
 

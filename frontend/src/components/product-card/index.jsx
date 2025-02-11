@@ -79,6 +79,14 @@ const ProductCard = ({
                         )}
                     </div>
                     
+                    {/* Shtojmë çmimin */}
+                    {product.price && (
+                        <div className="price">
+                            <span className="currency">€</span>
+                            <span className="amount">{product.price.toFixed(2)}</span>
+                        </div>
+                    )}
+
                     {/* Trego scores të ndryshme bazuar në kontekstin */}
                     {similarityScore && (
                         <div className="similarity-score">

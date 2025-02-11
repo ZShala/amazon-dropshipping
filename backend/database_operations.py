@@ -390,7 +390,7 @@ def fetch_image(product_url):
     return "http://localhost:5001/static/images/product-placeholder.jpg"
 
 def fetch_product_details(product_url):
-    """Merr imazhin dhe titullin e produktit nga faqja e Amazon"""
+    """Merr imazhin, titullin dhe çmimin e produktit nga faqja e Amazon"""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
     }
@@ -406,16 +406,31 @@ def fetch_product_details(product_url):
         title_tag = soup.find("span", {"id": "productTitle"})
         title = title_tag.text.strip() if title_tag else None
         
+        # Marrim çmimin
+        price = None
+        price_tag = soup.find("span", {"class": "a-price-whole"})
+        if price_tag:
+            try:
+                # Heqim pikën në fund dhe presjet
+                price_text = price_tag.text.strip().rstrip('.').replace(',', '')
+                price_inr = float(price_text)
+                # Konvertojmë nga INR në EUR (përafërsisht 1 EUR = 90 INR)
+                price = round(price_inr / 90, 2)
+            except (ValueError, AttributeError):
+                price = None
+        
         return {
             "image_url": image_url,
-            "title": title
+            "title": title,
+            "price": price
         }
         
     except Exception as e:
         print(f"Gabim gjatë marrjes së detajeve për URL {product_url}: {e}")
         return {
             "image_url": DEFAULT_IMAGE_URL,
-            "title": None
+            "title": None,
+            "price": None
         }
 
 def get_category_products(engine, category_type, page=1, per_page=None):
@@ -460,11 +475,13 @@ def get_category_products(engine, category_type, page=1, per_page=None):
                     
                     products.append({
                         "ProductId": row.ProductId,
-                        "ProductType": product_details["title"] or row.ProductType,  # Përdor titullin nëse ekziston
+                        "ProductType": product_details["title"] or row.ProductType,
                         "Rating": float(row.avg_rating),
                         "URL": row.URL,
                         "ReviewCount": row.review_count,
-                        "ImageURL": product_details["image_url"]
+                        "ImageURL": product_details["image_url"],
+                        "price": product_details["price"],
+                        "currency": "EUR"
                     })
                     
                 except Exception as e:
