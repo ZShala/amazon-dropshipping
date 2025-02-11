@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_cors import CORS
 from model import get_recommendations_with_images
-from database_operations import get_data_from_db, get_product_details, get_cart_recommendations, get_category_products, get_all_product_types
+from database_operations import get_data_from_db, get_product_details, get_cart_recommendations, get_category_products, get_all_product_types, fetch_product_details
 import atexit
 from sqlalchemy import create_engine, text
 import multiprocessing
@@ -187,18 +187,15 @@ def get_product_details(product_id):
             result = conn.execute(query, {"product_id": product_id}).fetchone()
             
             if result:
-                url_parts = result.URL.split('/')
-                asin = next((part for part in url_parts 
-                           if part.startswith('B0') or part.startswith('A0')), None)
+                product_details = fetch_product_details(result.URL)
                 
                 product = {
                     "ProductId": result.ProductId,
-                    "ProductType": result.ProductType,
+                    "ProductType": product_details["title"] or result.ProductType,
                     "Rating": float(result.avg_rating),
                     "URL": result.URL,
                     "ReviewCount": result.review_count,
-                    "ASIN": asin,
-                    "ImageURL": f"https://m.media-amazon.com/images/I/{asin}._SX300_SY300_QL70_ML2_.jpg"
+                    "ImageURL": product_details["image_url"]
                 }
                 
                 return jsonify({"product": product})

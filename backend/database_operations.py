@@ -389,13 +389,38 @@ def fetch_image(product_url):
         print(f"Gabim gjatë marrjes së imazhit për URL {product_url}: {e}")
     return "http://localhost:5001/static/images/product-placeholder.jpg"
 
+def fetch_product_details(product_url):
+    """Merr imazhin dhe titullin e produktit nga faqja e Amazon"""
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
+    }
+    try:
+        response = requests.get(product_url, headers=headers)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Marrim imazhin
+        image_tag = soup.find("img", {"id": "landingImage"})
+        image_url = image_tag.get("src") if image_tag else DEFAULT_IMAGE_URL
+        
+        # Marrim titullin
+        title_tag = soup.find("span", {"id": "productTitle"})
+        title = title_tag.text.strip() if title_tag else None
+        
+        return {
+            "image_url": image_url,
+            "title": title
+        }
+        
+    except Exception as e:
+        print(f"Gabim gjatë marrjes së detajeve për URL {product_url}: {e}")
+        return {
+            "image_url": DEFAULT_IMAGE_URL,
+            "title": None
+        }
+
 def get_category_products(engine, category_type, page=1, per_page=None):
     """Merr produktet për një kategori specifike"""
     try:
-        # Mapping i kategorive me termat e kërkimit
-            # https://www.amazon.in/Biotique-White-Advanced-Fairness-Transparent/dp/B07QF7LNVD/ref=sr_1_14?pf_rd_i=1355016031&pf_rd_m=A1VBAL9TL5WCBF&pf_rd_p=1f9b873b-851b-4ef7-9137-1a1dc23c575a&pf_rd_r=76BM2ADV9TQD1B275FZF&pf_rd_s=merchandised-search-11&qid=1680068570&refinements=p_72%3A1318477031&s=beauty&sr=1-14&th=1
-            # https://m.media-amazon.com/images/I/51ym8rbYGrL._SX522_.jpg
-        
         search_terms = CATEGORY_MAPPING.get(category_type.lower(), [])
         
         if not search_terms:
@@ -431,16 +456,15 @@ def get_category_products(engine, category_type, page=1, per_page=None):
             products = []
             for row in result:
                 try:
-                    url = row.URL
-                    image_url = fetch_image(url)
+                    product_details = fetch_product_details(row.URL)
                     
                     products.append({
                         "ProductId": row.ProductId,
-                        "ProductType": row.ProductType,
+                        "ProductType": product_details["title"] or row.ProductType,  # Përdor titullin nëse ekziston
                         "Rating": float(row.avg_rating),
                         "URL": row.URL,
                         "ReviewCount": row.review_count,
-                        "ImageURL": image_url
+                        "ImageURL": product_details["image_url"]
                     })
                     
                 except Exception as e:
