@@ -22,6 +22,7 @@ import Shipping from './pages/shipping';
 import TrackOrder from './pages/track-order';
 import AuthenticProducts from './pages/authentic';
 import PrimeDelivery from './pages/prime-delivery';
+import SecurePayment from './pages/secure-payment';
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
             <Route path="/track-order" element={<TrackOrder />} />
             <Route path="/authentic" element={<AuthenticProducts />} />
             <Route path="/prime-delivery" element={<PrimeDelivery />} />
+            <Route path="/secure-payment" element={<SecurePayment />} />
           </Routes>
           <Footer />
         </div>

@@ -38,6 +38,10 @@ const Footer = () => {
                             <i className="fas fa-box"></i>
                             <Link to="/track-order">Track Your Order</Link>
                         </li>
+                        <li>
+                            <i className="fas fa-shield-alt"></i>
+                            <Link to="/secure-payment">Secure Payment</Link>
+                        </li>
                     </ul>
                 </div>
 
