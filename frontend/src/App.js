@@ -19,6 +19,7 @@ import PrivacyPolicy from './pages/privacy-policy';
 import TermsOfService from './pages/terms';
 import Returns from './pages/returns';
 import Shipping from './pages/shipping';
+import TrackOrder from './pages/track-order';
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/returns" element={<Returns />} />
             <Route path="/shipping" element={<Shipping />} />
+            <Route path="/track-order" element={<TrackOrder />} />
           </Routes>
           <Footer />
         </div>

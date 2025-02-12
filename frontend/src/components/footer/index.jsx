@@ -36,7 +36,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <i className="fas fa-box"></i>
-                            Track Your Order
+                            <Link to="/track-order">Track Your Order</Link>
                         </li>
                     </ul>
                 </div>
