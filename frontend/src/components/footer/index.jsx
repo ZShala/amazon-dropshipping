@@ -58,7 +58,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <i className="fas fa-shield-alt"></i>
-                            Secure Payment
+                            <Link to="/secure-payment">Secure Payment</Link>
                         </li>
                         <li>
                             <i className="fas fa-headset"></i>
