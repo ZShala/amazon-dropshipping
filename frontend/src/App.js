@@ -15,6 +15,7 @@ import { CartProvider } from './contexts/cart.context';
 import ScrollToTop from './components/scroll-to-top';
 import { FaTruck, FaBolt, FaGift } from 'react-icons/fa';
 import FAQ from './pages/faq';
+import PrivacyPolicy from './pages/privacy-policy';
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
             <Route path="/product/:productId" element={<ProductDetail />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/faq" element={<FAQ />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
           </Routes>
           <Footer />
         </div>
