@@ -32,7 +32,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <i className="fas fa-question-circle"></i>
-                            FAQ
+                            <Link to="/faq">FAQ</Link>
                         </li>
                         <li>
                             <i className="fas fa-box"></i>

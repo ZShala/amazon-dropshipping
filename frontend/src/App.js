@@ -14,6 +14,7 @@ import CartPage from './pages/cart-page';
 import { CartProvider } from './contexts/cart.context';
 import ScrollToTop from './components/scroll-to-top';
 import { FaTruck, FaBolt, FaGift } from 'react-icons/fa';
+import FAQ from './pages/faq';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
             <Route path="/haircare" element={<Haircare />} />
             <Route path="/product/:productId" element={<ProductDetail />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/faq" element={<FAQ />} />
           </Routes>
           <Footer />
         </div>
