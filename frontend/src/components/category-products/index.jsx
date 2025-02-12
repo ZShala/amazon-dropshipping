@@ -13,19 +13,15 @@ const CategoryProducts = ({ categoryType }) => {
     const [productTypes, setProductTypes] = useState([]);
     const [page, setPage] = useState(1);
     const productsPerPage = 20;
-    const [selectedFilter, setSelectedFilter] = useState('all');
 
-    // Funksion për të marrë produktet nga cache
     const getFromCache = (category) => {
         try {
             const cached = localStorage.getItem(`products_${category}`);
             if (cached) {
                 const { data, timestamp } = JSON.parse(cached);
-                // Kontrollojmë nëse cache është më i vjetër se 1 orë
                 if (Date.now() - timestamp < 3600000) {
                     return data;
                 }
-                // Fshijmë cache-in e vjetër
                 localStorage.removeItem(`products_${category}`);
             }
         } catch (error) {
@@ -34,7 +30,6 @@ const CategoryProducts = ({ categoryType }) => {
         return null;
     };
 
-    // Funksion për të ruajtur produktet në cache
     const saveToCache = (category, products) => {
         try {
             const cacheData = {
@@ -63,8 +58,6 @@ const CategoryProducts = ({ categoryType }) => {
                 setLoading(false);
                 return;
             }
-
-            // Nëse nuk ka cache, bëjmë fetch nga API
             const url = `http://localhost:5001/api/${categoryType.toLowerCase()}`;
             const response = await fetch(url, {
                 method: 'GET',
@@ -78,7 +71,6 @@ const CategoryProducts = ({ categoryType }) => {
 
             if (data && data.products) {
                 const products = data.products;
-                // Ruajmë në cache
                 saveToCache(categoryType.toLowerCase(), products);
                 
                 setAllProducts(products);

@@ -1,3 +1,9 @@
+.product-detail-page {
+    background: #f8f9fa;
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+} 
+
 .product-detail-container {
     max-width: 1400px;
     margin: 2rem auto;
@@ -299,55 +305,87 @@
             }
 
             .product-features {
-                margin-bottom: 2rem;
+                margin-top: 2rem;
+                padding: 1.5rem;
+                background-color: #f8f9fa;
+                border-radius: 8px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 
                 h3 {
+                    font-size: 1.2rem;
                     color: #2c3e50;
                     margin-bottom: 1rem;
+                    padding-bottom: 0.5rem;
+                    border-bottom: 2px solid #C4A77D;
                 }
 
                 ul {
                     list-style: none;
                     padding: 0;
+                    margin: 0;
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 1rem;
 
                     li {
                         display: flex;
                         align-items: center;
-                        gap: 0.75rem;
-                        margin-bottom: 0.75rem;
-                        color: #5C3D2E;
+                        padding: 0.75rem;
+                        background-color: white;
+                        border-radius: 6px;
+                        transition: transform 0.2s ease;
+
+                        &:hover {
+                            transform: translateY(-2px);
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        }
 
                         i {
-                            color: #AF946F;
+                            color: #C4A77D;
+                            margin-right: 0.75rem;
+                            font-size: 1.1rem;
                         }
                     }
                 }
             }
 
             .trust-badges {
+                margin-top: 2rem;
                 display: grid;
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
                 gap: 1.5rem;
-                padding-top: 2rem;
-                border-top: 1px solid #eee;
 
                 .badge {
-                    text-align: center;
+                    display: flex;
+                    align-items: center;
+                    padding: 1rem;
+                    background-color: #f8f9fa;
+                    border-radius: 8px;
+                    transition: transform 0.2s ease;
+
+                    &:hover {
+                        transform: translateY(-2px);
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                    }
 
                     i {
                         font-size: 1.5rem;
-                        color: #AF946F;
-                        margin-bottom: 0.5rem;
+                        color: #C4A77D;
+                        margin-right: 1rem;
                     }
 
-                    h4 {
-                        color: #2c3e50;
-                        margin-bottom: 0.25rem;
-                    }
+                    div {
+                        h4 {
+                            margin: 0;
+                            font-size: 1rem;
+                            color: #2c3e50;
+                        }
 
-                    p {
-                        color: #7f8c8d;
-                        font-size: 0.9rem;
+                        p {
+                            margin: 0.25rem 0 0;
+                            font-size: 0.9rem;
+                            color: #6c757d;
+                        }
                     }
                 }
             }

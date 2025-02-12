@@ -300,16 +300,7 @@
     padding: 2rem 0;
     position: relative;
     
-    &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: #e0e0e0;
-        z-index: 1;
-    }
+   
 
     .load-more-button {
         position: relative;

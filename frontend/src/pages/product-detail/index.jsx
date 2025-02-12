@@ -129,7 +129,7 @@ const ProductDetail = () => {
     const images = getImageFormats(product.ASIN);
 
     return (
-        <>
+        <div className="product-detail-page">
             <div className="product-detail-container">
                 <div className="product-main">
                     <div className="product-image-section">
@@ -305,7 +305,7 @@ const ProductDetail = () => {
                 isVisible={showToast}
                 onClose={() => setShowToast(false)}
             />
-        </>
+        </div>
     );
 };
 

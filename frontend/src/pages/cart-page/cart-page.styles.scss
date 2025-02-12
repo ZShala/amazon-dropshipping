@@ -1,16 +1,13 @@
 .cart-page {
-    min-height: calc(100vh - 200px); // Duke zbritur lartësinë e header dhe footer
+    min-height: calc(100vh - 200px);
     background: #f8f9fa;
     
-    // Nëse dëshirojmë të shtojmë padding ose margin shtesë
     padding-top: 2rem;
     padding-bottom: 4rem;
 
-    // Për të siguruar që cart container të jetë i centruar
     display: flex;
     justify-content: center;
 
-    // Për responsive design
     @media (max-width: 768px) {
         padding: 1rem;
     }

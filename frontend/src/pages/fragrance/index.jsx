@@ -9,7 +9,7 @@ const Fragrance = () => {
                 title="Fragrances | Luxury Perfumes Collection"
                 description="Explore our collection of luxury perfumes and fragrances from Amazon. Shop designer scents with authentic product guarantee and Prime shipping."
             />
-            <div className="fragrance-page">
+            <div>
                 <CategoryProducts categoryType="fragrance" />
             </div>
         </>
