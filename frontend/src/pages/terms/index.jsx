@@ -78,7 +78,7 @@ const TermsOfService = () => {
                     <h2>8. Contact Information</h2>
                     <div className="contact-info">
                         <p>For any questions regarding these terms, please contact us at:</p>
-                        <p>Email: legal@yourbeauty.com</p>
+                        <p>Email: legal@glowaura.com</p>
                         <p>Phone: 1-800-BEAUTY</p>
                         <p>Address: 123 Beauty Street, New York, NY 10001</p>
                     </div>

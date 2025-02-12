@@ -30,7 +30,7 @@ const Support = () => {
                     <div className="method-card">
                         <FaEnvelope />
                         <h3>Email Support</h3>
-                        <p>support@yourbeauty.com</p>
+                        <p>support@glowaura.com</p>
                         <span className="availability">Response within 2 hours</span>
                         <button className="contact-button">Send Email</button>
                     </div>

@@ -137,7 +137,7 @@ const TrackOrder = () => {
                     <div className="contact-methods">
                         <div className="contact-method">
                             <i className="fas fa-envelope"></i>
-                            <p>Email: support@yourbeauty.com</p>
+                            <p>Email: support@glowaura.com</p>
                         </div>
                         <div className="contact-method">
                             <i className="fas fa-phone"></i>

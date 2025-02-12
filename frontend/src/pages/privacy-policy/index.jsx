@@ -77,7 +77,7 @@ const PrivacyPolicy = () => {
                     <h2>6. Contact Us</h2>
                     <p>If you have any questions about this Privacy Policy, please contact us at:</p>
                     <div className="contact-info">
-                        <p>Email: privacy@yourbeauty.com</p>
+                        <p>Email: privacy@glowaura.com</p>
                         <p>Phone: 1-800-BEAUTY</p>
                         <p>Address: 123 Beauty Street, New York, NY 10001</p>
                     </div>

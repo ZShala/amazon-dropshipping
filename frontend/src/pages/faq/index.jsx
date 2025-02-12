@@ -62,7 +62,7 @@ const FAQ = () => {
                     <div className="contact-methods">
                         <div className="contact-method">
                             <i className="fas fa-envelope"></i>
-                            <p>Email us at: support@yourbeauty.com</p>
+                            <p>Email us at: support@glowaura.com</p>
                         </div>
                         <div className="contact-method">
                             <i className="fas fa-phone"></i>
