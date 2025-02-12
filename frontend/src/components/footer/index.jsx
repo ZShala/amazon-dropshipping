@@ -62,7 +62,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <i className="fas fa-headset"></i>
-                            24/7 Support
+                            <Link to="/support">24/7 Support</Link>
                         </li>
                     </ul>
                 </div>

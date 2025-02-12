@@ -1,0 +1,307 @@
+.support-page {
+    background: #f8f9fa;
+    min-height: 100vh;
+    padding: 4rem 0;
+
+    .support-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+
+            .support-icon {
+                font-size: 4rem;
+                color: #C4A77D;
+                margin-bottom: 1rem;
+            }
+
+            h1 {
+                color: #2c3e50;
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                color: #666;
+                font-size: 1.2rem;
+            }
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+
+            .method-card {
+                background: white;
+                padding: 2rem;
+                border-radius: 12px;
+                text-align: center;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                transition: transform 0.2s;
+
+                &:hover {
+                    transform: translateY(-4px);
+                }
+
+                svg {
+                    font-size: 2.5rem;
+                    color: #C4A77D;
+                    margin-bottom: 1rem;
+                }
+
+                h3 {
+                    color: #2c3e50;
+                    margin-bottom: 0.5rem;
+                }
+
+                p {
+                    color: #666;
+                    margin-bottom: 0.5rem;
+                }
+
+                .availability {
+                    display: block;
+                    color: #C4A77D;
+                    font-size: 0.9rem;
+                    margin-bottom: 1rem;
+                }
+
+                .contact-button {
+                    background: #C4A77D;
+                    color: white;
+                    border: none;
+                    padding: 0.8rem 1.5rem;
+                    border-radius: 6px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: background-color 0.2s;
+
+                    &:hover {
+                        background: darken(#C4A77D, 10%);
+                    }
+                }
+            }
+        }
+
+        .support-features {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+            h2 {
+                color: #2c3e50;
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+
+            .features-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+
+                .feature {
+                    text-align: center;
+
+                    svg, i {
+                        font-size: 2.5rem;
+                        color: #C4A77D;
+                        margin-bottom: 1rem;
+                    }
+
+                    h3 {
+                        color: #2c3e50;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    p {
+                        color: #666;
+                    }
+                }
+            }
+        }
+
+        .support-categories {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+            h2 {
+                color: #2c3e50;
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+
+            .categories-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+
+                .category {
+                    h3 {
+                        color: #2c3e50;
+                        margin-bottom: 1rem;
+                        font-size: 1.3rem;
+                        padding-bottom: 0.5rem;
+                        border-bottom: 2px solid #C4A77D;
+                    }
+
+                    ul {
+                        list-style: none;
+                        padding-left: 1.5rem;
+
+                        li {
+                            color: #666;
+                            line-height: 1.6;
+                            margin-bottom: 0.5rem;
+                            position: relative;
+
+                            &:before {
+                                content: "•";
+                                color: #C4A77D;
+                                position: absolute;
+                                left: -1.5rem;
+                                font-size: 1.2rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .faq-preview {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+            h2 {
+                color: #2c3e50;
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+
+            .faq-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+                gap: 2rem;
+                margin-bottom: 2rem;
+
+                .faq-item {
+                    h3 {
+                        color: #2c3e50;
+                        margin-bottom: 0.5rem;
+                        font-size: 1.2rem;
+                    }
+
+                    p {
+                        color: #666;
+                        line-height: 1.6;
+                    }
+                }
+            }
+
+            .view-more {
+                text-align: center;
+
+                .view-more-button {
+                    display: inline-block;
+                    background: #C4A77D;
+                    color: white;
+                    padding: 0.8rem 2rem;
+                    border-radius: 6px;
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: background-color 0.2s;
+
+                    &:hover {
+                        background: darken(#C4A77D, 10%);
+                    }
+                }
+            }
+        }
+
+        .support-commitment {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+            h2 {
+                color: #2c3e50;
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+
+            .commitment-content {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 2rem;
+                align-items: center;
+
+                @media (max-width: 768px) {
+                    grid-template-columns: 1fr;
+                }
+
+                .commitment-text {
+                    p {
+                        color: #666;
+                        margin-bottom: 1rem;
+                    }
+
+                    ul {
+                        list-style: none;
+                        padding-left: 1.5rem;
+
+                        li {
+                            color: #666;
+                            line-height: 1.6;
+                            margin-bottom: 0.5rem;
+                            position: relative;
+
+                            &:before {
+                                content: "•";
+                                color: #C4A77D;
+                                position: absolute;
+                                left: -1.5rem;
+                                font-size: 1.2rem;
+                            }
+                        }
+                    }
+                }
+
+                .commitment-badge {
+                    text-align: center;
+                    
+                    svg {
+                        font-size: 4rem;
+                        color: #C4A77D;
+                        margin-bottom: 1rem;
+                    }
+
+                    span {
+                        display: block;
+                        color: #2c3e50;
+                        font-weight: 600;
+                        font-size: 1.2rem;
+                        line-height: 1.4;
+                    }
+                }
+            }
+        }
+    }
+} 
