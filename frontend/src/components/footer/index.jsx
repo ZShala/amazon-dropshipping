@@ -50,7 +50,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <i className="fas fa-truck-fast"></i>
-                            Prime Delivery 2-5 Days
+                            <Link to="/prime-delivery">Prime Delivery 2-5 Days</Link>
                         </li>
                         <li>
                             <i className="fas fa-shield-alt"></i>
