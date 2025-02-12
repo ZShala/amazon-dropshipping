@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './cart.styles.scss';
 import { FaBox, FaTruck, FaShieldAlt, FaShoppingCart, FaTrash, FaLock } from 'react-icons/fa';
+import CheckoutModal from '../checkout-modal';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
 
     useEffect(() => {
         loadCart();
@@ -205,7 +207,10 @@ const Cart = () => {
                             <span>${(subtotal + (subtotal * 0.15)).toFixed(2)}</span>
                         </div>
 
-                        <button className="checkout-btn">
+                        <button 
+                            className="checkout-btn"
+                            onClick={() => setIsCheckoutModalOpen(true)}
+                        >
                             <FaLock /> Proceed to Checkout
                         </button>
 
@@ -216,6 +221,12 @@ const Cart = () => {
                     </div>
                 </div>
             )}
+
+            <CheckoutModal 
+                isOpen={isCheckoutModalOpen}
+                onClose={() => setIsCheckoutModalOpen(false)}
+                total={subtotal + (subtotal * 0.15)}
+            />
         </div>
     );
 };
