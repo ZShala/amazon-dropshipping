@@ -1,0 +1,291 @@
+.authentic-page {
+    background: #f8f9fa;
+    min-height: 100vh;
+    padding: 4rem 0;
+
+    .authentic-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+
+            .amazon-icon {
+                font-size: 4rem;
+                color: #C4A77D;
+                margin-bottom: 1rem;
+            }
+
+            h1 {
+                color: #2c3e50;
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                color: #666;
+                font-size: 1.2rem;
+            }
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+
+            .benefit-card {
+                background: white;
+                padding: 2rem;
+                border-radius: 12px;
+                text-align: center;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                transition: transform 0.2s;
+
+                &:hover {
+                    transform: translateY(-4px);
+                }
+
+                svg {
+                    font-size: 2.5rem;
+                    color: #C4A77D;
+                    margin-bottom: 1rem;
+                }
+
+                h3 {
+                    color: #2c3e50;
+                    margin-bottom: 1rem;
+                }
+
+                p {
+                    color: #666;
+                    line-height: 1.6;
+                }
+            }
+        }
+
+        .info-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+            h2 {
+                color: #2c3e50;
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+                text-align: center;
+            }
+
+            > p {
+                color: #666;
+                text-align: center;
+                max-width: 800px;
+                margin: 0 auto 2rem;
+                line-height: 1.6;
+            }
+
+            .partnership-features {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+
+                .feature {
+                    h3 {
+                        color: #2c3e50;
+                        margin-bottom: 1rem;
+                        font-size: 1.3rem;
+                        padding-bottom: 0.5rem;
+                        border-bottom: 2px solid #C4A77D;
+                    }
+
+                    ul {
+                        list-style: none;
+                        padding-left: 1.5rem;
+
+                        li {
+                            color: #666;
+                            line-height: 1.6;
+                            margin-bottom: 0.5rem;
+                            position: relative;
+
+                            &:before {
+                                content: "•";
+                                color: #C4A77D;
+                                position: absolute;
+                                left: -1.5rem;
+                                font-size: 1.2rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .verification-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+            h2 {
+                color: #2c3e50;
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+
+            .verification-steps {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 2rem;
+
+                .step {
+                    text-align: center;
+                    padding: 1.5rem;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+
+                    .step-number {
+                        width: 36px;
+                        height: 36px;
+                        background: #C4A77D;
+                        color: white;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 1rem;
+                        font-weight: bold;
+                    }
+
+                    h4 {
+                        color: #2c3e50;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    p {
+                        color: #666;
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+        }
+
+        .guarantee-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+            h2 {
+                color: #2c3e50;
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+                text-align: center;
+            }
+
+            .guarantee-content {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 2rem;
+                align-items: center;
+
+                @media (max-width: 768px) {
+                    grid-template-columns: 1fr;
+                }
+
+                .guarantee-text {
+                    p {
+                        color: #666;
+                        margin-bottom: 1rem;
+                    }
+
+                    ul {
+                        list-style: none;
+                        padding-left: 1.5rem;
+
+                        li {
+                            color: #666;
+                            line-height: 1.6;
+                            margin-bottom: 0.5rem;
+                            position: relative;
+
+                            &:before {
+                                content: "•";
+                                color: #C4A77D;
+                                position: absolute;
+                                left: -1.5rem;
+                                font-size: 1.2rem;
+                            }
+                        }
+                    }
+                }
+
+                .guarantee-badge {
+                    text-align: center;
+                    
+                    svg {
+                        font-size: 4rem;
+                        color: #C4A77D;
+                        margin-bottom: 1rem;
+                    }
+
+                    span {
+                        display: block;
+                        color: #2c3e50;
+                        font-weight: 600;
+                        font-size: 1.2rem;
+                        line-height: 1.4;
+                    }
+                }
+            }
+        }
+
+        .contact-support {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+
+            h2 {
+                color: #2c3e50;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                color: #666;
+                margin-bottom: 2rem;
+            }
+
+            .contact-methods {
+                display: flex;
+                justify-content: center;
+                gap: 3rem;
+                flex-wrap: wrap;
+
+                .contact-method {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+
+                    i {
+                        font-size: 1.5rem;
+                        color: #C4A77D;
+                    }
+
+                    p {
+                        margin: 0;
+                        color: #2c3e50;
+                    }
+                }
+            }
+        }
+    }
+} 

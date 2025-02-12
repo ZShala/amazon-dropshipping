@@ -46,7 +46,7 @@ const Footer = () => {
                     <ul>
                         <li>
                             <i className="fas fa-check-circle"></i>
-                            Authentic Amazon Products
+                            <Link to="/authentic">Authentic Amazon Products</Link>
                         </li>
                         <li>
                             <i className="fas fa-truck-fast"></i>
