@@ -18,6 +18,7 @@ import FAQ from './pages/faq';
 import PrivacyPolicy from './pages/privacy-policy';
 import TermsOfService from './pages/terms';
 import Returns from './pages/returns';
+import Shipping from './pages/shipping';
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/returns" element={<Returns />} />
+            <Route path="/shipping" element={<Shipping />} />
           </Routes>
           <Footer />
         </div>

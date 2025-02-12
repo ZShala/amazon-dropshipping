@@ -24,7 +24,7 @@ const Footer = () => {
                     <ul>
                         <li>
                             <i className="fas fa-truck"></i>
-                            Shipping Information
+                            <Link to="/shipping">Shipping Information</Link>
                         </li>
                         <li>
                             <i className="fas fa-undo"></i>
