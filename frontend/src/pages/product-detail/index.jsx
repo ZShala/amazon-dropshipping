@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Toast from '../../components/toast';
 import './product-detail.styles.scss';
+import { useCart } from '../../contexts/cart.context';
 
 const ProductDetail = () => {
     const { productId } = useParams();
@@ -14,6 +15,8 @@ const ProductDetail = () => {
     const [showToast, setShowToast] = useState(false);
     const [selectedQuantity, setSelectedQuantity] = useState(1);
     const [deliveryDate, setDeliveryDate] = useState('');
+    const { addToCart } = useCart();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProductDetails = async () => {
@@ -85,6 +88,17 @@ const ProductDetail = () => {
         setTimeout(() => {
             setShowToast(false);
         }, 3000);
+    };
+
+    const handleBuyNow = () => {
+        addToCart({
+            ProductId: product.ProductId,
+            ProductType: product.ProductType,
+            Price: product.Price,
+            ImageURL: imageUrl || images[selectedImage],
+            quantity: selectedQuantity
+        });
+        navigate('/cart');
     };
 
     if (loading) {
@@ -244,7 +258,7 @@ const ProductDetail = () => {
                                     <i className="fas fa-shopping-cart"></i>
                                     Add to Cart
                                 </button>
-                                <button className="buy-now">
+                                <button className="buy-now" onClick={handleBuyNow}>
                                     <i className="fas fa-bolt"></i>
                                     Buy Now
                                 </button>

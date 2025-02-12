@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 export const CartContext = createContext({
     cartItems: [],
@@ -9,6 +9,14 @@ export const CartContext = createContext({
     itemCount: 0,
     total: 0,
 });
+
+export const useCart = () => {
+    const context = useContext(CartContext);
+    if (!context) {
+        throw new Error('useCart must be used within a CartProvider');
+    }
+    return context;
+};
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
@@ -46,27 +54,31 @@ export const CartProvider = ({ children }) => {
         });
     };
 
+    const removeFromCart = (productId) => {
+        setCartItems(prevItems => prevItems.filter(item => item.ProductId !== productId));
+    };
+
+    const updateQuantity = (productId, quantity) => {
+        setCartItems(prevItems =>
+            prevItems.map(item =>
+                item.ProductId === productId
+                    ? { ...item, quantity: Math.max(0, quantity) }
+                    : item
+            )
+        );
+    };
+
+    const clearCart = () => {
+        setCartItems([]);
+        localStorage.removeItem('cart');
+    };
+
     const value = {
         cartItems,
         addToCart,
-        removeFromCart: (productId) => {
-            setCartItems(prevItems => 
-                prevItems.filter(item => item.ProductId !== productId)
-            );
-        },
-        updateQuantity: (productId, quantity) => {
-            setCartItems(prevItems =>
-                prevItems.map(item =>
-                    item.ProductId === productId
-                        ? { ...item, quantity: Math.max(0, quantity) }
-                        : item
-                )
-            );
-        },
-        clearCart: () => {
-            setCartItems([]);
-            localStorage.removeItem('cart');
-        },
+        removeFromCart,
+        updateQuantity,
+        clearCart,
         itemCount,
         total
     };

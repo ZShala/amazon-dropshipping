@@ -57,32 +57,9 @@ const Cart = () => {
         calculateTotals(updatedItems);
     };
 
-    const getProductImage = (productType) => {
-        const productType_lower = productType.toLowerCase();
-        
-        if (productType_lower.includes('lipstick') || productType_lower.includes('lip')) {
-            return "https://m.media-amazon.com/images/I/61bwqXwdPWL._SX522_.jpg";
-        }
-        if (productType_lower.includes('mascara') || productType_lower.includes('eye')) {
-            return "https://m.media-amazon.com/images/I/71yM0xUAetL._SX522_.jpg";
-        }
-        if (productType_lower.includes('foundation') || productType_lower.includes('concealer')) {
-            return "https://m.media-amazon.com/images/I/71Pp8KFNKBL._SX522_.jpg";
-        }
-        if (productType_lower.includes('cream') || productType_lower.includes('moisturizer')) {
-            return "https://m.media-amazon.com/images/I/71J5c8yR90L._SX522_.jpg";
-        }
-        if (productType_lower.includes('serum') || productType_lower.includes('oil')) {
-            return "https://m.media-amazon.com/images/I/61VYQRUjwwL._SX522_.jpg";
-        }
-        if (productType_lower.includes('shampoo') || productType_lower.includes('hair')) {
-            return "https://m.media-amazon.com/images/I/71qlR7nICdL._SX522_.jpg";
-        }
-        if (productType_lower.includes('perfume') || productType_lower.includes('fragrance')) {
-            return "https://m.media-amazon.com/images/I/61MYnlrmHyL._SX522_.jpg";
-        }
-        // Default image if no match
-        return "https://m.media-amazon.com/images/I/61w-ZYmf6WL._SX522_.jpg";
+    const getProductImage = (item) => {
+        if (!item.ImageURL) return null;
+        return item.ImageURL;
     };
 
     if (loading) {
@@ -122,12 +99,8 @@ const Cart = () => {
                             <div key={item.ProductId} className="cart-item">
                                 <div className="item-image">
                                     <img 
-                                        src={item.ImageURL || getProductImage(item.ProductType)} 
+                                        src={item.ImageURL}
                                         alt={item.ProductType}
-                                        onError={(e) => {
-                                            e.target.onerror = null;
-                                            e.target.src = getProductImage(item.ProductType);
-                                        }}
                                     />
                                 </div>
                                 <div className="item-details">
