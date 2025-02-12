@@ -17,6 +17,7 @@ import { FaTruck, FaBolt, FaGift } from 'react-icons/fa';
 import FAQ from './pages/faq';
 import PrivacyPolicy from './pages/privacy-policy';
 import TermsOfService from './pages/terms';
+import Returns from './pages/returns';
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
             <Route path="/faq" element={<FAQ />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/returns" element={<Returns />} />
           </Routes>
           <Footer />
         </div>

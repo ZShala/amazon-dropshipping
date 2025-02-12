@@ -28,7 +28,7 @@ const Footer = () => {
                         </li>
                         <li>
                             <i className="fas fa-undo"></i>
-                            Returns & Refunds
+                            <Link to="/returns">Returns & Refunds</Link>
                         </li>
                         <li>
                             <i className="fas fa-question-circle"></i>
