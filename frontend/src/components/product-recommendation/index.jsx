@@ -23,9 +23,8 @@ function Recommendations() {
     setError(null);
     
     try {
-      console.log("Duke bërë kërkesë për:", productId);
       const response = await fetch(
-        `http://127.0.0.1:5000/recommendations?product_id=${productId}`
+        `http://localhost:5001/recommendations?product_id=${productId}`
       );
       
       if (!response.ok) {
@@ -34,7 +33,6 @@ function Recommendations() {
       }
       
       const data = await response.json();
-      console.log("Përgjigja:", data);
       
       if (data.recommendations && data.recommendations.length > 0) {
         setRecommendations(data.recommendations);

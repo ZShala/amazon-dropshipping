@@ -1,19 +1,123 @@
-import React from 'react';
-import ProductCard from '../product-card';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './recommended-products.styles.scss';
 
-const RecommendedProducts = ({ products, type }) => {
-    return (
-        <div className={`recommended-products ${type}`}>
-            {products.map(product => (
-                <ProductCard
-                    key={product.ProductId}
-                    product={product}
-                    bundleDiscount={type === 'crosssell' ? product.bundleDiscount : null}
-                    comparisonFeatures={type === 'upsell' ? product.upgradeReason : null}
-                />
-            ))}
+const LoadingState = () => (
+    <div className="loading-state">
+        <div className="loading-spinner"></div>
+        <p>Loading recommendations...</p>
+    </div>
+);
+
+const ErrorState = ({ message }) => (
+    <div className="error-state">
+        <p>{message}</p>
+    </div>
+);
+
+const ProductCard = ({ product }) => (
+    <Link 
+        to={`/product/${product.ProductId}`}
+        className="recommendation-card"
+    >
+        <div className="product-image-container">
+            <img 
+                src={product.ImageURL} 
+                alt={product.ProductType}
+                onError={(e) => {
+                    e.target.src = "https://via.placeholder.com/150";
+                }}
+            />
+            <div className="hover-overlay">
+                <span>View Details</span>
+            </div>
         </div>
+        <div className="product-info">
+            <h3>{product.ProductType}</h3>
+            <div className="rating-container">
+                <div className="stars">
+                    {[...Array(5)].map((_, index) => (
+                        <span key={index} className={index < Math.round(product.Rating) ? 'star filled' : 'star'}>
+                            ★
+                        </span>
+                    ))}
+                </div>
+                <span className="rating-text">{product.Rating.toFixed(1)}</span>
+            </div>
+            {product.price && (
+                <div className="price">
+                    <span className="currency">$</span>
+                    <span className="amount">{product.price.toFixed(2)}</span>
+                </div>
+            )}
+        </div>
+    </Link>
+);
+
+const RecommendedProducts = ({ currentProductId }) => {
+    const [recommendations, setRecommendations] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchRecommendations = async () => {
+            if (!currentProductId) return;
+            
+            setLoading(true);
+            setError(null);
+            
+            try {
+                console.log(`Fetching recommendations for product: ${currentProductId}`);
+                
+                const response = await fetch(
+                    `http://localhost:5001/recommendations?product_id=${currentProductId}`
+                );
+
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to fetch recommendations');
+                }
+
+                if (data.success && data.recommendations && data.recommendations.length > 0) {
+                    console.log(`Received ${data.recommendations.length} recommendations`);
+                    setRecommendations(data.recommendations);
+                } else {
+                    console.log('No recommendations available');
+                    setRecommendations([]);
+                    setError("No recommendations available for this product");
+                }
+            } catch (error) {
+                console.error('Error fetching recommendations:', error);
+                setError(error.message);
+                setRecommendations([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRecommendations();
+    }, [currentProductId]);
+
+    if (loading) return <LoadingState />;
+    if (error) return <ErrorState message={error} />;
+    if (!recommendations.length) return null;
+
+    return (
+        <section className="recommended-products">
+            <div className="section-header">
+                <h2>Recommended For You</h2>
+                <p>Products similar to what you're viewing</p>
+            </div>
+            <div className="recommendations-grid">
+                {recommendations.map((product) => (
+                    <ProductCard 
+                        key={product.ProductId} 
+                        product={product} 
+                    />
+                ))}
+            </div>
+        </section>
     );
 };
 

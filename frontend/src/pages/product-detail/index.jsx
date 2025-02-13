@@ -3,6 +3,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Toast from '../../components/toast';
 import './product-detail.styles.scss';
 import { useCart } from '../../contexts/cart.context';
+import RecommendedProducts from '../../components/recommended-products';
 
 const ProductDetail = () => {
     const { productId } = useParams();
@@ -313,6 +314,8 @@ const ProductDetail = () => {
                     </div>
                 </div>
             </div>
+            
+            <RecommendedProducts currentProductId={productId} />
             
             <Toast 
                 message="Produkti u shtua në shportë!"
