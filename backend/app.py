@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_cors import CORS
-from model import get_recommendations_with_images
+from model import get_recommendations, get_recommendations_with_images
 from database_operations import get_data_from_db, get_product_details, get_cart_recommendations, get_category_products, get_all_product_types, fetch_product_details
 import atexit
 from sqlalchemy import create_engine, text
@@ -55,37 +55,45 @@ def cleanup():
     multiprocessing.current_process()._config['semprefix'] = '/mp'
 
 @app.route('/recommendations', methods=['GET'])
-def get_recommendations():
+def get_recommendations_endpoint():
     try:
-        engine = get_db()
         product_id = request.args.get('product_id')
-        print(f"Duke kërkuar rekomandime për produktin: {product_id}")
-        
         if not product_id:
-            print("Nuk u dha product_id")
-            return jsonify({"error": "Duhet të jepni një Product ID"}), 400
+            return jsonify({"error": "Product ID is required"}), 400
+            
+        print(f"Processing recommendation request for product: {product_id}")
         
-        product_exists = get_product_details(engine, product_id)
-        if not product_exists:
-            print(f"Produkti {product_id} nuk u gjet në databazë")
-            return jsonify({"error": f"Produkti {product_id} nuk ekziston"}), 404
+        # Kontrollojmë nëse produkti ekziston
+        engine = get_db()
+        with engine.connect() as conn:
+            exists_query = text("SELECT 1 FROM amazon_beauty WHERE ProductId = :pid")
+            exists = conn.execute(exists_query, {"pid": product_id}).fetchone()
+            
+            if not exists:
+                print(f"Product {product_id} not found")
+                return jsonify({
+                    "error": "Product not found",
+                    "recommendations": []
+                }), 404
         
-        print("Duke gjeneruar rekomandimet...")
-        recommendations = get_recommendations_with_images(product_id, engine)
-        print(f"U gjetën {len(recommendations)} rekomandime")
+        recommendations = get_recommendations_with_images(product_id)
         
         if not recommendations:
-            print("Nuk u gjetën rekomandime")
-            return jsonify({"error": "Nuk u gjetën rekomandime"}), 404
+            print(f"No recommendations found for product {product_id}")
+            return jsonify({
+                "success": False,
+                "error": "No recommendations found",
+                "recommendations": []
+            }), 404
             
+        print(f"Returning {len(recommendations)} recommendations")
         return jsonify({
             "success": True,
-            "product_id": product_id,
             "recommendations": recommendations
         })
         
     except Exception as e:
-        print(f"Error në /recommendations: {str(e)}")
+        print(f"Error in recommendations endpoint: {str(e)}")
         import traceback
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
@@ -168,7 +176,7 @@ def get_all_product_types_endpoint():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/products/details/<product_id>', methods=['GET'])
-def get_product_details(product_id):
+def get_product_details_endpoint(product_id):
     try:
         query = text("""
             SELECT DISTINCT 
@@ -211,6 +219,45 @@ def get_product_details(product_id):
 @app.route('/static/images/<path:filename>')
 def serve_image(filename):
     return send_from_directory(os.path.join(app.static_folder, 'images'), filename)
+
+@app.route('/api/products/recommendations/<product_id>', methods=['GET'])
+def get_product_recommendations(product_id):
+    try:
+        recommendations = get_recommendations_with_images(product_id)
+        if not recommendations:
+            return jsonify({"error": "No recommendations found."}), 404
+        return jsonify({"recommendations": recommendations})
+    except Exception as e:
+        print(f"Error in recommendations endpoint: {str(e)}")
+        return jsonify({"error": "Internal server error."}), 500
+
+@app.route('/test-db-connection', methods=['GET'])
+def test_db_connection():
+    try:
+        engine = get_db()
+        with engine.connect() as conn:
+            result = conn.execute("SELECT 1").fetchone()
+        return jsonify({"message": "Database connection successful!", "result": result[0]})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/test-recommendation/<product_id>', methods=['GET'])
+def test_recommendation(product_id):
+    try:
+        engine = get_db()
+        with engine.connect() as conn:
+            query = text("""
+                SELECT ProductId, ProductType, Rating, URL 
+                FROM amazon_beauty 
+                WHERE ProductId = :product_id
+            """)
+            result = conn.execute(query, {"product_id": product_id}).fetchone()
+            return jsonify({
+                "exists": bool(result),
+                "product": dict(result) if result else None
+            })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     engine = get_db()
