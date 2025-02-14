@@ -37,20 +37,12 @@ function App() {
               <span>FREE Prime Shipping on Orders $25+</span>
             </div>
             <div className="promo-item">
-              <FaBolt />
-              <span>Flash Sale: Up to 70% OFF</span>
-            </div>
-            <div className="promo-item">
               <FaGift />
               <span>New Customers: Get 10% OFF</span>
             </div>
             <div className="promo-item">
               <FaTruck />
               <span>FREE Prime Shipping on Orders $25+</span>
-            </div>
-            <div className="promo-item">
-              <FaBolt />
-              <span>Flash Sale: Up to 70% OFF</span>
             </div>
             <div className="promo-item">
               <FaGift />
