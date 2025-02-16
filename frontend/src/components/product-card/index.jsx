@@ -27,24 +27,30 @@ const ProductCard = ({
         const cart = JSON.parse(localStorage.getItem('cart') || '[]');
         const existingProduct = cart.find(item => item.ProductId === product.ProductId);
         
+        // Ensure price is a number
+        const price = typeof product.price === 'string' 
+            ? parseFloat(product.price) 
+            : (typeof product.price === 'number' ? product.price : 29.99);
+        
+        const productToAdd = {
+            ...product,
+            price: price
+        };
+        
         if (existingProduct) {
             existingProduct.quantity += 1;
+            existingProduct.price = price; // Update price if it changed
         } else {
             cart.push({
-                ...product,
+                ...productToAdd,
                 quantity: 1
             });
         }
         
         localStorage.setItem('cart', JSON.stringify(cart));
-        
-        // Lësho një event për të njoftuar ndryshimin në shportë
         window.dispatchEvent(new Event('cartUpdated'));
-        
-        // Shfaq toast-in
         setShowToast(true);
         
-        // Fshije toast-in pas 3 sekondash
         setTimeout(() => {
             setShowToast(false);
         }, 3000);
@@ -71,7 +77,8 @@ const ProductCard = ({
                     </div>
                 </Link>
                 <div className="product-info">
-                    <h3>{product.ProductType}</h3>
+                    {console.log('product', product)}
+                    <h3>{product.ProductTitle}</h3>
                     <div className="rating">
                         <span>★</span> {product.Rating}
                         {product.ReviewCount && (
@@ -79,23 +86,27 @@ const ProductCard = ({
                         )}
                     </div>
                     
-                    {/* Shtojmë çmimin */}
-                    {product.price && (
+                    {/* Modify the price section */}
+                    {product.price !== undefined && (
                         <div className="price">
                             <span className="currency">€</span>
-                            <span className="amount">{product.price.toFixed(2)}</span>
+                            <span className="amount">
+                                {typeof product.price === 'number' 
+                                    ? product.price.toFixed(2) 
+                                    : Number(product.price).toFixed(2)}
+                            </span>
                         </div>
                     )}
 
                     {/* Trego scores të ndryshme bazuar në kontekstin */}
                     {similarityScore && (
                         <div className="similarity-score">
-                            Similarity: {similarityScore.toFixed(2)}
+                            Similarity: {similarityScore (2)}
                         </div>
                     )}
                     {trendingScore && (
                         <div className="trending-score">
-                            Trending Score: {trendingScore.toFixed(2)}
+                            Trending Score: {trendingScore (2)}
                         </div>
                     )}
                     {recommendationReason && (
@@ -105,7 +116,7 @@ const ProductCard = ({
                     )}
                     {categoryScore && (
                         <div className="category-score">
-                            Category Score: {categoryScore.toFixed(2)}
+                            Category Score: {categoryScore}
                         </div>
                     )}
                     {bundleDiscount && (

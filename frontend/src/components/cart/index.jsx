@@ -17,9 +17,14 @@ const Cart = () => {
     const loadCart = () => {
         try {
             const items = JSON.parse(localStorage.getItem('cart') || '[]');
-            console.log('Cart Items:', items);
-            setCartItems(items);
-            calculateTotals(items);
+            // Convert all prices to numbers when loading cart
+            const itemsWithNumberPrices = items.map(item => ({
+                ...item,
+                price: typeof item.price === 'string' ? parseFloat(item.price) : (item.price || 29.99)
+            }));
+            console.log('Cart Items:', itemsWithNumberPrices);
+            setCartItems(itemsWithNumberPrices);
+            calculateTotals(itemsWithNumberPrices);
             setLoading(false);
         } catch (error) {
             console.error('Error loading cart:', error);
@@ -29,7 +34,7 @@ const Cart = () => {
 
     const calculateTotals = (items) => {
         const total = items.reduce((sum, item) => {
-            const price = item.price || 29.99;
+            const price = typeof item.price === 'number' ? item.price : 29.99;
             return sum + (price * item.quantity);
         }, 0);
         setSubtotal(total);
@@ -122,7 +127,7 @@ const Cart = () => {
                                     </div>
                                     <div className="item-actions">
                                         <div className="price-info">
-                                            <span className="price">${(item.price || 29.99).toFixed(2)}</span>
+                                            <span className="price">${item.price.toFixed(2)}</span>
                                             <span className="shipping">Free Prime Shipping</span>
                                         </div>
                                         
@@ -143,7 +148,7 @@ const Cart = () => {
                                         
                                         <div className="item-total">
                                             <span>Subtotal:</span>
-                                            <span>${((item.price || 29.99) * item.quantity).toFixed(2)}</span>
+                                            <span>${(item.price * item.quantity).toFixed(2)}</span>
                                         </div>
                                         
                                         <button 
