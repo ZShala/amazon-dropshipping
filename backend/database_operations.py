@@ -461,10 +461,6 @@ def fetch_product_details(product_url):
             
         soup = BeautifulSoup(response.content, 'html.parser')
         
-        # Debug: Save HTML content to file
-        with open('amazon_response.html', 'w', encoding='utf-8') as f:
-            f.write(soup.prettify())
-        
         # Improved image scraping with multiple selectors
         image_url = DEFAULT_IMAGE_URL
         
@@ -558,8 +554,6 @@ def fetch_product_details(product_url):
         
     except Exception as e:
         print(f"Error fetching product details: {str(e)}")
-        import traceback
-        traceback.print_exc()
         return {
             "image_url": DEFAULT_IMAGE_URL,
             "title": None,
@@ -594,7 +588,6 @@ def get_category_products(engine, category_type, page=1, per_page=None):
                 AND p.URL IS NOT NULL
             GROUP BY p.ProductId, p.ProductType, p.Rating, p.URL
             ORDER BY p.Rating DESC
-            LIMIT 200
         """)
 
         with engine.connect() as conn:
@@ -605,7 +598,7 @@ def get_category_products(engine, category_type, page=1, per_page=None):
             for row in result:
                 try:
                     # Add delay between requests
-                    time.sleep(2)  # Wait 2 seconds between requests
+                    # time.sleep(1)  # Wait 2 seconds between requests
                     
                     # First check if product exists in products table
                     check_query = text("""
@@ -882,6 +875,5 @@ if __name__ == "__main__":
     categories_to_clear = ['haircare', 'fragrance']
     for category in categories_to_clear:
         delete_category_products(engine, category)
-
     # Delete products after a specific ID
     delete_products_after_id(engine, 605)  # Delete products with ID >= 605

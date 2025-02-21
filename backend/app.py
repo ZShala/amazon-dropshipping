@@ -223,10 +223,19 @@ def serve_image(filename):
 @app.route('/api/products/recommendations/<product_id>', methods=['GET'])
 def get_product_recommendations(product_id):
     try:
+        print(f"Recommendation request received for product: {product_id}")  # Debug log
         recommendations = get_recommendations_with_images(product_id)
+        
         if not recommendations:
+            print(f"No recommendations found for product: {product_id}")  # Debug log
             return jsonify({"error": "No recommendations found."}), 404
-        return jsonify({"recommendations": recommendations})
+            
+        print(f"Returning {len(recommendations)} recommendations")  # Debug log
+        return jsonify({
+            "recommendations": recommendations,
+            "count": len(recommendations)
+        })
+        
     except Exception as e:
         print(f"Error in recommendations endpoint: {str(e)}")
         return jsonify({"error": "Internal server error."}), 500

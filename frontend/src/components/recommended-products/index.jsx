@@ -23,9 +23,9 @@ const ProductCard = ({ product }) => (
         <div className="product-image-container">
             <img 
                 src={product.ImageURL} 
-                alt={product.ProductType}
+                alt={product.ProductTitle || product.ProductType}
                 onError={(e) => {
-                    e.target.src = "https://via.placeholder.com/150";
+                    e.target.src = "http://localhost:5001/static/images/product-placeholder.jpg";
                 }}
             />
             <div className="hover-overlay">
@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => (
             </div>
         </div>
         <div className="product-info">
-            <h3>{product.ProductType}</h3>
+            <h3>{product.ProductTitle || product.ProductType}</h3>
             <div className="rating-container">
                 <div className="stars">
                     {[...Array(5)].map((_, index) => (
@@ -70,7 +70,7 @@ const RecommendedProducts = ({ currentProductId }) => {
                 console.log(`Fetching recommendations for product: ${currentProductId}`);
                 
                 const response = await fetch(
-                    `http://localhost:5001/recommendations?product_id=${currentProductId}`
+                    `http://localhost:5001/api/products/recommendations/${currentProductId}`
                 );
 
                 const data = await response.json();
@@ -79,7 +79,7 @@ const RecommendedProducts = ({ currentProductId }) => {
                     throw new Error(data.error || 'Failed to fetch recommendations');
                 }
 
-                if (data.success && data.recommendations && data.recommendations.length > 0) {
+                if (data.recommendations && data.recommendations.length > 0) {
                     console.log(`Received ${data.recommendations.length} recommendations`);
                     setRecommendations(data.recommendations);
                 } else {

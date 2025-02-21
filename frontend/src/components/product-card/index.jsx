@@ -10,7 +10,8 @@ const ProductCard = ({
     recommendationReason,
     categoryScore,
     bundleDiscount,
-    comparisonFeatures
+    comparisonFeatures,
+    recommendationType
 }) => {
     const [imageError, setImageError] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -100,8 +101,13 @@ const ProductCard = ({
 
                     {/* Trego scores të ndryshme bazuar në kontekstin */}
                     {similarityScore && (
-                        <div className="similarity-score">
-                            Similarity: {similarityScore (2)}
+                        <div className="similarity-info">
+                            <span className="similarity-score">
+                                {Math.round(similarityScore * 100)}% match
+                            </span>
+                            <span className="recommendation-type">
+                                {recommendationType === 'hybrid' ? 'Similar product' : 'Same category'}
+                            </span>
                         </div>
                     )}
                     {trendingScore && (
