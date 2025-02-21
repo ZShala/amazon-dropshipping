@@ -44,12 +44,12 @@ const ProductCard = ({ product }) => (
                 </div>
                 <span className="rating-text">{product.Rating.toFixed(1)}</span>
             </div>
-            {product.price && (
-                <div className="price">
-                    <span className="currency">$</span>
-                    <span className="amount">{product.price.toFixed(2)}</span>
-                </div>
-            )}
+            <div className="price">
+                <span className="currency">€</span>
+                <span className="amount">
+                    {product.price ? product.price.toFixed(2) : '0.00'}
+                </span>
+            </div>
         </div>
     </Link>
 );

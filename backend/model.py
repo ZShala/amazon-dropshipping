@@ -30,7 +30,7 @@ def get_recommendations(product_id, num_recommendations=4):
         with engine.connect() as conn:
             # First check if product exists
             check_query = text("""
-                SELECT a.ProductId, a.ProductType, p.ProductTitle, p.ImageURL 
+                SELECT a.ProductId, a.ProductType, p.ProductTitle, p.ImageURL, p.price 
                 FROM amazon_beauty a
                 JOIN products p ON a.ProductId = p.ProductId
                 WHERE a.ProductId = :product_id
@@ -43,13 +43,14 @@ def get_recommendations(product_id, num_recommendations=4):
                 
             print(f"Found product {product_id} of type: {product.ProductType}")
             
-            # Get recommendations with titles and images
+            # Get recommendations with titles, images, and prices
             query = text("""
                 SELECT DISTINCT 
                     a.ProductId, 
                     a.ProductType, 
                     p.ProductTitle,
                     p.ImageURL,
+                    p.price,
                     a.Rating, 
                     a.URL
                 FROM amazon_beauty a
@@ -76,7 +77,8 @@ def get_recommendations(product_id, num_recommendations=4):
                 "ProductId": row.ProductId,
                 "ProductType": row.ProductType,
                 "ProductTitle": row.ProductTitle,
-                "ImageURL": row.ImageURL if row.ImageURL else None,  # Include ImageURL
+                "ImageURL": row.ImageURL if row.ImageURL else None,
+                "price": float(row.price if row.price is not None else 0),
                 "Rating": float(row.Rating),
                 "URL": row.URL
             } for row in recommendations]
