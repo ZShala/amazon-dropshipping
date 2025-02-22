@@ -19,6 +19,14 @@ CORS(app, resources={
 
 engine = None
 
+VALID_CATEGORIES = [
+    'makeup', 
+    'skincare', 
+    'haircare', 
+    'fragrance', 
+    'miscellaneous'
+]
+
 def get_db():
     global engine
     if engine is None:
@@ -34,8 +42,6 @@ def get_db():
                 echo=False, 
                 connect_args={
                     'connect_timeout': 10,
-                    'read_timeout': 30,
-                    'write_timeout': 30,
                     'use_pure': True,  
                 }
             )
@@ -99,24 +105,33 @@ def get_recommendations_endpoint():
 @app.route('/api/<category_type>', methods=['GET'])
 def get_category_products_endpoint(category_type):
     try:
-        print(f"Duke kërkuar produktet për kategorinë: {category_type}")
+        category = category_type.lower()
+        if category not in VALID_CATEGORIES:
+            return jsonify({
+                "message": f"No products found for category: {category}", 
+                "products": [],
+                "total": 0
+            }), 404
+
+        print(f"Duke kërkuar produktet për kategorinë: {category}")
         engine = get_db()
         page = request.args.get('page', 1, type=int)
         per_page = request.args.get('per_page', 20, type=int)
         
-        result = get_category_products(engine, category_type, page, per_page)
-        print("API Response:", result) 
+        result = get_category_products(engine, category, page, per_page)
+        
+        print("Query result:", result)
         
         if not result or not result.get('products'):
-            print(f"Nuk u gjetën produkte për kategorinë: {category_type}")
+            print(f"Nuk u gjetën produkte për kategorinë: {category}")
             return jsonify({
-                "message": f"No products found for category: {category_type}", 
+                "message": f"No products found for category: {category}", 
                 "products": [],
                 "total": 0,
                 "page": page,
                 "per_page": per_page,
                 "total_pages": 1
-            }), 200  
+            }), 404
             
         return jsonify(result)
         
@@ -131,7 +146,7 @@ def get_category_products_endpoint(category_type):
             "page": 1,
             "per_page": 20,
             "total_pages": 1
-        }), 200 
+        }), 500
 
 @app.route('/api/products/details/<product_id>', methods=['GET'])
 def get_product_details_endpoint(product_id):
@@ -177,6 +192,26 @@ def get_product_details_endpoint(product_id):
 @app.route('/static/images/<path:filename>')
 def serve_image(filename):
     return send_from_directory(os.path.join(app.static_folder, 'images'), filename)
+
+@app.route('/api/products/<category>')
+def get_products(category):
+    if category.lower() not in VALID_CATEGORIES:
+        return jsonify({
+            'error': 'Kategoria nuk u gjet',
+            'message': f'No products found for category: {category}'
+        }), 404
+    
+    try:
+        engine = get_db()
+        result = get_category_products(engine, category)
+        return jsonify(result)
+    except Exception as e:
+        print(f"Error në /products endpoint: {str(e)}")
+        return jsonify({
+            "error": str(e),
+            "products": [],
+            "total": 0
+        }), 500
 
 if __name__ == '__main__':
     engine = get_db()

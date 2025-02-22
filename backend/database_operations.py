@@ -270,93 +270,87 @@ def get_category_products(engine, category_type, page=1, per_page=None):
             return {"products": [], "total": 0, "page": page, "per_page": per_page, "total_pages": 0}
 
         conditions = " OR ".join([
-            "LOWER(p.ProductType) LIKE LOWER(:term" + str(i) + ")"
+            f"LOWER(prod.ProductType) LIKE LOWER(:term{i})"
             for i in range(len(search_terms))
         ])
 
         query = text(f"""
             SELECT DISTINCT 
-                p.ProductId,
-                p.ProductType,
-                p.Rating,
-                p.URL,
-                COUNT(*) as review_count,
-                AVG(p.Rating) as avg_rating
-            FROM amazon_beauty p
+                prod.ProductId,
+                prod.ProductType,
+                prod.ProductTitle,
+                prod.ImageURL,
+                prod.price,
+                prod.URL,
+                COALESCE(AVG(ab.Rating), 0) as avg_rating,
+                COUNT(ab.Rating) as review_count
+            FROM products prod
+            LEFT JOIN amazon_beauty ab ON prod.ProductId = ab.ProductId
             WHERE ({conditions})
-                AND p.ProductId IS NOT NULL
-                AND p.URL IS NOT NULL
-            GROUP BY p.ProductId, p.ProductType, p.Rating, p.URL
-            ORDER BY p.Rating DESC
+                AND prod.ProductId IS NOT NULL
+            GROUP BY 
+                prod.ProductId, 
+                prod.ProductType,
+                prod.ProductTitle,
+                prod.ImageURL,
+                prod.price,
+                prod.URL
+            HAVING review_count > 0
+            ORDER BY avg_rating DESC, review_count DESC
         """)
+
+        print(f"Executing query for category: {category_type}")
+        print(f"Search terms: {search_terms}")
 
         with engine.connect() as conn:
             params = {f"term{i}": term for i, term in enumerate(search_terms)}
-            result = conn.execute(query, params)
+            print(f"Query parameters: {params}")
             
+            result = conn.execute(query, params)
             products = []
+            
             for row in result:
                 try:
-                    check_query = text("""
-                        SELECT ProductId, ProductType, ProductTitle, URL, ImageURL, price
-                        FROM products 
-                        WHERE ProductId = :product_id
-                    """)
-                    
-                    product_result = conn.execute(check_query, {"product_id": row.ProductId}).fetchone()
-                    
-                    if product_result:
-                        print(f"Found product {row.ProductId} in database, skipping scraping")
-                        product_details = {
-                            "image_url": product_result.ImageURL,
-                            "title": product_result.ProductTitle,
-                            "price": float(product_result.price if product_result.price is not None else 0)
-                        }
-                    else:
-                        print(f"Product {row.ProductId} not found in database, scraping details")
-                        product_details = fetch_product_details(row.URL)
-                        
-                        product_data = {
-                            "ProductId": row.ProductId,
-                            "ProductType": row.ProductType,
-                            "ProductTitle": product_details["title"] or "",
-                            "URL": row.URL,
-                            "ImageURL": product_details["image_url"],
-                            "price": float(product_details["price"] if product_details["price"] is not None else 0)
-                        }
-                        
-                        check_and_insert_product(engine, product_data)
-                    
-                    products.append({
+                    image_url = row.ImageURL
+                    if not image_url or image_url.isspace():
+                        image_url = DEFAULT_IMAGE_URL
+                    elif not image_url.startswith(('http://', 'https://')):
+                        image_url = f"http://localhost:5001/static/images/{image_url}"
+
+                    product_details = {
                         "ProductId": row.ProductId,
                         "ProductType": row.ProductType,
-                        "ProductTitle": product_details["title"],
+                        "ProductTitle": row.ProductTitle or row.ProductType,
                         "Rating": float(row.avg_rating),
                         "URL": row.URL,
                         "ReviewCount": row.review_count,
-                        "ImageURL": product_details["image_url"],
-                        "price": round(float(product_details["price"] if product_details["price"] is not None else 0), 2),
+                        "ImageURL": image_url,
+                        "price": float(row.price) if row.price else 0.0,
                         "currency": "EUR"
-                    })
-                    
+                    }
+                    products.append(product_details)
                 except Exception as e:
-                    print(f"Gabim gjatë krijimit të produktit: {str(e)}")
+                    print(f"Error processing product {row.ProductId}: {str(e)}")
                     continue
+
+            print(f"Found {len(products)} products for category {category_type}")
             
             return {
                 "products": products,
                 "total": len(products),
-                "page": 1,
+                "page": page,
                 "per_page": len(products),
                 "total_pages": 1
             }
 
     except Exception as e:
         print(f"Error in get_category_products: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return {
             "products": [],
             "total": 0,
-            "page": 1,
+            "page": page,
             "per_page": 0,
             "total_pages": 1
         }

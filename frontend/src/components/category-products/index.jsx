@@ -13,6 +13,13 @@ const CategoryProducts = ({ categoryType }) => {
     const [productTypes, setProductTypes] = useState([]);
     const [page, setPage] = useState(1);
     const productsPerPage = 20;
+    const [categories, setCategories] = useState([
+        'makeup', 
+        'skincare', 
+        'haircare', 
+        'fragrance', 
+        'miscellaneous'
+    ]);
 
     const getFromCache = (category) => {
         try {
@@ -44,21 +51,18 @@ const CategoryProducts = ({ categoryType }) => {
 
     const fetchProducts = async () => {
         try {
+            const category = categoryType.toLowerCase();
+            if (!categories.includes(category)) {
+                console.warn(`Kategoria '${category}' nuk ekziston`);
+                return;
+            }
+
             setLoading(true);
             setError(null);
 
-            // Kontrollojmë fillimisht cache-in
-            const cachedProducts = getFromCache(categoryType.toLowerCase());
-            if (cachedProducts) {
-                console.log('Loading from cache');
-                setAllProducts(cachedProducts);
-                setDisplayedProducts(cachedProducts.slice(0, productsPerPage));
-                const types = [...new Set(cachedProducts.map(p => p.ProductType))];
-                setProductTypes(types);
-                setLoading(false);
-                return;
-            }
-            const url = `http://localhost:5001/api/${categoryType.toLowerCase()}`;
+            const url = `http://localhost:5001/api/${category}`;
+            console.log('Fetching products from:', url);
+            
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -67,18 +71,20 @@ const CategoryProducts = ({ categoryType }) => {
                 }
             });
             
+            console.log('Response status:', response.status);
             const data = await response.json();
+            console.log('Response data:', data);
 
-            if (data && data.products) {
+            if (data && data.products && data.products.length > 0) {
                 const products = data.products;
-                saveToCache(categoryType.toLowerCase(), products);
+                saveToCache(category, products);
                 
                 setAllProducts(products);
                 setDisplayedProducts(products.slice(0, productsPerPage));
                 const types = [...new Set(products.map(p => p.ProductType))];
                 setProductTypes(types);
             } else {
-                throw new Error('Invalid response format from server');
+                throw new Error('No products found for this category');
             }
             
         } catch (err) {
@@ -306,9 +312,12 @@ const CategoryProducts = ({ categoryType }) => {
     useEffect(() => {
         const testConnection = async () => {
             try {
-                const response = await fetch('http://localhost:5001/api/test');
+                // Përdorim një kategori të vlefshme për të testuar lidhjen
+                const response = await fetch('http://localhost:5001/api/makeup');
                 const data = await response.json();
-                console.log('Backend connection:', data.message);
+                if (data.products) {
+                    console.log('Backend connection successful');
+                }
             } catch (err) {
                 console.error('Backend connection failed:', err);
             }
