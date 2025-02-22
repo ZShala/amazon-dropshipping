@@ -1,11 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from sqlalchemy import create_engine, text
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-from IPython.display import Image, display
 
-# Create a database connection
 def get_db():
     try:
         engine = create_engine('mysql+mysqlconnector://root:mysqlZ97*@localhost/dataset_db')
@@ -14,21 +10,12 @@ def get_db():
         print(f"Database connection error: {str(e)}")
         raise e
 
-# Function to fetch all products from the database
-def fetch_all_products():
-    engine = get_db()
-    with engine.connect() as conn:
-        query = text("SELECT ProductId, ProductType, Rating, URL FROM amazon_beauty")
-        result = conn.execute(query).fetchall()
-    return [dict(row) for row in result]
-
-# Function to get recommendations based on product ID
 def get_recommendations(product_id, num_recommendations=4):
     try:
         print(f"Starting recommendation fetch for product: {product_id}")
         engine = get_db()
         with engine.connect() as conn:
-            # First check if product exists
+            
             check_query = text("""
                 SELECT a.ProductId, a.ProductType, p.ProductTitle, p.ImageURL, p.price 
                 FROM amazon_beauty a
@@ -43,7 +30,6 @@ def get_recommendations(product_id, num_recommendations=4):
                 
             print(f"Found product {product_id} of type: {product.ProductType}")
             
-            # Get recommendations with titles, images, and prices
             query = text("""
                 SELECT DISTINCT 
                     a.ProductId, 
@@ -72,7 +58,6 @@ def get_recommendations(product_id, num_recommendations=4):
                 "num_recommendations": num_recommendations
             }).fetchall()
             
-            # Convert to list of dictionaries
             recommendations_list = [{
                 "ProductId": row.ProductId,
                 "ProductType": row.ProductType,
@@ -91,24 +76,6 @@ def get_recommendations(product_id, num_recommendations=4):
         traceback.print_exc()
         return []
 
-# Example function to fetch product details
-def get_product_details(product_id):
-    """Fetch product details from the database."""
-    try:
-        engine = get_db()
-        with engine.connect() as conn:
-            query = text("""
-                SELECT ProductId, ProductType, Rating, URL
-                FROM amazon_beauty
-                WHERE ProductId = :product_id
-            """)
-            result = conn.execute(query, {"product_id": product_id}).fetchone()
-            return dict(result) if result else None
-    except Exception as e:
-        print(f"Error fetching product details: {str(e)}")
-        return None
-
-# Function to fetch image from product URL
 def fetch_image(product_url):
     if not product_url:
         return None
@@ -120,7 +87,6 @@ def fetch_image(product_url):
         response = requests.get(product_url, headers=headers)
         soup = BeautifulSoup(response.content, 'html.parser')
         
-        # Try different image selectors
         image_tag = (
             soup.find("img", {"id": "landingImage"}) or
             soup.find("img", {"id": "main-image"}) or
@@ -129,7 +95,7 @@ def fetch_image(product_url):
         
         if image_tag and image_tag.get("src"):
             image_url = image_tag.get("src")
-            # Verify it's a valid image URL
+            
             if image_url.startswith('http') and any(ext in image_url.lower() for ext in ['.jpg', '.jpeg', '.png', '.gif']):
                 return image_url
                 
@@ -137,7 +103,6 @@ def fetch_image(product_url):
         print(f"Error fetching image for URL {product_url}: {e}")
     return None
 
-# Function to get recommendations with images
 def get_recommendations_with_images(product_id):
     try:
         print(f"Fetching recommendations for product: {product_id}")
@@ -149,10 +114,8 @@ def get_recommendations_with_images(product_id):
             
         print(f"Found {len(recommendations)} recommendations")
         
-        # Add images to recommendations
         for rec in recommendations:
             try:
-                # First try to get image from products table
                 query = text("""
                     SELECT p.ImageURL, p.URL, ab.URL as amazon_url
                     FROM products p
@@ -166,7 +129,7 @@ def get_recommendations_with_images(product_id):
                     if result and result.ImageURL and result.ImageURL.strip():
                         rec['ImageURL'] = result.ImageURL
                     else:
-                        # Try both URLs for image fetching
+                        
                         image_url = None
                         for url in [result.URL, result.amazon_url]:
                             if url:
@@ -176,7 +139,6 @@ def get_recommendations_with_images(product_id):
                         
                         rec['ImageURL'] = image_url or "http://localhost:5001/static/images/product-placeholder.jpg"
                         
-                        # Update the database with the found image URL
                         if image_url and 'placeholder' not in image_url:
                             update_query = text("""
                                 UPDATE products 
@@ -200,14 +162,3 @@ def get_recommendations_with_images(product_id):
     except Exception as e:
         print(f"Error in get_recommendations_with_images: {str(e)}")
         raise e
-
-# Test the function
-test_product_id = 'B00LLPT4HI'
-recommended_products = get_recommendations_with_images(test_product_id)
-
-# Display recommendations with images
-for product in recommended_products:
-    print(f"Product ID: {product['ProductId']}")
-    print(f"Product Type: {product['ProductType']}")
-    print(f"Rating: {product['Rating']}")
-    display(Image(url=product['ImageURL']))

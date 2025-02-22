@@ -29,7 +29,6 @@ export const CartProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        // Përditëso itemCount dhe total sa herë që ndryshon cart
         const count = cartItems.reduce((total, item) => total + item.quantity, 0);
         const newTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         

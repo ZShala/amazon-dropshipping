@@ -69,16 +69,14 @@ const RecommendedProducts = ({ currentProductId }) => {
             try {
                 console.log(`Fetching recommendations for product: ${currentProductId}`);
                 
-                const response = await fetch(
-                    `http://localhost:5001/api/products/recommendations/${currentProductId}`
-                );
+                const response = await fetch(`http://localhost:5001/recommendations?product_id=${currentProductId}`);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch recommendations');
+                }
 
                 const data = await response.json();
                 
-                if (!response.ok) {
-                    throw new Error(data.error || 'Failed to fetch recommendations');
-                }
-
                 if (data.recommendations && data.recommendations.length > 0) {
                     console.log(`Received ${data.recommendations.length} recommendations`);
                     setRecommendations(data.recommendations);
@@ -88,7 +86,7 @@ const RecommendedProducts = ({ currentProductId }) => {
                     setError("No recommendations available for this product");
                 }
             } catch (error) {
-                console.error('Error fetching recommendations:', error);
+                console.error('Error:', error);
                 setError(error.message);
                 setRecommendations([]);
             } finally {

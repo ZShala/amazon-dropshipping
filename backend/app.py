@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_cors import CORS
 from model import get_recommendations, get_recommendations_with_images
-from database_operations import get_data_from_db, get_product_details, get_cart_recommendations, get_category_products, get_all_product_types, fetch_product_details
+from database_operations import get_data_from_db, get_category_products, fetch_product_details
 import atexit
 from sqlalchemy import create_engine, text
 import multiprocessing
@@ -63,7 +63,6 @@ def get_recommendations_endpoint():
             
         print(f"Processing recommendation request for product: {product_id}")
         
-        # Kontrollojmë nëse produkti ekziston
         engine = get_db()
         with engine.connect() as conn:
             exists_query = text("SELECT 1 FROM amazon_beauty WHERE ProductId = :pid")
@@ -96,22 +95,6 @@ def get_recommendations_endpoint():
         print(f"Error in recommendations endpoint: {str(e)}")
         import traceback
         traceback.print_exc()
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/api/recommendations/cart', methods=['GET'])
-def get_cart_recommendations():
-    try:
-        product_ids = request.args.get('products', '').split(',')
-        if not product_ids:
-            return jsonify({"error": "No products provided"}), 400
-
-        engine = get_db()
-        recommendations = get_cart_recommendations(engine, product_ids)
-        
-        return jsonify(recommendations)
-        
-    except Exception as e:
-        print(f"Error në /cart recommendations: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/<category_type>', methods=['GET'])
@@ -150,30 +133,6 @@ def get_category_products_endpoint(category_type):
             "per_page": 20,
             "total_pages": 1
         }), 200 
-
-@app.route('/api/test', methods=['GET'])
-def test_connection():
-    return jsonify({"message": "Backend connection successful!"})
-
-@app.route('/api/product-types', methods=['GET'])
-def get_all_product_types_endpoint():
-    try:
-        engine = get_db()
-        product_types = get_all_product_types(engine)
-        
-        if not product_types:
-            return jsonify({
-                "message": "No product types found", 
-                "types": []
-            }), 404
-            
-        return jsonify({
-            "types": product_types
-        })
-        
-    except Exception as e:
-        print(f"Error në /product-types endpoint: {str(e)}")
-        return jsonify({"error": str(e)}), 500
 
 @app.route('/api/products/details/<product_id>', methods=['GET'])
 def get_product_details_endpoint(product_id):
@@ -219,54 +178,6 @@ def get_product_details_endpoint(product_id):
 @app.route('/static/images/<path:filename>')
 def serve_image(filename):
     return send_from_directory(os.path.join(app.static_folder, 'images'), filename)
-
-@app.route('/api/products/recommendations/<product_id>', methods=['GET'])
-def get_product_recommendations(product_id):
-    try:
-        print(f"Recommendation request received for product: {product_id}")  # Debug log
-        recommendations = get_recommendations_with_images(product_id)
-        
-        if not recommendations:
-            print(f"No recommendations found for product: {product_id}")  # Debug log
-            return jsonify({"error": "No recommendations found."}), 404
-            
-        print(f"Returning {len(recommendations)} recommendations")  # Debug log
-        return jsonify({
-            "recommendations": recommendations,
-            "count": len(recommendations)
-        })
-        
-    except Exception as e:
-        print(f"Error in recommendations endpoint: {str(e)}")
-        return jsonify({"error": "Internal server error."}), 500
-
-@app.route('/test-db-connection', methods=['GET'])
-def test_db_connection():
-    try:
-        engine = get_db()
-        with engine.connect() as conn:
-            result = conn.execute("SELECT 1").fetchone()
-        return jsonify({"message": "Database connection successful!", "result": result[0]})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/test-recommendation/<product_id>', methods=['GET'])
-def test_recommendation(product_id):
-    try:
-        engine = get_db()
-        with engine.connect() as conn:
-            query = text("""
-                SELECT ProductId, ProductType, Rating, URL 
-                FROM amazon_beauty 
-                WHERE ProductId = :product_id
-            """)
-            result = conn.execute(query, {"product_id": product_id}).fetchone()
-            return jsonify({
-                "exists": bool(result),
-                "product": dict(result) if result else None
-            })
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     engine = get_db()

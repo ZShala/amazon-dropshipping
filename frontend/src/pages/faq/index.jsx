@@ -40,11 +40,11 @@ const FAQ = () => {
 
     return (
         <div className="faq-page">
-            <SEO 
+            <SEO
                 title="FAQ | Your Beauty Products"
                 description="Find answers to frequently asked questions about our beauty products, shipping, returns, and more."
             />
-            
+
             <div className="faq-container">
                 <h1>Frequently Asked Questions</h1>
                 <div className="faq-grid">
