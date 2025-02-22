@@ -25,32 +25,35 @@ import PrimeDelivery from './pages/prime-delivery';
 import SecurePayment from './pages/secure-payment';
 import Support from './pages/support';
 
+const PromoBanner = () => {
+  const promoItems = [
+    { icon: <FaTruck />, text: "FREE Prime Shipping on Orders $25+" },
+    { icon: <FaGift />, text: "New Customers: Get 10% OFF" }
+  ];
+
+  return (
+    <div className="promo-banner">
+      <div className="promo-scroll">
+        {[...Array(3)].map((_, i) => (
+          promoItems.map((item, index) => (
+            <div key={`${i}-${index}`} className="promo-item">
+              {item.icon}
+              <span>{item.text}</span>
+            </div>
+          ))
+        ))}
+      </div>
+    </div>
+  );
+};
+
 function App() {
   return (
     <CartProvider>
       <Router>
         <ScrollToTop />
-        <div className="promo-banner">
-          <div className="promo-scroll">
-            <div className="promo-item">
-              <FaTruck />
-              <span>FREE Prime Shipping on Orders $25+</span>
-            </div>
-            <div className="promo-item">
-              <FaGift />
-              <span>New Customers: Get 10% OFF</span>
-            </div>
-            <div className="promo-item">
-              <FaTruck />
-              <span>FREE Prime Shipping on Orders $25+</span>
-            </div>
-            <div className="promo-item">
-              <FaGift />
-              <span>New Customers: Get 10% OFF</span>
-            </div>
-          </div>
-        </div>
-        <div>
+        <PromoBanner />
+        <>
           <Header />
           <Cursor />
           <Routes>
@@ -74,7 +77,7 @@ function App() {
             <Route path="/support" element={<Support />} />
           </Routes>
           <Footer />
-        </div>
+        </>
       </Router>
     </CartProvider>
   );

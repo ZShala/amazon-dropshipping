@@ -318,7 +318,7 @@ const ProductDetail = () => {
             <RecommendedProducts currentProductId={productId} />
             
             <Toast 
-                message="Produkti u shtua në shportë!"
+                message="Product added to cart!"
                 isVisible={showToast}
                 onClose={() => setShowToast(false)}
             />

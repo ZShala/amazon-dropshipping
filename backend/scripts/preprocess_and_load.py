@@ -3,103 +3,84 @@ import mysql.connector
 from sqlalchemy import create_engine, text
 import numpy as np
 
-# Lexojmë datasetin
-df = pd.read_csv('./backend/amazon-beauty-recommendation.csv')
+df = pd.read_csv('../data/amazon-beauty-recommendation.csv')
 
-# Pastrimi i të dhënave
 def preprocess_dataset(df):
-    print("Duke pastruar të dhënat...")
+    print("Cleaning data...")
     
-    # Shfaqim kolonat që kemi në dataset
-    print("\nKolonat në dataset:")
+    print("\nColumns in dataset:")
     print(df.columns.tolist())
     
-    # Heqim rreshtat me vlera që mungojnë
     df = df.dropna()
     
-    # Heqim duplikatet
     df = df.drop_duplicates()
     
-    # Konvertojmë kolonat në tipin e duhur të të dhënave
-    # Përdorim 'Rating' në vend të 'rating' pasi është emri i saktë i kolonës
     df['Rating'] = pd.to_numeric(df['Rating'], errors='coerce')
     
-    # Nëse ka kolona të tjera numerike
     if 'Timestamp' in df.columns:
         df['Timestamp'] = pd.to_numeric(df['Timestamp'], errors='coerce')
     
-    # Pastrojmë tekstin në URL nëse ekziston
     if 'URL' in df.columns:
         df['URL'] = df['URL'].astype(str).str.strip()
     
-    print("\nInformacion për datasetin e pastruar:")
-    print(f"Numri total i rreshtave: {len(df)}")
-    print(f"Numri i kolonave: {len(df.columns)}")
-    print("\nShpërndarja e vlerave të Rating:")
+    print("\nCleaned dataset information:")
+    print(f"Total rows: {len(df)}")
+    print(f"Number of columns: {len(df.columns)}")
+    print("\nRating value distribution:")
     print(df['Rating'].value_counts().sort_index())
     
     return df
 
-# Konfigurimi i lidhjes me MySQL
 def create_mysql_connection():
     engine = create_engine('mysql+mysqlconnector://root:mysqlZ97*@localhost/dataset_db')
     return engine
 
-# Funksioni kryesor
 def main():
     try:
-        # Lexojmë datasetin në chunks për performancë më të mirë
         chunk_size = 100000
         chunks = []
         
-        print("Duke lexuar datasetin në chunks...")
-        for chunk in pd.read_csv('./backend/amazon-beauty-recommendation.csv', 
+        print("Reading dataset in chunks...")
+        for chunk in pd.read_csv('../data/amazon-beauty-recommendation.csv', 
                                chunksize=chunk_size):
             chunks.append(chunk)
         
         df = pd.concat(chunks)
-        print(f"U lexuan {len(df)} rreshta në total")
+        print(f"Read {len(df)} rows in total")
         
-        # Preprocessimi i dataset
         cleaned_df = preprocess_dataset(df)
         
-        # Krijojmë lidhjen me MySQL
-        print("\nDuke u lidhur me databasën...")
+        print("\nConnecting to database...")
         engine = create_mysql_connection()
         
-        # Ngarkojmë të dhënat në MySQL me chunks
-        print("Duke ngarkuar të dhënat në MySQL...")
+        print("Loading data into MySQL...")
         cleaned_df.to_sql('amazon_beauty', 
                          engine, 
                          if_exists='replace',
                          index=False,
                          chunksize=10000)
         
-        # Krijojmë indekset për performancë më të mirë
         with engine.connect() as conn:
-            print("\nDuke krijuar indekset...")
-            # Shtojmë gjatësinë maksimale për kolonat tekst (p.sh. 255 karaktere)
+            print("\nCreating indexes...")
             conn.execute(text("ALTER TABLE amazon_beauty ADD INDEX idx_product_id (ProductId(255))"))
             conn.execute(text("ALTER TABLE amazon_beauty ADD INDEX idx_user_id (UserId(255))"))
             conn.execute(text("ALTER TABLE amazon_beauty ADD INDEX idx_rating (Rating)"))
         
-        print("\nProcesi përfundoi me sukses!")
+        print("\nProcess completed successfully!")
         
     except Exception as e:
-        print(f"\nNdodhi një gabim: {str(e)}")
+        print(f"\nAn error occurred: {str(e)}")
 
 def check_data():
     try:
         engine = create_mysql_connection()
         
         with engine.connect() as conn:
-            # Numri total i rreshtave
             result = conn.execute(text("SELECT COUNT(*) FROM amazon_beauty"))
             count = result.scalar()
-            print(f"\nNumri total i rreshtave në databazë: {count}")
+            print(f"\nTotal rows in database: {count}")
             
-            # Statistika për secilën kolonë
-            print("\nStatistikat për kolonat:")
+            print("\nColumn statistics:")
             result = conn.execute(text("""
                 SELECT 
                     COUNT(DISTINCT UserId) as unique_users,
@@ -110,13 +91,12 @@ def check_data():
                 FROM amazon_beauty
             """))
             stats = result.fetchone()
-            print(f"Përdorues unikë: {stats[0]}")
-            print(f"Produkte unike: {stats[1]}")
-            print(f"Rating minimal: {stats[2]}")
-            print(f"Rating maksimal: {stats[3]}")
-            print(f"Rating mesatar: {round(stats[4], 2)}")
+            print(f"Unique users: {stats[0]}")
+            print(f"Unique products: {stats[1]}")
+            print(f"Minimum rating: {stats[2]}")
+            print(f"Maximum rating: {stats[3]}")
+            print(f"Average rating: {round(stats[4], 2)}")
             
-            # Madhësia e tabelës në MB
             result = conn.execute(text("""
                 SELECT 
                     ROUND(((data_length + index_length) / 1024 / 1024), 2) AS size_mb
@@ -125,12 +105,11 @@ def check_data():
                 AND table_name = 'amazon_beauty'
             """))
             size = result.scalar()
-            print(f"\nMadhësia e tabelës: {size} MB")
+            print(f"\nTable size: {size} MB")
             
     except Exception as e:
-        print(f"\nNdodhi një gabim: {str(e)}")
+        print(f"\nAn error occurred: {str(e)}")
 
-# Thirre funksionin në fund të main()
 if __name__ == "__main__":
     main()
     check_data() 

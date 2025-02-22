@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_cors import CORS
-from model import get_recommendations, get_recommendations_with_images
+from recommendation_model import get_recommendations, get_recommendations_with_images
 from database_operations import get_data_from_db, get_category_products, fetch_product_details
 import atexit
 from sqlalchemy import create_engine, text
