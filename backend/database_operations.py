@@ -36,7 +36,6 @@ SCRAPING_HEADERS = {
 }
 
 def setup_database(engine):
-    """Krijon tabelat dhe indekset e nevojshme në databazë"""
     try:
         with engine.connect() as conn:
             with conn.begin():
@@ -263,7 +262,6 @@ def fetch_product_details(product_url):
         }
 
 def get_category_products(engine, category_type, page=1, per_page=None):
-    """Merr produktet për një kategori specifike"""
     try:
         search_terms = CATEGORY_MAPPING.get(category_type.lower(), [])
         
@@ -364,7 +362,6 @@ def get_category_products(engine, category_type, page=1, per_page=None):
         }
 
 def check_and_insert_product(engine, product_data):
-    """Check if product exists and insert if it doesn't"""
     try:
         with engine.connect() as conn:
             with conn.begin():

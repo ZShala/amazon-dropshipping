@@ -47,7 +47,6 @@ def get_db():
 
 @atexit.register
 def cleanup():
-    """Pastron resurset në mbyllje të aplikacionit"""
     global engine
     if engine:
         engine.dispose()
