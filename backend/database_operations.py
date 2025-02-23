@@ -40,10 +40,6 @@ SCRAPING_HEADERS = {
 product_cache = {}
 cache_duration = timedelta(hours=1)
 
-# Shtojmë cache për kategoritë
-category_cache = {}
-category_cache_duration = timedelta(minutes=30)  # Cache për 30 minuta
-
 def get_cached_product(product_id):
     """Merr produktin nga cache"""
     if product_id in product_cache:
@@ -56,21 +52,6 @@ def get_cached_product(product_id):
 def set_cached_product(product_id, data):
     """Ruan produktin në cache"""
     product_cache[product_id] = (data, datetime.now())
-
-def get_cached_category(category_type, page):
-    """Merr produktet e kategorisë nga cache"""
-    cache_key = f"{category_type}_{page}"
-    if cache_key in category_cache:
-        cached_data, timestamp = category_cache[cache_key]
-        if datetime.now() - timestamp < category_cache_duration:
-            return cached_data
-        del category_cache[cache_key]
-    return None
-
-def set_cached_category(category_type, page, data):
-    """Ruan produktet e kategorisë në cache"""
-    cache_key = f"{category_type}_{page}"
-    category_cache[cache_key] = (data, datetime.now())
 
 def setup_database(engine):
     try:
@@ -247,122 +228,97 @@ def get_product_details(engine, product_id):
         print(f"Error in get_product_details: {str(e)}")
         return None
 
-def get_category_products(engine, category_type, page=1, per_page=20):
+def get_category_products(engine, category_type, page=1, per_page=None):
     try:
-        # Kontrollo cache-in
-        cached_result = get_cached_category(category_type, page)
-        if cached_result:
-            return cached_result
-
         search_terms = CATEGORY_MAPPING.get(category_type.lower(), [])
         
         if not search_terms:
-            return {"products": [], "total": 0, "page": page, "per_page": per_page}
+            print(f"Nuk u gjetën terma kërkimi për kategorinë: {category_type}")
+            return {"products": [], "total": 0, "page": page, "per_page": per_page, "total_pages": 0}
 
-        # Query e optimizuar
-        query = text("""
-            WITH RankedProducts AS (
-                SELECT DISTINCT 
-                    prod.ProductId,
-                    prod.ProductType,
-                    prod.ProductTitle,
-                    prod.ImageURL,
-                    prod.price,
-                    COALESCE(AVG(ab.Rating), 0) as avg_rating,
-                    COUNT(DISTINCT ab.UserId) as review_count,
-                    ROW_NUMBER() OVER (
-                        ORDER BY 
-                            COALESCE(AVG(ab.Rating), 0) DESC,
-                            COUNT(DISTINCT ab.UserId) DESC
-                    ) as row_num
-                FROM products prod
-                LEFT JOIN amazon_beauty ab ON prod.ProductId = ab.ProductId
-                WHERE prod.ProductType REGEXP :search_pattern
-                    AND prod.ProductId IS NOT NULL
-                GROUP BY 
-                    prod.ProductId, 
-                    prod.ProductType,
-                    prod.ProductTitle,
-                    prod.ImageURL,
-                    prod.price
-                HAVING review_count > 0
-            )
-            SELECT *
-            FROM RankedProducts
-            WHERE row_num BETWEEN :start_row AND :end_row
+        conditions = " OR ".join([
+            f"LOWER(prod.ProductType) LIKE LOWER(:term{i})"
+            for i in range(len(search_terms))
+        ])
+
+        query = text(f"""
+            SELECT DISTINCT 
+                prod.ProductId,
+                prod.ProductType,
+                prod.ProductTitle,
+                prod.ImageURL,
+                prod.price,
+                prod.URL,
+                COALESCE(AVG(ab.Rating), 0) as avg_rating,
+                COUNT(ab.Rating) as review_count
+            FROM products prod
+            LEFT JOIN amazon_beauty ab ON prod.ProductId = ab.ProductId
+            WHERE ({conditions})
+                AND prod.ProductId IS NOT NULL
+            GROUP BY 
+                prod.ProductId, 
+                prod.ProductType,
+                prod.ProductTitle,
+                prod.ImageURL,
+                prod.price,
+                prod.URL
+            HAVING review_count > 0
+            ORDER BY avg_rating DESC, review_count DESC
         """)
 
-        # Përgatit pattern për kërkim
-        search_pattern = '|'.join(term.replace('%', '') for term in search_terms)
-        start_row = (page - 1) * per_page + 1
-        end_row = start_row + per_page - 1
+        print(f"Executing query for category: {category_type}")
+        print(f"Search terms: {search_terms}")
 
         with engine.connect() as conn:
-            # Merr totalin e produkteve
-            count_query = text("""
-                SELECT COUNT(*) as total
-                FROM (
-                    SELECT DISTINCT prod.ProductId
-                    FROM products prod
-                    LEFT JOIN amazon_beauty ab ON prod.ProductId = ab.ProductId
-                    WHERE prod.ProductType REGEXP :search_pattern
-                    GROUP BY prod.ProductId
-                    HAVING COUNT(DISTINCT ab.UserId) > 0
-                ) as counted
-            """)
+            params = {f"term{i}": term for i, term in enumerate(search_terms)}
+            print(f"Query parameters: {params}")
             
-            total = conn.execute(count_query, {
-                "search_pattern": search_pattern
-            }).scalar()
-
-            # Merr produktet për faqen aktuale
-            results = conn.execute(query, {
-                "search_pattern": search_pattern,
-                "start_row": start_row,
-                "end_row": end_row
-            }).fetchall()
-
+            result = conn.execute(query, params)
             products = []
-            for row in results:
+            
+            for row in result:
                 try:
-                    image_url = row.ImageURL or DEFAULT_IMAGE_URL
-                    if not image_url.startswith(('http://', 'https://')):
+                    image_url = row.ImageURL
+                    if not image_url or image_url.isspace():
+                        image_url = DEFAULT_IMAGE_URL
+                    elif not image_url.startswith(('http://', 'https://')):
                         image_url = f"http://localhost:5001/static/images/{image_url}"
 
-                    product = {
+                    product_details = {
                         "ProductId": row.ProductId,
                         "ProductType": row.ProductType,
                         "ProductTitle": row.ProductTitle or row.ProductType,
                         "Rating": float(row.avg_rating),
+                        "URL": row.URL,
                         "ReviewCount": row.review_count,
                         "ImageURL": image_url,
                         "price": float(row.price) if row.price else 0.0,
                         "currency": "EUR"
                     }
-                    products.append(product)
+                    products.append(product_details)
                 except Exception as e:
                     print(f"Error processing product {row.ProductId}: {str(e)}")
                     continue
 
-            result = {
+            print(f"Found {len(products)} products for category {category_type}")
+            
+            return {
                 "products": products,
-                "total": total,
+                "total": len(products),
                 "page": page,
-                "per_page": per_page,
-                "total_pages": (total + per_page - 1) // per_page
+                "per_page": len(products),
+                "total_pages": 1
             }
-
-            # Ruaj në cache
-            set_cached_category(category_type, page, result)
-            return result
 
     except Exception as e:
         print(f"Error in get_category_products: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return {
             "products": [],
             "total": 0,
             "page": page,
-            "per_page": per_page,
+            "per_page": 0,
             "total_pages": 1
         }
 
