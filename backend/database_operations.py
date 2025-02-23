@@ -2,8 +2,9 @@ import pandas as pd
 from sqlalchemy import text, Table, Column, String, MetaData, create_engine
 from bs4 import BeautifulSoup
 import requests
-from datetime import datetime
-import time
+from datetime import datetime, timedelta
+from functools import lru_cache
+import json
 
 CATEGORY_MAPPING = {
     'makeup': [
@@ -34,6 +35,42 @@ DEFAULT_IMAGE_URL = "http://localhost:5001/static/images/product-placeholder.jpg
 SCRAPING_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
 }
+
+# Cache për produktet
+product_cache = {}
+cache_duration = timedelta(hours=1)
+
+# Shtojmë cache për kategoritë
+category_cache = {}
+category_cache_duration = timedelta(minutes=30)  # Cache për 30 minuta
+
+def get_cached_product(product_id):
+    """Merr produktin nga cache"""
+    if product_id in product_cache:
+        cached_data, timestamp = product_cache[product_id]
+        if datetime.now() - timestamp < cache_duration:
+            return cached_data
+        del product_cache[product_id]
+    return None
+
+def set_cached_product(product_id, data):
+    """Ruan produktin në cache"""
+    product_cache[product_id] = (data, datetime.now())
+
+def get_cached_category(category_type, page):
+    """Merr produktet e kategorisë nga cache"""
+    cache_key = f"{category_type}_{page}"
+    if cache_key in category_cache:
+        cached_data, timestamp = category_cache[cache_key]
+        if datetime.now() - timestamp < category_cache_duration:
+            return cached_data
+        del category_cache[cache_key]
+    return None
+
+def set_cached_category(category_type, page, data):
+    """Ruan produktet e kategorisë në cache"""
+    cache_key = f"{category_type}_{page}"
+    category_cache[cache_key] = (data, datetime.now())
 
 def setup_database(engine):
     try:
@@ -151,207 +188,181 @@ def fetch_image(product_url):
         print(f"Error fetching image for URL {product_url}: {e}")
     return "http://localhost:5001/static/images/product-placeholder.jpg"
 
-def fetch_product_details(product_url):
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-        "Sec-Fetch-Dest": "document",
-        "Sec-Fetch-Mode": "navigate",
-        "Sec-Fetch-Site": "none",
-        "Sec-Fetch-User": "?1"
-    }
-    
+@lru_cache(maxsize=1000)
+def get_product_details(engine, product_id):
+    """Merr detajet e produktit nga databaza me caching"""
     try:
-        response = requests.get(product_url, headers=headers, timeout=10)
-        
-        if response.status_code != 200:
-            return {
-                "image_url": DEFAULT_IMAGE_URL,
-                "title": None,
-                "price": 0.0
-            }
-            
-        soup = BeautifulSoup(response.content, 'html.parser')
-        
-        image_url = DEFAULT_IMAGE_URL
-        
-        image_selectors = [
-            {"id": "landingImage"},
-            {"id": "imgBlkFront"},
-            {"class": "a-dynamic-image"},
-            {"class": "s-image"},
-            {"id": "main-image"},
-            {"id": "product-image"},
-            {"class": "image-block"},
-            {"class": "product-image-container"}
-        ]
-        
-        for selector in image_selectors:
-            image_tags = soup.find_all("img", selector)
-            
-            for image_tag in image_tags:
-                for attr in ['src', 'data-src', 'data-a-dynamic-image', 'data-old-hires', 'data-zoom-hires']:
-                    img_url = image_tag.get(attr)
-                    
-                    if img_url:
-                        if attr == 'data-a-dynamic-image':
-                            try:
-                                import json
-                                urls = json.loads(img_url)
-                                if urls:
-                                    image_url = list(urls.keys())[0]
-                                    break
-                            except Exception as e:
-                                continue
-                        else:
-                            image_url = img_url
-                            break
-                
-                if image_url != DEFAULT_IMAGE_URL:
-                    break
-            
-            if image_url != DEFAULT_IMAGE_URL:
-                break
-        
-        if image_url and image_url != DEFAULT_IMAGE_URL:
-            if '._' in image_url:
-                base_url = image_url.split('._')[0]
-                image_url = f"{base_url}._V1_FMjpg_UX1000_.jpg"
-            elif '_SL' in image_url:
-                base_url = image_url.split('_SL')[0]
-                image_url = f"{base_url}_SL1500_.jpg"
-                
-            print(f"Final image URL: {image_url}")
-        else:
-            print("No image found, using default image")
-        
-        title_tag = soup.find("span", {"id": "productTitle"})
-        title = title_tag.text.strip() if title_tag else None
-        print(f"Found title: {title}")
-        
-        price = 0.0
-        price_tag = soup.find("span", {"class": "a-price-whole"})
-        if price_tag:
-            try:
-                price_text = price_tag.text.strip().rstrip('.').replace(',', '')
-                price_inr = float(price_text)
-                price = round(price_inr / 90, 2)
-                print(f"Found price: {price}")
-            except (ValueError, AttributeError) as e:
-                print(f"Error parsing price: {e}")
-                price = 0.0
-        else:
-            print("No price found")
-        
-        return {
-            "image_url": image_url,
-            "title": title,
-            "price": round(float(price), 2)
-        }
-        
-    except Exception as e:
-        print(f"Error fetching product details: {str(e)}")
-        return {
-            "image_url": DEFAULT_IMAGE_URL,
-            "title": None,
-            "price": 0.00
-        }
+        # Kontrollo cache-in
+        cached_product = get_cached_product(product_id)
+        if cached_product:
+            return cached_product
 
-def get_category_products(engine, category_type, page=1, per_page=None):
+        # Query e optimizuar që merr të gjitha të dhënat në një kërkesë
+        query = text("""
+            SELECT 
+                p.ProductId,
+                p.ProductType,
+                p.ProductTitle,
+                p.URL,
+                p.ImageURL,
+                p.price,
+                COALESCE(AVG(ab.Rating), 0) as avg_rating,
+                COUNT(DISTINCT ab.UserId) as review_count,
+                GROUP_CONCAT(DISTINCT ab.ProductType) as categories,
+                MIN(p.price) as min_price,
+                MAX(p.price) as max_price
+            FROM products p
+            LEFT JOIN amazon_beauty ab ON p.ProductId = ab.ProductId
+            WHERE p.ProductId = :product_id
+            GROUP BY p.ProductId, p.ProductType, p.ProductTitle, p.URL, p.ImageURL, p.price
+        """)
+
+        with engine.connect() as conn:
+            result = conn.execute(query, {"product_id": product_id}).fetchone()
+            
+            if result:
+                product = {
+                    "ProductId": result.ProductId,
+                    "ProductType": result.ProductTitle or result.ProductType,
+                    "Rating": float(result.avg_rating),
+                    "URL": result.URL,
+                    "ReviewCount": result.review_count,
+                    "ImageURL": result.ImageURL or "http://localhost:5001/static/images/product-placeholder.jpg",
+                    "price": float(result.price) if result.price else 0.0,
+                    "categories": result.categories.split(',') if result.categories else [],
+                    "price_range": {
+                        "min": float(result.min_price) if result.min_price else 0.0,
+                        "max": float(result.max_price) if result.max_price else 0.0
+                    },
+                    "currency": "EUR"
+                }
+
+                # Ruaj në cache
+                set_cached_product(product_id, product)
+                return product
+
+        return None
+
+    except Exception as e:
+        print(f"Error in get_product_details: {str(e)}")
+        return None
+
+def get_category_products(engine, category_type, page=1, per_page=20):
     try:
+        # Kontrollo cache-in
+        cached_result = get_cached_category(category_type, page)
+        if cached_result:
+            return cached_result
+
         search_terms = CATEGORY_MAPPING.get(category_type.lower(), [])
         
         if not search_terms:
-            print(f"Nuk u gjetën terma kërkimi për kategorinë: {category_type}")
-            return {"products": [], "total": 0, "page": page, "per_page": per_page, "total_pages": 0}
+            return {"products": [], "total": 0, "page": page, "per_page": per_page}
 
-        conditions = " OR ".join([
-            f"LOWER(prod.ProductType) LIKE LOWER(:term{i})"
-            for i in range(len(search_terms))
-        ])
-
-        query = text(f"""
-            SELECT DISTINCT 
-                prod.ProductId,
-                prod.ProductType,
-                prod.ProductTitle,
-                prod.ImageURL,
-                prod.price,
-                prod.URL,
-                COALESCE(AVG(ab.Rating), 0) as avg_rating,
-                COUNT(ab.Rating) as review_count
-            FROM products prod
-            LEFT JOIN amazon_beauty ab ON prod.ProductId = ab.ProductId
-            WHERE ({conditions})
-                AND prod.ProductId IS NOT NULL
-            GROUP BY 
-                prod.ProductId, 
-                prod.ProductType,
-                prod.ProductTitle,
-                prod.ImageURL,
-                prod.price,
-                prod.URL
-            HAVING review_count > 0
-            ORDER BY avg_rating DESC, review_count DESC
+        # Query e optimizuar
+        query = text("""
+            WITH RankedProducts AS (
+                SELECT DISTINCT 
+                    prod.ProductId,
+                    prod.ProductType,
+                    prod.ProductTitle,
+                    prod.ImageURL,
+                    prod.price,
+                    COALESCE(AVG(ab.Rating), 0) as avg_rating,
+                    COUNT(DISTINCT ab.UserId) as review_count,
+                    ROW_NUMBER() OVER (
+                        ORDER BY 
+                            COALESCE(AVG(ab.Rating), 0) DESC,
+                            COUNT(DISTINCT ab.UserId) DESC
+                    ) as row_num
+                FROM products prod
+                LEFT JOIN amazon_beauty ab ON prod.ProductId = ab.ProductId
+                WHERE prod.ProductType REGEXP :search_pattern
+                    AND prod.ProductId IS NOT NULL
+                GROUP BY 
+                    prod.ProductId, 
+                    prod.ProductType,
+                    prod.ProductTitle,
+                    prod.ImageURL,
+                    prod.price
+                HAVING review_count > 0
+            )
+            SELECT *
+            FROM RankedProducts
+            WHERE row_num BETWEEN :start_row AND :end_row
         """)
 
-        print(f"Executing query for category: {category_type}")
-        print(f"Search terms: {search_terms}")
+        # Përgatit pattern për kërkim
+        search_pattern = '|'.join(term.replace('%', '') for term in search_terms)
+        start_row = (page - 1) * per_page + 1
+        end_row = start_row + per_page - 1
 
         with engine.connect() as conn:
-            params = {f"term{i}": term for i, term in enumerate(search_terms)}
-            print(f"Query parameters: {params}")
+            # Merr totalin e produkteve
+            count_query = text("""
+                SELECT COUNT(*) as total
+                FROM (
+                    SELECT DISTINCT prod.ProductId
+                    FROM products prod
+                    LEFT JOIN amazon_beauty ab ON prod.ProductId = ab.ProductId
+                    WHERE prod.ProductType REGEXP :search_pattern
+                    GROUP BY prod.ProductId
+                    HAVING COUNT(DISTINCT ab.UserId) > 0
+                ) as counted
+            """)
             
-            result = conn.execute(query, params)
+            total = conn.execute(count_query, {
+                "search_pattern": search_pattern
+            }).scalar()
+
+            # Merr produktet për faqen aktuale
+            results = conn.execute(query, {
+                "search_pattern": search_pattern,
+                "start_row": start_row,
+                "end_row": end_row
+            }).fetchall()
+
             products = []
-            
-            for row in result:
+            for row in results:
                 try:
-                    image_url = row.ImageURL
-                    if not image_url or image_url.isspace():
-                        image_url = DEFAULT_IMAGE_URL
-                    elif not image_url.startswith(('http://', 'https://')):
+                    image_url = row.ImageURL or DEFAULT_IMAGE_URL
+                    if not image_url.startswith(('http://', 'https://')):
                         image_url = f"http://localhost:5001/static/images/{image_url}"
 
-                    product_details = {
+                    product = {
                         "ProductId": row.ProductId,
                         "ProductType": row.ProductType,
                         "ProductTitle": row.ProductTitle or row.ProductType,
                         "Rating": float(row.avg_rating),
-                        "URL": row.URL,
                         "ReviewCount": row.review_count,
                         "ImageURL": image_url,
                         "price": float(row.price) if row.price else 0.0,
                         "currency": "EUR"
                     }
-                    products.append(product_details)
+                    products.append(product)
                 except Exception as e:
                     print(f"Error processing product {row.ProductId}: {str(e)}")
                     continue
 
-            print(f"Found {len(products)} products for category {category_type}")
-            
-            return {
+            result = {
                 "products": products,
-                "total": len(products),
+                "total": total,
                 "page": page,
-                "per_page": len(products),
-                "total_pages": 1
+                "per_page": per_page,
+                "total_pages": (total + per_page - 1) // per_page
             }
+
+            # Ruaj në cache
+            set_cached_category(category_type, page, result)
+            return result
 
     except Exception as e:
         print(f"Error in get_category_products: {str(e)}")
-        import traceback
-        traceback.print_exc()
         return {
             "products": [],
             "total": 0,
             "page": page,
-            "per_page": 0,
+            "per_page": per_page,
             "total_pages": 1
         }
 

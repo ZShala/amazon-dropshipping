@@ -14,10 +14,10 @@ const CategoryProducts = ({ categoryType }) => {
     const [page, setPage] = useState(1);
     const productsPerPage = 20;
     const [categories, setCategories] = useState([
-        'makeup', 
-        'skincare', 
-        'haircare', 
-        'fragrance', 
+        'makeup',
+        'skincare',
+        'haircare',
+        'fragrance',
         'miscellaneous'
     ]);
 
@@ -62,7 +62,7 @@ const CategoryProducts = ({ categoryType }) => {
 
             const url = `http://localhost:5001/api/${category}`;
             console.log('Fetching products from:', url);
-            
+
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -70,7 +70,7 @@ const CategoryProducts = ({ categoryType }) => {
                     'Accept': 'application/json'
                 }
             });
-            
+
             console.log('Response status:', response.status);
             const data = await response.json();
             console.log('Response data:', data);
@@ -78,7 +78,7 @@ const CategoryProducts = ({ categoryType }) => {
             if (data && data.products && data.products.length > 0) {
                 const products = data.products;
                 saveToCache(category, products);
-                
+
                 setAllProducts(products);
                 setDisplayedProducts(products.slice(0, productsPerPage));
                 const types = [...new Set(products.map(p => p.ProductType))];
@@ -86,7 +86,7 @@ const CategoryProducts = ({ categoryType }) => {
             } else {
                 throw new Error('No products found for this category');
             }
-            
+
         } catch (err) {
             console.error('Error details:', err);
             setError(err.message);
@@ -99,7 +99,7 @@ const CategoryProducts = ({ categoryType }) => {
         const subcategoryMap = {
             // Makeup
             'Eye Makeup': [
-                'eye', 'mascara', 'eyeliner', 'kajal', 'shadow', 
+                'eye', 'mascara', 'eyeliner', 'kajal', 'shadow',
                 'eyeshadow', 'eye liner', 'eye shadow', 'eye makeup'
             ],
             'Lip Products': [
@@ -168,7 +168,7 @@ const CategoryProducts = ({ categoryType }) => {
                 'deo', 'roll-on'
             ]
         };
-        
+
         return subcategoryMap[subcategory] || [];
     };
 
@@ -177,15 +177,18 @@ const CategoryProducts = ({ categoryType }) => {
             return true;
         }
 
-        const productType = product.ProductType.toLowerCase();
+        const productType = product.ProductType?.toLowerCase() || '';
+        const productTitle = product.ProductTitle?.toLowerCase() || '';
         const keywords = getSubcategoryKeywords(type);
-        
+
         return keywords.some(keyword => {
             const normalizedKeyword = keyword.toLowerCase().trim();
             return productType.includes(normalizedKeyword) ||
-                   normalizedKeyword.split(' ').every(word => 
-                       productType.includes(word.toLowerCase())
-                   );
+                productTitle.includes(normalizedKeyword) ||
+                normalizedKeyword.split(' ').every(word =>
+                    productType.includes(word.toLowerCase()) ||
+                    productTitle.includes(word.toLowerCase())
+                );
         });
     };
 
@@ -203,13 +206,13 @@ const CategoryProducts = ({ categoryType }) => {
         const filteredProducts = allProducts.filter(p => filterProductByType(p, selectedType));
         const start = 0;
         const end = nextPage * productsPerPage;
-        
+
         setDisplayedProducts(filteredProducts.slice(start, end));
         setPage(nextPage);
     };
 
     // Përditësojmë hasMore për të përdorur produktet e filtruara
-    const hasMore = displayedProducts.length < 
+    const hasMore = displayedProducts.length <
         allProducts.filter(p => filterProductByType(p, selectedType)).length;
 
     // Përditësojmë filteredProducts
@@ -239,8 +242,7 @@ const CategoryProducts = ({ categoryType }) => {
 
     const groupProductTypes = (types) => {
         const grouped = new Map();
-        
-        // Definojmë nënkategoritë për secilën kategori kryesore
+
         const categorySubgroups = {
             'makeup': [
                 { name: 'All Products', keywords: [] },
@@ -271,22 +273,22 @@ const CategoryProducts = ({ categoryType }) => {
             ],
             'miscellaneous': [
                 { name: 'All Products', keywords: [] },
-                { name: 'Tools', keywords: ['tool', 'brush', 'applicator'] },
-                { name: 'Accessories', keywords: ['accessory', 'accessories'] },
-                { name: 'Sets & Kits', keywords: ['kit', 'set', 'collection'] }
+                // {
+                //     name: 'Kits & Accessories',
+                //     keywords: ['kit', 'accessory', 'accessories', 'beauty accessory', 'makeup accessory']
+                // }
             ]
         };
 
         const currentCategory = categoryType ? categoryType.toLowerCase() : 'all';
         const subgroups = categorySubgroups[currentCategory] || [{ name: 'All Products', keywords: [] }];
 
-        // Shtojmë secilën nënkategori
         subgroups.forEach(subgroup => {
-            const matchingProducts = subgroup.name === 'All Products' 
-                ? types 
+            const matchingProducts = subgroup.name === 'All Products'
+                ? types
                 : types.filter(type => {
                     const productType = type.toLowerCase();
-                    return subgroup.keywords.some(keyword => 
+                    return subgroup.keywords.some(keyword =>
                         productType.includes(keyword.toLowerCase())
                     );
                 });
@@ -312,7 +314,6 @@ const CategoryProducts = ({ categoryType }) => {
     useEffect(() => {
         const testConnection = async () => {
             try {
-                // Përdorim një kategori të vlefshme për të testuar lidhjen
                 const response = await fetch('http://localhost:5001/api/makeup');
                 const data = await response.json();
                 if (data.products) {
@@ -322,7 +323,7 @@ const CategoryProducts = ({ categoryType }) => {
                 console.error('Backend connection failed:', err);
             }
         };
-        
+
         testConnection();
     }, []);
 
@@ -332,7 +333,6 @@ const CategoryProducts = ({ categoryType }) => {
         ));
     };
 
-    // Shtojmë efektin për të thirrur fetchProducts kur ndryshon kategoria
     useEffect(() => {
         setPage(1);
         setAllProducts([]);
@@ -390,8 +390,8 @@ const CategoryProducts = ({ categoryType }) => {
                 <h2 data-category={categoryType.toLowerCase()}>
                     {categoryType} Products
                 </h2>
-                
-                <CategoryFilter 
+
+                <CategoryFilter
                     productTypes={productTypes}
                     selectedType={selectedType}
                     onTypeSelect={setSelectedType}
@@ -401,7 +401,7 @@ const CategoryProducts = ({ categoryType }) => {
 
                 <div className="products-grid">
                     {filteredProducts.map(product => (
-                        <ProductCard 
+                        <ProductCard
                             key={product.ProductId}
                             product={product}
                         />
@@ -410,7 +410,7 @@ const CategoryProducts = ({ categoryType }) => {
 
                 {hasMore && !loading && (
                     <div className="load-more-container">
-                        <button 
+                        <button
                             className="load-more-button"
                             onClick={loadMore}
                         >
@@ -419,13 +419,13 @@ const CategoryProducts = ({ categoryType }) => {
                                 {allProducts.length - displayedProducts.length} more
                             </span>
                         </button>
-                        
+
                         <div className="products-progress">
                             <div className="progress-bar">
-                                <div 
-                                    className="progress" 
-                                    style={{ 
-                                        width: `${(displayedProducts.length / allProducts.length) * 100}%` 
+                                <div
+                                    className="progress"
+                                    style={{
+                                        width: `${(displayedProducts.length / allProducts.length) * 100}%`
                                     }}
                                 />
                             </div>

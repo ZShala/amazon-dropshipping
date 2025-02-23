@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_cors import CORS
 from recommendation_model import get_recommendations, get_recommendations_with_images
-from database_operations import get_data_from_db, get_category_products, fetch_product_details
+from database_operations import get_data_from_db, get_category_products, get_product_details
 import atexit
 from sqlalchemy import create_engine, text
 import multiprocessing
@@ -151,43 +151,26 @@ def get_category_products_endpoint(category_type):
 @app.route('/api/products/details/<product_id>', methods=['GET'])
 def get_product_details_endpoint(product_id):
     try:
-        query = text("""
-            SELECT DISTINCT 
-                p.ProductId,
-                p.ProductType,
-                p.Rating,
-                p.URL,
-                COUNT(*) as review_count,
-                AVG(p.Rating) as avg_rating
-            FROM amazon_beauty p
-            WHERE p.ProductId = :product_id
-            GROUP BY p.ProductId, p.ProductType, p.Rating, p.URL
-        """)
+        engine = get_db()
+        product = get_product_details(engine, product_id)
         
-        with engine.connect() as conn:
-            result = conn.execute(query, {"product_id": product_id}).fetchone()
-            
-            if result:
-                product_details = fetch_product_details(result.URL)
-                
-                product = {
-                    "ProductId": result.ProductId,
-                    "ProductType": product_details["title"] or result.ProductType,
-                    "Rating": float(result.avg_rating),
-                    "URL": result.URL,
-                    "ReviewCount": result.review_count,
-                    "ImageURL": product_details["image_url"],
-                    "price": product_details["price"],
-                    "currency": "EUR"
-                }
-                
-                return jsonify({"product": product})
-            
-            return jsonify({"error": "Product not found"}), 404
+        if product:
+            return jsonify({
+                "success": True,
+                "product": product
+            })
+        
+        return jsonify({
+            "success": False,
+            "error": "Product not found"
+        }), 404
             
     except Exception as e:
         print(f"Error getting product details: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
 
 @app.route('/static/images/<path:filename>')
 def serve_image(filename):
