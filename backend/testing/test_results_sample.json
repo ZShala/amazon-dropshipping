@@ -1,0 +1,262 @@
+[
+    {
+        "detailed_results": {
+            "content_based_analysis": {
+                "category_match_rate": 0.85,
+                "avg_response_time": 180
+            },
+            "collaborative_analysis": {
+                "user_preference_match": 0.78,
+                "avg_response_time": 200
+            },
+            "hybrid_analysis": {
+                "overall_accuracy": 0.88,
+                "avg_response_time": 190
+            }
+        },
+        "resource_metrics": {
+            "cache_performance": {
+                "cache_hit_rate": 0.9,
+                "cache_miss_rate": 0.1
+            },
+            "memory_usage": {
+                "memory_used_mb": 1200,
+                "timestamp": "2024-03-01"
+            }
+        }
+    },
+    {
+        "detailed_results": {
+            "content_based_analysis": {
+                "category_match_rate": 0.85,
+                "avg_response_time": 180
+            },
+            "collaborative_analysis": {
+                "user_preference_match": 0.78,
+                "avg_response_time": 200
+            },
+            "hybrid_analysis": {
+                "overall_accuracy": 0.88,
+                "avg_response_time": 190
+            }
+        },
+        "resource_metrics": {
+            "cache_performance": {
+                "cache_hit_rate": 0.9,
+                "cache_miss_rate": 0.1
+            },
+            "memory_usage": {
+                "memory_used_mb": 1500,
+                "timestamp": "2024-03-02"
+            }
+        }
+    },
+    {
+        "detailed_results": {
+            "content_based_analysis": {
+                "category_match_rate": 0.85,
+                "avg_response_time": 180
+            },
+            "collaborative_analysis": {
+                "user_preference_match": 0.78,
+                "avg_response_time": 200
+            },
+            "hybrid_analysis": {
+                "overall_accuracy": 0.88,
+                "avg_response_time": 190
+            }
+        },
+        "resource_metrics": {
+            "cache_performance": {
+                "cache_hit_rate": 0.9,
+                "cache_miss_rate": 0.1
+            },
+            "memory_usage": {
+                "memory_used_mb": 1800,
+                "timestamp": "2024-03-03"
+            }
+        }
+    },
+    {
+        "detailed_results": {
+            "content_based_analysis": {
+                "category_match_rate": 0.85,
+                "avg_response_time": 180
+            },
+            "collaborative_analysis": {
+                "user_preference_match": 0.78,
+                "avg_response_time": 200
+            },
+            "hybrid_analysis": {
+                "overall_accuracy": 0.88,
+                "avg_response_time": 190
+            }
+        },
+        "resource_metrics": {
+            "cache_performance": {
+                "cache_hit_rate": 0.9,
+                "cache_miss_rate": 0.1
+            },
+            "memory_usage": {
+                "memory_used_mb": 2100,
+                "timestamp": "2024-03-04"
+            }
+        }
+    },
+    {
+        "detailed_results": {
+            "content_based_analysis": {
+                "category_match_rate": 0.85,
+                "avg_response_time": 180
+            },
+            "collaborative_analysis": {
+                "user_preference_match": 0.78,
+                "avg_response_time": 200
+            },
+            "hybrid_analysis": {
+                "overall_accuracy": 0.88,
+                "avg_response_time": 190
+            }
+        },
+        "resource_metrics": {
+            "cache_performance": {
+                "cache_hit_rate": 0.9,
+                "cache_miss_rate": 0.1
+            },
+            "memory_usage": {
+                "memory_used_mb": 1900,
+                "timestamp": "2024-03-05"
+            }
+        }
+    },
+    {
+        "detailed_results": {
+            "content_based_analysis": {
+                "category_match_rate": 0.85,
+                "avg_response_time": 180
+            },
+            "collaborative_analysis": {
+                "user_preference_match": 0.78,
+                "avg_response_time": 200
+            },
+            "hybrid_analysis": {
+                "overall_accuracy": 0.88,
+                "avg_response_time": 190
+            }
+        },
+        "resource_metrics": {
+            "cache_performance": {
+                "cache_hit_rate": 0.9,
+                "cache_miss_rate": 0.1
+            },
+            "memory_usage": {
+                "memory_used_mb": 2300,
+                "timestamp": "2024-03-06"
+            }
+        }
+    },
+    {
+        "detailed_results": {
+            "content_based_analysis": {
+                "category_match_rate": 0.85,
+                "avg_response_time": 180
+            },
+            "collaborative_analysis": {
+                "user_preference_match": 0.78,
+                "avg_response_time": 200
+            },
+            "hybrid_analysis": {
+                "overall_accuracy": 0.88,
+                "avg_response_time": 190
+            }
+        },
+        "resource_metrics": {
+            "cache_performance": {
+                "cache_hit_rate": 0.9,
+                "cache_miss_rate": 0.1
+            },
+            "memory_usage": {
+                "memory_used_mb": 2000,
+                "timestamp": "2024-03-07"
+            }
+        }
+    },
+    {
+        "detailed_results": {
+            "content_based_analysis": {
+                "category_match_rate": 0.85,
+                "avg_response_time": 180
+            },
+            "collaborative_analysis": {
+                "user_preference_match": 0.78,
+                "avg_response_time": 200
+            },
+            "hybrid_analysis": {
+                "overall_accuracy": 0.88,
+                "avg_response_time": 190
+            }
+        },
+        "resource_metrics": {
+            "cache_performance": {
+                "cache_hit_rate": 0.9,
+                "cache_miss_rate": 0.1
+            },
+            "memory_usage": {
+                "memory_used_mb": 2200,
+                "timestamp": "2024-03-08"
+            }
+        }
+    },
+    {
+        "detailed_results": {
+            "content_based_analysis": {
+                "category_match_rate": 0.85,
+                "avg_response_time": 180
+            },
+            "collaborative_analysis": {
+                "user_preference_match": 0.78,
+                "avg_response_time": 200
+            },
+            "hybrid_analysis": {
+                "overall_accuracy": 0.88,
+                "avg_response_time": 190
+            }
+        },
+        "resource_metrics": {
+            "cache_performance": {
+                "cache_hit_rate": 0.9,
+                "cache_miss_rate": 0.1
+            },
+            "memory_usage": {
+                "memory_used_mb": 1800,
+                "timestamp": "2024-03-09"
+            }
+        }
+    },
+    {
+        "detailed_results": {
+            "content_based_analysis": {
+                "category_match_rate": 0.85,
+                "avg_response_time": 180
+            },
+            "collaborative_analysis": {
+                "user_preference_match": 0.78,
+                "avg_response_time": 200
+            },
+            "hybrid_analysis": {
+                "overall_accuracy": 0.88,
+                "avg_response_time": 190
+            }
+        },
+        "resource_metrics": {
+            "cache_performance": {
+                "cache_hit_rate": 0.9,
+                "cache_miss_rate": 0.1
+            },
+            "memory_usage": {
+                "memory_used_mb": 1600,
+                "timestamp": "2024-03-10"
+            }
+        }
+    }
+]
