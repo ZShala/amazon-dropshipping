@@ -3,8 +3,9 @@ from sqlalchemy import text, Table, Column, String, MetaData, create_engine
 from bs4 import BeautifulSoup
 import requests
 from datetime import datetime, timedelta
-from functools import lru_cache
+from functools import lru_cache, wraps
 import json
+import time
 
 CATEGORY_MAPPING = {
     'makeup': [
@@ -36,7 +37,6 @@ SCRAPING_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
 }
 
-# Cache për produktet
 product_cache = {}
 cache_duration = timedelta(hours=1)
 
@@ -130,16 +130,18 @@ def get_data_from_db(engine):
     try:
         query = text("""
             SELECT DISTINCT 
-                ProductId, 
-                ProductType, 
-                Rating, 
-                URL,
-                COUNT(*) OVER (PARTITION BY ProductId) as review_count,
-                AVG(Rating) OVER (PARTITION BY ProductId) as avg_rating
-            FROM amazon_beauty 
-            WHERE ProductId IS NOT NULL 
-                AND ProductType IS NOT NULL 
-                AND Rating >= 4.0
+                p.ProductId, 
+                p.ProductType, 
+                ab.Rating, 
+                p.URL,
+                COUNT(*) OVER (PARTITION BY p.ProductId) as review_count,
+                AVG(ab.Rating) OVER (PARTITION BY p.ProductId) as avg_rating
+            FROM products p
+            JOIN amazon_beauty ab ON p.ProductId = ab.ProductId
+            WHERE p.ProductId IS NOT NULL 
+                AND p.ProductType IS NOT NULL 
+                AND ab.Rating >= 4.0
+                AND p.price > 0
             HAVING review_count >= 3
             ORDER BY avg_rating DESC, review_count DESC
             LIMIT 1000
@@ -155,30 +157,30 @@ def get_data_from_db(engine):
         print(f"Error reading data: {str(e)}")
         return None
 
-def fetch_image(product_url):
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
-    }
-    try:
-        response = requests.get(product_url, headers=headers)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        image_tag = soup.find("img", {"id": "landingImage"})
-        if image_tag:
-            return image_tag.get("src")
-    except Exception as e:
-        print(f"Error fetching image for URL {product_url}: {e}")
-    return "http://localhost:5001/static/images/product-placeholder.jpg"
+def timed_lru_cache(seconds: int, maxsize: int = 128):
+    def wrapper_decorator(func):
+        func = lru_cache(maxsize=maxsize)(func)
+        func.lifetime = seconds
+        func.expiration = time.time() + func.lifetime
 
-@lru_cache(maxsize=1000)
+        @wraps(func)
+        def wrapped_func(*args, **kwargs):
+            if time.time() >= func.expiration:
+                func.cache_clear()
+                func.expiration = time.time() + func.lifetime
+            return func(*args, **kwargs)
+
+        return wrapped_func
+    return wrapper_decorator
+
+@timed_lru_cache(seconds=3600, maxsize=1000)  # Cache zgjat 1 orë
 def get_product_details(engine, product_id):
     """Merr detajet e produktit nga databaza me caching"""
     try:
-        # Kontrollo cache-in
         cached_product = get_cached_product(product_id)
         if cached_product:
             return cached_product
 
-        # Query e optimizuar që merr të gjitha të dhënat në një kërkesë
         query = text("""
             SELECT 
                 p.ProductId,
@@ -187,7 +189,7 @@ def get_product_details(engine, product_id):
                 p.URL,
                 p.ImageURL,
                 p.price,
-                COALESCE(AVG(ab.Rating), 0) as avg_rating,
+                ROUND(COALESCE(AVG(ab.Rating), 0), 1) as avg_rating,
                 COUNT(DISTINCT ab.UserId) as review_count,
                 GROUP_CONCAT(DISTINCT ab.ProductType) as categories,
                 MIN(p.price) as min_price,
@@ -195,6 +197,7 @@ def get_product_details(engine, product_id):
             FROM products p
             LEFT JOIN amazon_beauty ab ON p.ProductId = ab.ProductId
             WHERE p.ProductId = :product_id
+                AND p.price > 0
             GROUP BY p.ProductId, p.ProductType, p.ProductTitle, p.URL, p.ImageURL, p.price
         """)
 
@@ -249,12 +252,13 @@ def get_category_products(engine, category_type, page=1, per_page=None):
                 prod.ImageURL,
                 prod.price,
                 prod.URL,
-                COALESCE(AVG(ab.Rating), 0) as avg_rating,
+                ROUND(COALESCE(AVG(ab.Rating), 0), 1) as avg_rating,
                 COUNT(ab.Rating) as review_count
             FROM products prod
             LEFT JOIN amazon_beauty ab ON prod.ProductId = ab.ProductId
             WHERE ({conditions})
                 AND prod.ProductId IS NOT NULL
+                AND prod.price > 0
             GROUP BY 
                 prod.ProductId, 
                 prod.ProductType,

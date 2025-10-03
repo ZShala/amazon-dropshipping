@@ -20,51 +20,22 @@ def get_db():
         raise e
 
 def get_recommendations(product_id, num_recommendations=4):
-    """Funksioni kryesor për rekomandimet"""
     try:
         print(f"Starting recommendations for product: {product_id}")
         engine = get_db()
         recommender = AdvancedRecommendationEngine(engine)
-        recommendations = recommender.get_similar_products(product_id, num_recommendations)
-        print(f"Found {len(recommendations)} recommendations")
+        recommendations = recommender.get_hybrid_recommendations(product_id, num_recommendations)
+        print(f"Found {len(recommendations)} hybrid recommendations")
         return recommendations
     except Exception as e:
         print(f"Error in get_recommendations: {str(e)}")
         import traceback
         traceback.print_exc()
-        return []
-
-def fetch_image(product_url):
-    if not product_url:
-        return None
-        
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
-    }
-    try:
-        response = requests.get(product_url, headers=headers)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        
-        image_tag = (
-            soup.find("img", {"id": "landingImage"}) or
-            soup.find("img", {"id": "main-image"}) or
-            soup.find("img", {"class": "product-image"})
-        )
-        
-        if image_tag and image_tag.get("src"):
-            image_url = image_tag.get("src")
-            
-            if image_url.startswith('http') and any(ext in image_url.lower() for ext in ['.jpg', '.jpeg', '.png', '.gif']):
-                return image_url
-                
-    except Exception as e:
-        print(f"Error fetching image for URL {product_url}: {e}")
-    return None
+        return recommender.get_similar_products(product_id, num_recommendations)
 
 def get_recommendations_with_images(product_id):
-    """Funksioni për rekomandimet me imazhe"""
     try:
-        print(f"Getting recommendations with images for product: {product_id}")
+        print(f"Getting hybrid recommendations with images for product: {product_id}")
         recommendations = get_recommendations(product_id)
         
         if not recommendations:
@@ -115,11 +86,9 @@ class AdvancedRecommendationEngine:
         self.memory_cache = {}
 
     def get_similar_products(self, product_id, num_recommendations=4):
-        """Metoda kryesore për gjetjen e produkteve të ngjashme"""
         try:
             print(f"Finding similar products for: {product_id}")
             
-            # Query për të marrë produktin aktual dhe produktet e ngjashme
             query = text("""
                 WITH product_info AS (
                     SELECT 
@@ -198,7 +167,6 @@ class AdvancedRecommendationEngine:
             return []
 
     def get_collaborative_recommendations(self, product_id, num_recommendations=4):
-        """Rekomandimet bazuar në sjelljen e përdoruesve"""
         try:
             query = text("""
                 WITH user_preferences AS (
@@ -250,7 +218,7 @@ class AdvancedRecommendationEngine:
                     "price": float(row.price) if row.price else 0.0,
                     "Rating": float(row.avg_rating),
                     "UserCount": row.user_count,
-                    "similarity_score": 0.8  # Peshë për collaborative filtering
+                    "similarity_score": 0.8  
                 } for row in results]
 
         except Exception as e:
@@ -258,7 +226,11 @@ class AdvancedRecommendationEngine:
             return []
 
     def get_trending_recommendations(self, product_id, num_recommendations=4):
-        """Rekomandimet bazuar në trendet aktuale"""
+        """
+        Trend-based filtering adapted for historical dataset (2018-2019).
+        Identifies trending products based on popularity within the dataset period,
+        rather than real-time trends.
+        """
         try:
             query = text("""
                 WITH product_category AS (
@@ -273,16 +245,16 @@ class AdvancedRecommendationEngine:
                         p.ProductTitle,
                         p.ImageURL,
                         p.price,
-                        COUNT(DISTINCT ab.UserId) as recent_purchases,
-                        AVG(ab.Rating) as avg_rating
+                        COUNT(DISTINCT ab.UserId) as review_count,
+                        AVG(ab.Rating) as avg_rating,
+                        (COUNT(DISTINCT ab.UserId) * AVG(ab.Rating)) as trend_score
                     FROM products p
                     JOIN amazon_beauty ab ON p.ProductId = ab.ProductId
                     JOIN product_category pc ON p.ProductType LIKE CONCAT('%', pc.ProductType, '%')
                     WHERE p.ProductId != :product_id
-                    AND ab.Timestamp >= DATE_SUB(NOW(), INTERVAL 30 DAY)
                     GROUP BY p.ProductId, p.ProductType, p.ProductTitle, p.ImageURL, p.price
-                    HAVING avg_rating >= 4.0
-                    ORDER BY recent_purchases DESC, avg_rating DESC
+                    HAVING avg_rating >= 4.0 AND review_count >= 10
+                    ORDER BY trend_score DESC, review_count DESC, avg_rating DESC
                     LIMIT :limit
                 )
                 SELECT * FROM trending_products
@@ -301,8 +273,9 @@ class AdvancedRecommendationEngine:
                     "ImageURL": row.ImageURL or "http://localhost:5001/static/images/product-placeholder.jpg",
                     "price": float(row.price) if row.price else 0.0,
                     "Rating": float(row.avg_rating),
-                    "RecentPurchases": row.recent_purchases,
-                    "similarity_score": 0.6  # Peshë për trending products
+                    "ReviewCount": row.review_count,
+                    "TrendScore": float(row.trend_score),
+                    "similarity_score": min(float(row.trend_score) / 1000, 1.0)  # Normalize trend score
                 } for row in results]
 
         except Exception as e:
@@ -310,36 +283,28 @@ class AdvancedRecommendationEngine:
             return []
 
     def get_hybrid_recommendations(self, product_id, num_recommendations=4):
-        """Kombinon të gjitha metodat e rekomandimit"""
         try:
-            # Merr rekomandimet nga secila metodë
             similar_products = self.get_similar_products(product_id, num_recommendations)
             collaborative_recs = self.get_collaborative_recommendations(product_id, num_recommendations)
             trending_recs = self.get_trending_recommendations(product_id, num_recommendations)
 
-            # Kombinon rezultatet me pesha
             product_scores = defaultdict(float)
-            
-            # Shton pikët për produktet e ngjashme (40%)
+           
             for prod in similar_products:
                 product_scores[prod['ProductId']] += 0.4 * prod['similarity_score']
 
-            # Shton pikët për collaborative filtering (35%)
             for prod in collaborative_recs:
                 product_scores[prod['ProductId']] += 0.35 * prod['similarity_score']
 
-            # Shton pikët për trending products (25%)
             for prod in trending_recs:
                 product_scores[prod['ProductId']] += 0.25 * prod['similarity_score']
 
-            # Merr top N produktet
             top_products = sorted(
                 product_scores.items(), 
                 key=lambda x: x[1], 
                 reverse=True
             )[:num_recommendations]
 
-            # Merr detajet e produkteve
             final_recommendations = []
             for prod_id, score in top_products:
                 query = text("""
@@ -371,4 +336,5 @@ class AdvancedRecommendationEngine:
 
         except Exception as e:
             print(f"Error in hybrid recommendations: {str(e)}")
-            return self.get_similar_products(product_id, num_recommendations)  # Fallback në metodën bazë
+            return self.get_similar_products(product_id, num_recommendations) 
+ 
