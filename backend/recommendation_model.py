@@ -187,19 +187,29 @@ class AdvancedRecommendationEngine:
                     SELECT 
                         up2.ProductId,
                         COUNT(DISTINCT up2.UserId) as user_count,
-                        AVG(up2.Rating) as avg_rating
+                        AVG(up2.Rating) as avg_rating,
+                        -- Collaborative score dinamik bazuar në popullaritet dhe cilësi
+                        CASE 
+                            WHEN COUNT(DISTINCT up2.UserId) >= 20 THEN 
+                                (COUNT(DISTINCT up2.UserId) * AVG(up2.Rating)) / 30.0
+                            WHEN COUNT(DISTINCT up2.UserId) >= 10 THEN 
+                                (COUNT(DISTINCT up2.UserId) * AVG(up2.Rating)) / 25.0
+                            ELSE 
+                                (COUNT(DISTINCT up2.UserId) * AVG(up2.Rating)) / 20.0
+                        END as collaborative_score
                     FROM user_preferences up2
                     JOIN similar_users su ON up2.UserId = su.UserId
                     WHERE up2.ProductId != :product_id
                     GROUP BY up2.ProductId
                     HAVING avg_rating >= 4.0
-                    ORDER BY user_count DESC, avg_rating DESC
+                    ORDER BY collaborative_score DESC, user_count DESC, avg_rating DESC
                     LIMIT :limit
                 )
                 SELECT 
                     p.*,
                     rp.user_count,
-                    rp.avg_rating
+                    rp.avg_rating,
+                    rp.collaborative_score
                 FROM recommended_products rp
                 JOIN products p ON rp.ProductId = p.ProductId
             """)
@@ -218,7 +228,7 @@ class AdvancedRecommendationEngine:
                     "price": float(row.price) if row.price else 0.0,
                     "Rating": float(row.avg_rating),
                     "UserCount": row.user_count,
-                    "similarity_score": 0.8  
+                    "similarity_score": float(row.collaborative_score)  # Score dinamik!
                 } for row in results]
 
         except Exception as e:

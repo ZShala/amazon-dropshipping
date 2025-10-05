@@ -1,0 +1,804 @@
+{
+  "individual_algorithms": {
+    "test_name": "Individual Algorithms Comparison",
+    "timestamp": "2025-10-04T13:13:12.589554",
+    "algorithms": {
+      "content_based": {
+        "test_name": "content_based",
+        "tests": [
+          {
+            "product_id": "B0009V1YR8",
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 0.3561880588531494,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 5.0
+            }
+          },
+          {
+            "product_id": "B0043OYFKU",
+            "success": false,
+            "recommendations_count": 0,
+            "response_time": 0.0013318061828613281,
+            "metrics": {
+              "accuracy": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1_score": 0.0,
+              "diversity": 0.0,
+              "avg_rating": 0.0
+            }
+          },
+          {
+            "product_id": "B0000YUXI0",
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 0.40152812004089355,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 4.9861
+            }
+          },
+          {
+            "product_id": "B0000020TR",
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 0.791215181350708,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 5.0
+            }
+          },
+          {
+            "product_id": "B00000JGVX",
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 0.6681578159332275,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 5.0
+            }
+          }
+        ],
+        "metrics": [
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 100.0,
+            "f1_score": 100.0,
+            "diversity": 25.0,
+            "avg_rating": 5.0
+          },
+          {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "diversity": 0.0,
+            "avg_rating": 0.0
+          },
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 100.0,
+            "f1_score": 100.0,
+            "diversity": 25.0,
+            "avg_rating": 4.9861
+          },
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 100.0,
+            "f1_score": 100.0,
+            "diversity": 25.0,
+            "avg_rating": 5.0
+          },
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 100.0,
+            "f1_score": 100.0,
+            "diversity": 25.0,
+            "avg_rating": 5.0
+          }
+        ],
+        "summary": {
+          "total_tests": 5,
+          "successful_tests": 4,
+          "success_rate": 80.0,
+          "avg_response_time": 0.5542722940444946,
+          "avg_accuracy": 100.0,
+          "min_accuracy": 100.0,
+          "max_accuracy": 100.0,
+          "avg_precision": 100.0,
+          "min_precision": 100.0,
+          "max_precision": 100.0,
+          "avg_recall": 100.0,
+          "min_recall": 100.0,
+          "max_recall": 100.0,
+          "avg_f1_score": 100.0,
+          "min_f1_score": 100.0,
+          "max_f1_score": 100.0,
+          "avg_diversity": 25.0,
+          "min_diversity": 25.0,
+          "max_diversity": 25.0,
+          "avg_avg_rating": 4.996525,
+          "min_avg_rating": 4.9861,
+          "max_avg_rating": 5.0
+        }
+      },
+      "collaborative": {
+        "test_name": "collaborative",
+        "tests": [
+          {
+            "product_id": "B0009V1YR8",
+            "success": true,
+            "recommendations_count": 3,
+            "response_time": 0.18176007270812988,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 75.0,
+              "f1_score": 85.71428571428571,
+              "diversity": 33.33333333333333,
+              "avg_rating": 4.7738
+            }
+          },
+          {
+            "product_id": "B0043OYFKU",
+            "success": true,
+            "recommendations_count": 2,
+            "response_time": 0.7291569709777832,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 50.0,
+              "f1_score": 66.66666666666667,
+              "diversity": 100.0,
+              "avg_rating": 4.7940000000000005
+            }
+          },
+          {
+            "product_id": "B0000YUXI0",
+            "success": true,
+            "recommendations_count": 3,
+            "response_time": 0.16611719131469727,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 75.0,
+              "f1_score": 85.71428571428571,
+              "diversity": 66.66666666666666,
+              "avg_rating": 4.9444333333333335
+            }
+          },
+          {
+            "product_id": "B0000020TR",
+            "success": true,
+            "recommendations_count": 1,
+            "response_time": 0.0019903182983398438,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 25.0,
+              "f1_score": 40.0,
+              "diversity": 100.0,
+              "avg_rating": 5.0
+            }
+          },
+          {
+            "product_id": "B00000JGVX",
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 0.003695249557495117,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 5.0
+            }
+          }
+        ],
+        "metrics": [
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 75.0,
+            "f1_score": 85.71428571428571,
+            "diversity": 33.33333333333333,
+            "avg_rating": 4.7738
+          },
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 50.0,
+            "f1_score": 66.66666666666667,
+            "diversity": 100.0,
+            "avg_rating": 4.7940000000000005
+          },
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 75.0,
+            "f1_score": 85.71428571428571,
+            "diversity": 66.66666666666666,
+            "avg_rating": 4.9444333333333335
+          },
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 25.0,
+            "f1_score": 40.0,
+            "diversity": 100.0,
+            "avg_rating": 5.0
+          },
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 100.0,
+            "f1_score": 100.0,
+            "diversity": 25.0,
+            "avg_rating": 5.0
+          }
+        ],
+        "summary": {
+          "total_tests": 5,
+          "successful_tests": 5,
+          "success_rate": 100.0,
+          "avg_response_time": 0.21654396057128905,
+          "avg_accuracy": 100.0,
+          "min_accuracy": 100.0,
+          "max_accuracy": 100.0,
+          "avg_precision": 100.0,
+          "min_precision": 100.0,
+          "max_precision": 100.0,
+          "avg_recall": 65.0,
+          "min_recall": 25.0,
+          "max_recall": 100.0,
+          "avg_f1_score": 75.61904761904762,
+          "min_f1_score": 40.0,
+          "max_f1_score": 100.0,
+          "avg_diversity": 65.0,
+          "min_diversity": 25.0,
+          "max_diversity": 100.0,
+          "avg_avg_rating": 4.902446666666667,
+          "min_avg_rating": 4.7738,
+          "max_avg_rating": 5.0
+        }
+      },
+      "trend_based": {
+        "test_name": "trend_based",
+        "tests": [
+          {
+            "product_id": "B0009V1YR8",
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 1.7281208038330078,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 4.3637500000000005
+            }
+          },
+          {
+            "product_id": "B0043OYFKU",
+            "success": false,
+            "recommendations_count": 0,
+            "response_time": 0.0011119842529296875,
+            "metrics": {
+              "accuracy": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1_score": 0.0,
+              "diversity": 0.0,
+              "avg_rating": 0.0
+            }
+          },
+          {
+            "product_id": "B0000YUXI0",
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 1.6890392303466797,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 4.362575
+            }
+          },
+          {
+            "product_id": "B0000020TR",
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 1.6936149597167969,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 4.3637500000000005
+            }
+          },
+          {
+            "product_id": "B00000JGVX",
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 1.8817107677459717,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 4.3637500000000005
+            }
+          }
+        ],
+        "metrics": [
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 100.0,
+            "f1_score": 100.0,
+            "diversity": 25.0,
+            "avg_rating": 4.3637500000000005
+          },
+          {
+            "accuracy": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1_score": 0.0,
+            "diversity": 0.0,
+            "avg_rating": 0.0
+          },
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 100.0,
+            "f1_score": 100.0,
+            "diversity": 25.0,
+            "avg_rating": 4.362575
+          },
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 100.0,
+            "f1_score": 100.0,
+            "diversity": 25.0,
+            "avg_rating": 4.3637500000000005
+          },
+          {
+            "accuracy": 100.0,
+            "precision": 100.0,
+            "recall": 100.0,
+            "f1_score": 100.0,
+            "diversity": 25.0,
+            "avg_rating": 4.3637500000000005
+          }
+        ],
+        "summary": {
+          "total_tests": 5,
+          "successful_tests": 4,
+          "success_rate": 80.0,
+          "avg_response_time": 1.748121440410614,
+          "avg_accuracy": 100.0,
+          "min_accuracy": 100.0,
+          "max_accuracy": 100.0,
+          "avg_precision": 100.0,
+          "min_precision": 100.0,
+          "max_precision": 100.0,
+          "avg_recall": 100.0,
+          "min_recall": 100.0,
+          "max_recall": 100.0,
+          "avg_f1_score": 100.0,
+          "min_f1_score": 100.0,
+          "max_f1_score": 100.0,
+          "avg_diversity": 25.0,
+          "min_diversity": 25.0,
+          "max_diversity": 25.0,
+          "avg_avg_rating": 4.36345625,
+          "min_avg_rating": 4.362575,
+          "max_avg_rating": 4.3637500000000005
+        }
+      }
+    }
+  },
+  "hybrid_vs_individual": {
+    "test_name": "Hybrid vs Individual Comparison",
+    "timestamp": "2025-10-04T13:13:22.893107",
+    "comparisons": [
+      {
+        "product_id": "B0009V1YR8",
+        "algorithms": {
+          "content_based": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 0.4068479537963867,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 5.0
+            }
+          },
+          "collaborative": {
+            "success": true,
+            "recommendations_count": 3,
+            "response_time": 0.18417716026306152,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 75.0,
+              "f1_score": 85.71428571428571,
+              "diversity": 33.33333333333333,
+              "avg_rating": 4.7738
+            }
+          },
+          "trend_based": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 1.695767879486084,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 4.3637500000000005
+            }
+          },
+          "hybrid": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 2.046907901763916,
+            "metrics": {
+              "accuracy": 75.0,
+              "precision": 75.0,
+              "recall": 75.0,
+              "f1_score": 75.0,
+              "diversity": 25.0,
+              "avg_rating": 4.286
+            }
+          }
+        }
+      },
+      {
+        "product_id": "B0043OYFKU",
+        "algorithms": {
+          "content_based": {
+            "success": false,
+            "recommendations_count": 0,
+            "response_time": 0.0012519359588623047,
+            "metrics": {
+              "accuracy": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1_score": 0.0,
+              "diversity": 0.0,
+              "avg_rating": 0.0
+            }
+          },
+          "collaborative": {
+            "success": true,
+            "recommendations_count": 2,
+            "response_time": 0.7898781299591064,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 50.0,
+              "f1_score": 66.66666666666667,
+              "diversity": 100.0,
+              "avg_rating": 4.7940000000000005
+            }
+          },
+          "trend_based": {
+            "success": false,
+            "recommendations_count": 0,
+            "response_time": 0.0010349750518798828,
+            "metrics": {
+              "accuracy": 0.0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1_score": 0.0,
+              "diversity": 0.0,
+              "avg_rating": 0.0
+            }
+          },
+          "hybrid": {
+            "success": true,
+            "recommendations_count": 2,
+            "response_time": 0.1278080940246582,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 50.0,
+              "f1_score": 66.66666666666667,
+              "diversity": 100.0,
+              "avg_rating": 4.434200000000001
+            }
+          }
+        }
+      },
+      {
+        "product_id": "B0000YUXI0",
+        "algorithms": {
+          "content_based": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 0.4751260280609131,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 4.9861
+            }
+          },
+          "collaborative": {
+            "success": true,
+            "recommendations_count": 3,
+            "response_time": 0.17739295959472656,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 75.0,
+              "f1_score": 85.71428571428571,
+              "diversity": 66.66666666666666,
+              "avg_rating": 4.9444333333333335
+            }
+          },
+          "trend_based": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 1.8871660232543945,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 4.362575
+            }
+          },
+          "hybrid": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 2.2588250637054443,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 4.83005
+            }
+          }
+        }
+      },
+      {
+        "product_id": "B0000020TR",
+        "algorithms": {
+          "content_based": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 0.7498319149017334,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 5.0
+            }
+          },
+          "collaborative": {
+            "success": true,
+            "recommendations_count": 1,
+            "response_time": 0.0026679039001464844,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 25.0,
+              "f1_score": 40.0,
+              "diversity": 100.0,
+              "avg_rating": 5.0
+            }
+          },
+          "trend_based": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 1.715876817703247,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 4.3637500000000005
+            }
+          },
+          "hybrid": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 2.3987181186676025,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 5.0
+            }
+          }
+        }
+      },
+      {
+        "product_id": "B00000JGVX",
+        "algorithms": {
+          "content_based": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 0.6893088817596436,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 5.0
+            }
+          },
+          "collaborative": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 0.005906343460083008,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 5.0
+            }
+          },
+          "trend_based": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 1.68638277053833,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 4.3637500000000005
+            }
+          },
+          "hybrid": {
+            "success": true,
+            "recommendations_count": 4,
+            "response_time": 2.425755739212036,
+            "metrics": {
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
+              "diversity": 25.0,
+              "avg_rating": 5.0
+            }
+          }
+        }
+      }
+    ],
+    "summary": {
+      "content_based": {
+        "avg_accuracy": 80.0,
+        "min_accuracy": 0.0,
+        "max_accuracy": 100.0,
+        "avg_precision": 80.0,
+        "min_precision": 0.0,
+        "max_precision": 100.0,
+        "avg_recall": 80.0,
+        "min_recall": 0.0,
+        "max_recall": 100.0,
+        "avg_f1_score": 80.0,
+        "min_f1_score": 0.0,
+        "max_f1_score": 100.0,
+        "avg_diversity": 20.0,
+        "min_diversity": 0.0,
+        "max_diversity": 25.0,
+        "avg_avg_rating": 3.99722,
+        "min_avg_rating": 0.0,
+        "max_avg_rating": 5.0
+      },
+      "collaborative": {
+        "avg_accuracy": 100.0,
+        "min_accuracy": 100.0,
+        "max_accuracy": 100.0,
+        "avg_precision": 100.0,
+        "min_precision": 100.0,
+        "max_precision": 100.0,
+        "avg_recall": 65.0,
+        "min_recall": 25.0,
+        "max_recall": 100.0,
+        "avg_f1_score": 75.61904761904762,
+        "min_f1_score": 40.0,
+        "max_f1_score": 100.0,
+        "avg_diversity": 65.0,
+        "min_diversity": 25.0,
+        "max_diversity": 100.0,
+        "avg_avg_rating": 4.902446666666667,
+        "min_avg_rating": 4.7738,
+        "max_avg_rating": 5.0
+      },
+      "trend_based": {
+        "avg_accuracy": 80.0,
+        "min_accuracy": 0.0,
+        "max_accuracy": 100.0,
+        "avg_precision": 80.0,
+        "min_precision": 0.0,
+        "max_precision": 100.0,
+        "avg_recall": 80.0,
+        "min_recall": 0.0,
+        "max_recall": 100.0,
+        "avg_f1_score": 80.0,
+        "min_f1_score": 0.0,
+        "max_f1_score": 100.0,
+        "avg_diversity": 20.0,
+        "min_diversity": 0.0,
+        "max_diversity": 25.0,
+        "avg_avg_rating": 3.4907649999999997,
+        "min_avg_rating": 0.0,
+        "max_avg_rating": 4.3637500000000005
+      },
+      "hybrid": {
+        "avg_accuracy": 95.0,
+        "min_accuracy": 75.0,
+        "max_accuracy": 100.0,
+        "avg_precision": 95.0,
+        "min_precision": 75.0,
+        "max_precision": 100.0,
+        "avg_recall": 85.0,
+        "min_recall": 50.0,
+        "max_recall": 100.0,
+        "avg_f1_score": 88.33333333333334,
+        "min_f1_score": 66.66666666666667,
+        "max_f1_score": 100.0,
+        "avg_diversity": 40.0,
+        "min_diversity": 25.0,
+        "max_diversity": 100.0,
+        "avg_avg_rating": 4.71005,
+        "min_avg_rating": 4.286,
+        "max_avg_rating": 5.0
+      }
+    }
+  }
+}

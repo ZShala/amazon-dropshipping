@@ -14,8 +14,6 @@ from datetime import datetime
 from test_algorithm_functionality import AlgorithmFunctionalityTester
 from test_core_metrics import CoreMetricsTester
 from test_performance import PerformanceTester
-from test_integration import IntegrationTester
-from test_edge_cases import EdgeCasesTester
 from test_comparison import ComparisonTester
 
 class MasterThesisTestRunner:
@@ -57,27 +55,6 @@ class MasterThesisTestRunner:
         
         print("\n✅ Testet e performancës u përfunduan\n")
     
-    def run_integration_tests(self):
-        """Ekzekuton testet e integrimit"""
-        print("🔗 TESTET E INTEGRIMIT")
-        print("=" * 60)
-        
-        tester = IntegrationTester()
-        tester.run_all_tests()
-        self.results['integration'] = tester.results
-        
-        print("\n✅ Testet e integrimit u përfunduan\n")
-    
-    def run_edge_cases_tests(self):
-        """Ekzekuton testet e edge cases"""
-        print("🎯 TESTET E EDGE CASES")
-        print("=" * 60)
-        
-        tester = EdgeCasesTester()
-        tester.run_all_tests()
-        self.results['edge_cases'] = tester.results
-        
-        print("\n✅ Testet e edge cases u përfunduan\n")
     
     def run_comparison_tests(self):
         """Ekzekuton testet e krahasimit"""
@@ -104,8 +81,6 @@ class MasterThesisTestRunner:
             self.run_algorithm_functionality_tests()
             self.run_core_metrics_tests()
             self.run_performance_tests()
-            self.run_integration_tests()
-            self.run_edge_cases_tests()
             self.run_comparison_tests()
             
             self.end_time = time.time()

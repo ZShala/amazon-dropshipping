@@ -1,0 +1,184 @@
+{
+  "accuracy": {
+    "test_name": "Accuracy Test",
+    "timestamp": "2025-10-04T13:11:33.542507",
+    "tests": [
+      {
+        "product_id": "B0009V1YR8",
+        "accuracy": 75.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B0043OYFKU",
+        "accuracy": 100.0,
+        "recommendations_count": 2,
+        "success": true
+      },
+      {
+        "product_id": "B0000YUXI0",
+        "accuracy": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B0000020TR",
+        "accuracy": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B00000JGVX",
+        "accuracy": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      }
+    ],
+    "summary": {
+      "total_tests": 5,
+      "successful_tests": 5,
+      "average_accuracy": 95.0,
+      "min_accuracy": 75.0,
+      "max_accuracy": 100.0
+    }
+  },
+  "precision": {
+    "test_name": "Precision Test",
+    "timestamp": "2025-10-04T13:11:45.591488",
+    "tests": [
+      {
+        "product_id": "B0009V1YR8",
+        "precision": 75.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B0043OYFKU",
+        "precision": 100.0,
+        "recommendations_count": 2,
+        "success": true
+      },
+      {
+        "product_id": "B0000YUXI0",
+        "precision": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B0000020TR",
+        "precision": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B00000JGVX",
+        "precision": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      }
+    ],
+    "summary": {
+      "total_tests": 5,
+      "successful_tests": 5,
+      "average_precision": 95.0,
+      "min_precision": 75.0,
+      "max_precision": 100.0
+    }
+  },
+  "recall": {
+    "test_name": "Recall Test",
+    "timestamp": "2025-10-04T13:11:56.164005",
+    "tests": [
+      {
+        "product_id": "B0009V1YR8",
+        "recall": 75.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B0043OYFKU",
+        "recall": 50.0,
+        "recommendations_count": 2,
+        "success": true
+      },
+      {
+        "product_id": "B0000YUXI0",
+        "recall": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B0000020TR",
+        "recall": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B00000JGVX",
+        "recall": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      }
+    ],
+    "summary": {
+      "total_tests": 5,
+      "successful_tests": 5,
+      "average_recall": 85.0,
+      "min_recall": 50.0,
+      "max_recall": 100.0
+    }
+  },
+  "f1_score": {
+    "test_name": "F1-Score Test",
+    "timestamp": "2025-10-04T13:12:06.551427",
+    "tests": [
+      {
+        "product_id": "B0009V1YR8",
+        "precision": 75.0,
+        "recall": 75.0,
+        "f1_score": 75.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B0043OYFKU",
+        "precision": 100.0,
+        "recall": 50.0,
+        "f1_score": 66.66666666666667,
+        "recommendations_count": 2,
+        "success": true
+      },
+      {
+        "product_id": "B0000YUXI0",
+        "precision": 100.0,
+        "recall": 100.0,
+        "f1_score": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B0000020TR",
+        "precision": 100.0,
+        "recall": 100.0,
+        "f1_score": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      },
+      {
+        "product_id": "B00000JGVX",
+        "precision": 100.0,
+        "recall": 100.0,
+        "f1_score": 100.0,
+        "recommendations_count": 4,
+        "success": true
+      }
+    ],
+    "summary": {
+      "total_tests": 5,
+      "successful_tests": 5,
+      "average_f1_score": 88.33333333333334,
+      "min_f1_score": 66.66666666666667,
+      "max_f1_score": 100.0
+    }
+  }
+}

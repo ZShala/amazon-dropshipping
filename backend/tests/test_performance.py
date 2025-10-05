@@ -12,6 +12,9 @@ import psutil
 import numpy as np
 from datetime import datetime
 from sqlalchemy import create_engine, text
+
+# Shto path-in për të importuar recommendation_model
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from recommendation_model import AdvancedRecommendationEngine
 
 class PerformanceTester:
