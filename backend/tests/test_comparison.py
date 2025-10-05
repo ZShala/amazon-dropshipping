@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-Testet për krahasimin e algoritmeve të rekomandimit
-Për temën e masterit: ENHANCING DROPSHIPPING PERFORMANCE THROUGH RECOMMENDATION ENGINES
-"""
-
 import sys
 import os
 import time
@@ -12,7 +7,6 @@ import numpy as np
 from datetime import datetime
 from sqlalchemy import create_engine, text
 
-# Shto path-in për të importuar recommendation_model
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from recommendation_model import AdvancedRecommendationEngine
 
@@ -24,7 +18,6 @@ class ComparisonTester:
         self.test_products = ['B0009V1YR8', 'B0043OYFKU', 'B0000YUXI0', 'B0000020TR', 'B00000JGVX']
         
     def calculate_metrics(self, recommendations):
-        """Llogarit metrikat për rekomandime"""
         if not recommendations:
             return {
                 'accuracy': 0.0,
@@ -35,24 +28,18 @@ class ComparisonTester:
                 'avg_rating': 0.0
             }
         
-        # Llogarit accuracy (rating > 3.5)
         correct_recommendations = sum(1 for rec in recommendations if rec.get('Rating', 0) > 3.5)
         accuracy = (correct_recommendations / len(recommendations)) * 100
         
-        # Llogarit precision
-        precision = accuracy  # Për thjeshtësi, precision = accuracy
-        
-        # Llogarit recall (supozojmë 4 rekomandime të mundshme)
+        precision = accuracy 
+   
         recall = (correct_recommendations / 4) * 100
         
-        # Llogarit F1-score
         f1_score = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
-        
-        # Llogarit diversitetin (numri i kategorive të ndryshme)
+
         categories = set(rec.get('ProductType', '') for rec in recommendations)
         diversity = (len(categories) / len(recommendations)) * 100 if recommendations else 0
         
-        # Llogarit rating mesatar
         avg_rating = sum(rec.get('Rating', 0) for rec in recommendations) / len(recommendations)
         
         return {
@@ -65,8 +52,7 @@ class ComparisonTester:
         }
     
     def test_individual_algorithms(self):
-        """Testimi i algoritmeve individuale"""
-        print("🧪 Testimi i algoritmeve individuale...")
+        print("Testimi i algoritmeve individuale...")
         
         results = {
             'test_name': 'Individual Algorithms Comparison',
@@ -109,7 +95,7 @@ class ComparisonTester:
                     algo_results['tests'].append(test_result)
                     algo_results['metrics'].append(metrics)
                     
-                    print(f"     ✅ {product_id}: {len(recommendations)} rekomandime, F1={metrics['f1_score']:.1f}%")
+                    print(f"     {product_id}: {len(recommendations)} rekomandime, F1={metrics['f1_score']:.1f}%")
                     
                 except Exception as e:
                     test_result = {
@@ -121,9 +107,8 @@ class ComparisonTester:
                     }
                     algo_results['tests'].append(test_result)
                     algo_results['metrics'].append(test_result['metrics'])
-                    print(f"     ❌ {product_id}: Gabim - {str(e)}")
+                    print(f"     {product_id}: Gabim - {str(e)}")
             
-            # Llogarit statistikat për algoritmin
             successful_tests = [test for test in algo_results['tests'] if test['success']]
             if successful_tests:
                 avg_metrics = {}
@@ -156,8 +141,7 @@ class ComparisonTester:
         return results
     
     def test_hybrid_vs_individual(self):
-        """Krahasimi i sistemit hibrid me algoritmet individuale"""
-        print("🧪 Krahasimi i sistemit hibrid me algoritmet individuale...")
+        print("Krahasimi i sistemit hibrid me algoritmet individuale...")
         
         results = {
             'test_name': 'Hybrid vs Individual Comparison',
@@ -173,7 +157,6 @@ class ComparisonTester:
                 'algorithms': {}
             }
             
-            # Testo algoritmet individuale
             individual_algorithms = {
                 'content_based': self.recommender.get_similar_products,
                 'collaborative': self.recommender.get_collaborative_recommendations,
@@ -204,7 +187,6 @@ class ComparisonTester:
                         'metrics': self.calculate_metrics([])
                     }
             
-            # Testo sistemin hibrid
             try:
                 start_time = time.time()
                 recommendations = self.recommender.get_hybrid_recommendations(product_id, 4)
@@ -230,13 +212,11 @@ class ComparisonTester:
             
             results['comparisons'].append(comparison)
             
-            # Printo rezultatet
             print(f"     Content-based: F1={comparison['algorithms']['content_based']['metrics']['f1_score']:.1f}%")
             print(f"     Collaborative: F1={comparison['algorithms']['collaborative']['metrics']['f1_score']:.1f}%")
             print(f"     Trend-based: F1={comparison['algorithms']['trend_based']['metrics']['f1_score']:.1f}%")
             print(f"     Hybrid: F1={comparison['algorithms']['hybrid']['metrics']['f1_score']:.1f}%")
         
-        # Llogarit statistikat e përgjithshme
         all_metrics = {}
         for comparison in results['comparisons']:
             for algo_name, algo_data in comparison['algorithms'].items():
@@ -261,24 +241,20 @@ class ComparisonTester:
     
     def run_all_tests(self):
         """Ekzekuton të gjitha testet"""
-        print("🚀 FILLIMI I TESTEVE TË KRAHASIMIT")
+        print("FILLIMI I TESTEVE TË KRAHASIMIT")
         print("=" * 60)
         
-        # Ekzekuto testet
         self.test_individual_algorithms()
         print()
         self.test_hybrid_vs_individual()
         print()
         
-        # Krijo raportin përfundimtar
         self.create_final_report()
     
     def create_final_report(self):
-        """Krijon raportin përfundimtar"""
-        print("📊 RAPORTI PËRFUNDIMTAR I KRAHASIMIT")
+        print("RAPORTI PËRFUNDIMTAR I KRAHASIMIT")
         print("=" * 50)
         
-        # Raporti për algoritmet individuale
         if 'individual_algorithms' in self.results:
             print("\nALGORITMET INDIVIDUALE:")
             for algo_name, algo_data in self.results['individual_algorithms']['algorithms'].items():
@@ -293,7 +269,6 @@ class ComparisonTester:
                 if 'avg_diversity' in summary:
                     print(f"   Diversiteti mesatar: {summary['avg_diversity']:.1f}%")
         
-        # Raporti për krahasimin hibrid vs individual
         if 'hybrid_vs_individual' in self.results:
             print("\nKRAHASIMI HIBRID VS INDIVIDUAL:")
             summary = self.results['hybrid_vs_individual']['summary']
@@ -309,17 +284,15 @@ class ComparisonTester:
                 if 'avg_avg_rating' in metrics:
                     print(f"   Rating mesatar: {metrics['avg_avg_rating']:.2f}")
         
-        # Ruaj rezultatet në skedar
         self.save_results_to_file()
     
     def save_results_to_file(self):
-        """Ruan rezultatet në skedar JSON"""
         filename = f"test_results_comparison_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(self.results, f, indent=2, ensure_ascii=False)
         
-        print(f"\n💾 Rezultatet u ruajtën në: {filename}")
+        print(f"\n Rezultatet u ruajtën në: {filename}")
 
 if __name__ == "__main__":
     tester = ComparisonTester()

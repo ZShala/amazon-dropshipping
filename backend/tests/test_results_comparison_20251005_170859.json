@@ -1,7 +1,7 @@
 {
   "individual_algorithms": {
     "test_name": "Individual Algorithms Comparison",
-    "timestamp": "2025-10-04T13:13:12.589554",
+    "timestamp": "2025-10-05T17:08:16.411533",
     "algorithms": {
       "content_based": {
         "test_name": "content_based",
@@ -10,7 +10,7 @@
             "product_id": "B0009V1YR8",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.3561880588531494,
+            "response_time": 0.3677101135253906,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -24,7 +24,7 @@
             "product_id": "B0043OYFKU",
             "success": false,
             "recommendations_count": 0,
-            "response_time": 0.0013318061828613281,
+            "response_time": 0.002376079559326172,
             "metrics": {
               "accuracy": 0.0,
               "precision": 0.0,
@@ -38,7 +38,7 @@
             "product_id": "B0000YUXI0",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.40152812004089355,
+            "response_time": 0.39917612075805664,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -52,7 +52,7 @@
             "product_id": "B0000020TR",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.791215181350708,
+            "response_time": 0.7962939739227295,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -66,7 +66,7 @@
             "product_id": "B00000JGVX",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.6681578159332275,
+            "response_time": 1.5472240447998047,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -123,7 +123,7 @@
           "total_tests": 5,
           "successful_tests": 4,
           "success_rate": 80.0,
-          "avg_response_time": 0.5542722940444946,
+          "avg_response_time": 0.7776010632514954,
           "avg_accuracy": 100.0,
           "min_accuracy": 100.0,
           "max_accuracy": 100.0,
@@ -151,7 +151,7 @@
             "product_id": "B0009V1YR8",
             "success": true,
             "recommendations_count": 3,
-            "response_time": 0.18176007270812988,
+            "response_time": 0.31682467460632324,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -165,7 +165,7 @@
             "product_id": "B0043OYFKU",
             "success": true,
             "recommendations_count": 2,
-            "response_time": 0.7291569709777832,
+            "response_time": 0.7701950073242188,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -179,7 +179,7 @@
             "product_id": "B0000YUXI0",
             "success": true,
             "recommendations_count": 3,
-            "response_time": 0.16611719131469727,
+            "response_time": 0.16797423362731934,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -193,7 +193,7 @@
             "product_id": "B0000020TR",
             "success": true,
             "recommendations_count": 1,
-            "response_time": 0.0019903182983398438,
+            "response_time": 0.002215862274169922,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -207,7 +207,7 @@
             "product_id": "B00000JGVX",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.003695249557495117,
+            "response_time": 0.011940240859985352,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -264,7 +264,7 @@
           "total_tests": 5,
           "successful_tests": 5,
           "success_rate": 100.0,
-          "avg_response_time": 0.21654396057128905,
+          "avg_response_time": 0.2538300037384033,
           "avg_accuracy": 100.0,
           "min_accuracy": 100.0,
           "max_accuracy": 100.0,
@@ -292,7 +292,7 @@
             "product_id": "B0009V1YR8",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.7281208038330078,
+            "response_time": 1.9200057983398438,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -306,7 +306,7 @@
             "product_id": "B0043OYFKU",
             "success": false,
             "recommendations_count": 0,
-            "response_time": 0.0011119842529296875,
+            "response_time": 0.0015490055084228516,
             "metrics": {
               "accuracy": 0.0,
               "precision": 0.0,
@@ -320,7 +320,7 @@
             "product_id": "B0000YUXI0",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.6890392303466797,
+            "response_time": 1.883321762084961,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -334,7 +334,7 @@
             "product_id": "B0000020TR",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.6936149597167969,
+            "response_time": 2.3757150173187256,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -348,7 +348,7 @@
             "product_id": "B00000JGVX",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.8817107677459717,
+            "response_time": 1.7559521198272705,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -405,7 +405,7 @@
           "total_tests": 5,
           "successful_tests": 4,
           "success_rate": 80.0,
-          "avg_response_time": 1.748121440410614,
+          "avg_response_time": 1.9837486743927002,
           "avg_accuracy": 100.0,
           "min_accuracy": 100.0,
           "max_accuracy": 100.0,
@@ -430,7 +430,7 @@
   },
   "hybrid_vs_individual": {
     "test_name": "Hybrid vs Individual Comparison",
-    "timestamp": "2025-10-04T13:13:22.893107",
+    "timestamp": "2025-10-05T17:08:28.735769",
     "comparisons": [
       {
         "product_id": "B0009V1YR8",
@@ -438,7 +438,7 @@
           "content_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.4068479537963867,
+            "response_time": 0.4991798400878906,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -451,7 +451,7 @@
           "collaborative": {
             "success": true,
             "recommendations_count": 3,
-            "response_time": 0.18417716026306152,
+            "response_time": 0.2477262020111084,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -464,7 +464,7 @@
           "trend_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.695767879486084,
+            "response_time": 2.280214786529541,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -477,7 +477,7 @@
           "hybrid": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.046907901763916,
+            "response_time": 5.4567060470581055,
             "metrics": {
               "accuracy": 75.0,
               "precision": 75.0,
@@ -495,7 +495,7 @@
           "content_based": {
             "success": false,
             "recommendations_count": 0,
-            "response_time": 0.0012519359588623047,
+            "response_time": 0.02855825424194336,
             "metrics": {
               "accuracy": 0.0,
               "precision": 0.0,
@@ -508,7 +508,7 @@
           "collaborative": {
             "success": true,
             "recommendations_count": 2,
-            "response_time": 0.7898781299591064,
+            "response_time": 1.3569598197937012,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -521,7 +521,7 @@
           "trend_based": {
             "success": false,
             "recommendations_count": 0,
-            "response_time": 0.0010349750518798828,
+            "response_time": 0.0011010169982910156,
             "metrics": {
               "accuracy": 0.0,
               "precision": 0.0,
@@ -534,7 +534,7 @@
           "hybrid": {
             "success": true,
             "recommendations_count": 2,
-            "response_time": 0.1278080940246582,
+            "response_time": 0.12177419662475586,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -552,7 +552,7 @@
           "content_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.4751260280609131,
+            "response_time": 0.5356979370117188,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -565,7 +565,7 @@
           "collaborative": {
             "success": true,
             "recommendations_count": 3,
-            "response_time": 0.17739295959472656,
+            "response_time": 0.18944096565246582,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -578,7 +578,7 @@
           "trend_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.8871660232543945,
+            "response_time": 1.8548963069915771,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -591,7 +591,7 @@
           "hybrid": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.2588250637054443,
+            "response_time": 2.1860780715942383,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -609,7 +609,7 @@
           "content_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.7498319149017334,
+            "response_time": 0.689849853515625,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -622,7 +622,7 @@
           "collaborative": {
             "success": true,
             "recommendations_count": 1,
-            "response_time": 0.0026679039001464844,
+            "response_time": 0.007705211639404297,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -635,7 +635,7 @@
           "trend_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.715876817703247,
+            "response_time": 2.9077329635620117,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -648,7 +648,7 @@
           "hybrid": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.3987181186676025,
+            "response_time": 2.4956860542297363,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -666,7 +666,7 @@
           "content_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.6893088817596436,
+            "response_time": 0.7742688655853271,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -679,7 +679,7 @@
           "collaborative": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.005906343460083008,
+            "response_time": 0.2965090274810791,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -692,7 +692,7 @@
           "trend_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.68638277053833,
+            "response_time": 2.0289971828460693,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -705,7 +705,7 @@
           "hybrid": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.425755739212036,
+            "response_time": 6.297015905380249,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,

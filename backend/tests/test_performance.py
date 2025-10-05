@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-Testet për performancën e sistemit të rekomandimit
-Për temën e masterit: ENHANCING DROPSHIPPING PERFORMANCE THROUGH RECOMMENDATION ENGINES
-"""
-
 import sys
 import os
 import time
@@ -13,7 +8,6 @@ import numpy as np
 from datetime import datetime
 from sqlalchemy import create_engine, text
 
-# Shto path-in për të importuar recommendation_model
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from recommendation_model import AdvancedRecommendationEngine
 
@@ -31,7 +25,7 @@ class PerformanceTester:
         
     def test_response_time(self):
         """Testimi i kohës së përgjigjes"""
-        print("🧪 Testimi i kohës së përgjigjes (Response Time)...")
+        print("Testimi i kohës së përgjigjes (Response Time)...")
         
         results = {
             'test_name': 'Response Time Test',
@@ -39,7 +33,6 @@ class PerformanceTester:
             'tests': []
         }
         
-        # Testo me algoritme të ndryshme
         algorithms = {
             'content_based': self.recommender.get_similar_products,
             'collaborative': self.recommender.get_collaborative_recommendations,
@@ -69,7 +62,7 @@ class PerformanceTester:
                     }
                     
                     results['tests'].append(test_result)
-                    print(f"     ✅ {product_id}: {response_time:.3f}s")
+                    print(f"     {product_id}: {response_time:.3f}s")
                     
                 except Exception as e:
                     test_result = {
@@ -80,7 +73,7 @@ class PerformanceTester:
                         'success': False
                     }
                     results['tests'].append(test_result)
-                    print(f"     ❌ {product_id}: Gabim - {str(e)}")
+                    print(f"     {product_id}: Gabim - {str(e)}")
             
             # Llogarit statistikat për algoritmin
             if algo_times:
@@ -108,7 +101,7 @@ class PerformanceTester:
     
     def test_memory_usage(self):
         """Testimi i përdorimit të memories"""
-        print("🧪 Testimi i përdorimit të memories (Memory Usage)...")
+        print("Testimi i përdorimit të memories (Memory Usage)...")
         
         results = {
             'test_name': 'Memory Usage Test',
@@ -116,10 +109,8 @@ class PerformanceTester:
             'tests': []
         }
         
-        # Merr përdorimin fillestar të memories
         initial_memory = self.get_memory_usage()
         
-        # Testo me algoritme të ndryshme
         algorithms = {
             'content_based': self.recommender.get_similar_products,
             'collaborative': self.recommender.get_collaborative_recommendations,
@@ -133,13 +124,10 @@ class PerformanceTester:
             
             for product_id in self.test_products:
                 try:
-                    # Merr përdorimin e memories para testit
                     memory_before = self.get_memory_usage()
                     
-                    # Ekzekuto algoritmin
                     recommendations = algo_func(product_id, 4)
-                    
-                    # Merr përdorimin e memories pas testit
+             
                     memory_after = self.get_memory_usage()
                     
                     memory_used = memory_after - memory_before
@@ -156,7 +144,7 @@ class PerformanceTester:
                     }
                     
                     results['tests'].append(test_result)
-                    print(f"     ✅ {product_id}: {memory_used:.2f}MB")
+                    print(f"     {product_id}: {memory_used:.2f}MB")
                     
                 except Exception as e:
                     test_result = {
@@ -167,7 +155,7 @@ class PerformanceTester:
                         'success': False
                     }
                     results['tests'].append(test_result)
-                    print(f"     ❌ {product_id}: Gabim - {str(e)}")
+                    print(f"     {product_id}: Gabim - {str(e)}")
             
             # Llogarit statistikat për algoritmin
             if algo_memory_usage:
@@ -176,8 +164,7 @@ class PerformanceTester:
                 max_memory = np.max(algo_memory_usage)
                 
                 print(f"   📊 {algo_name}: Mesatarja = {avg_memory:.2f}MB, Min = {min_memory:.2f}MB, Max = {max_memory:.2f}MB")
-        
-        # Llogarit statistikat e përgjithshme
+   
         successful_tests = [test for test in results['tests'] if test['success']]
         all_memory_usage = [test['memory_used'] for test in successful_tests]
         
@@ -196,15 +183,14 @@ class PerformanceTester:
     
     def test_throughput(self):
         """Testimi i throughput-it (numri i rekomandimeve për sekondë)"""
-        print("🧪 Testimi i throughput-it...")
+        print("Testimi i throughput-it...")
         
         results = {
             'test_name': 'Throughput Test',
             'timestamp': datetime.now().isoformat(),
             'tests': []
         }
-        
-        # Testo me sistemin hibrid
+     
         print("   Testimi i throughput-it me sistemin hibrid...")
         
         start_time = time.time()
@@ -246,7 +232,7 @@ class PerformanceTester:
             'throughput': throughput
         }
         
-        print(f"   📊 Throughput: {throughput:.2f} rekomandime/sekondë")
+        print(f"   Throughput: {throughput:.2f} rekomandime/sekondë")
         
         self.results['throughput'] = results
         return results
@@ -256,7 +242,6 @@ class PerformanceTester:
         print("🚀 FILLIMI I TESTEVE TË PERFORMANCËS")
         print("=" * 60)
         
-        # Ekzekuto testet
         self.test_response_time()
         print()
         self.test_memory_usage()
@@ -264,7 +249,6 @@ class PerformanceTester:
         self.test_throughput()
         print()
         
-        # Krijo raportin përfundimtar
         self.create_final_report()
     
     def create_final_report(self):
@@ -272,7 +256,6 @@ class PerformanceTester:
         print("📊 RAPORTI PËRFUNDIMTAR I PERFORMANCËS")
         print("=" * 50)
         
-        # Llogarit statistikat e përgjithshme
         total_tests = 0
         total_successful = 0
         
@@ -304,7 +287,6 @@ class PerformanceTester:
         print(f"   Teste të suksesshme: {total_successful}")
         print(f"   Shkalla e suksesit: {overall_success_rate:.1f}%")
         
-        # Ruaj rezultatet në skedar
         self.save_results_to_file()
     
     def save_results_to_file(self):

@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-Testet për metrikat kryesore të sistemit të rekomandimit
-Për temën e masterit: ENHANCING DROPSHIPPING PERFORMANCE THROUGH RECOMMENDATION ENGINES
-"""
-
 import sys
 import os
 import time
@@ -12,7 +7,6 @@ import numpy as np
 from datetime import datetime
 from sqlalchemy import create_engine, text
 
-# Shto path-in për të importuar recommendation_model
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from recommendation_model import AdvancedRecommendationEngine
 
@@ -24,18 +18,15 @@ class CoreMetricsTester:
         self.test_products = ['B0009V1YR8', 'B0043OYFKU', 'B0000YUXI0', 'B0000020TR', 'B00000JGVX']
         
     def calculate_accuracy(self, recommendations, expected_categories=None):
-        """Llogarit saktësinë e rekomandimeve"""
         if not recommendations:
             return 0.0
         
-        # Për thjeshtësi, supozojmë se rekomandimet janë të sakta nëse kanë rating > 3.5
         correct_recommendations = sum(1 for rec in recommendations if rec.get('Rating', 0) > 3.5)
         total_recommendations = len(recommendations)
         
         return (correct_recommendations / total_recommendations) * 100 if total_recommendations > 0 else 0.0
     
     def calculate_precision(self, recommendations, threshold=3.5):
-        """Llogarit precision"""
         if not recommendations:
             return 0.0
         
@@ -45,25 +36,21 @@ class CoreMetricsTester:
         return (relevant_recommendations / total_recommendations) * 100 if total_recommendations > 0 else 0.0
     
     def calculate_recall(self, recommendations, threshold=3.5):
-        """Llogarit recall"""
         if not recommendations:
             return 0.0
         
-        # Për thjeshtësi, supozojmë se ka 4 rekomandime të mundshme të sakta
         relevant_recommendations = sum(1 for rec in recommendations if rec.get('Rating', 0) >= threshold)
-        total_possible_relevant = 4  # Numri i rekomandimeve që kërkojmë
+        total_possible_relevant = 4 
         
         return (relevant_recommendations / total_possible_relevant) * 100
     
     def calculate_f1_score(self, precision, recall):
-        """Llogarit F1-score"""
         if precision + recall == 0:
             return 0.0
         return 2 * (precision * recall) / (precision + recall)
     
     def test_accuracy(self):
-        """Testimi i saktësisë"""
-        print("🧪 Testimi i saktësisë (Accuracy)...")
+        print("Testimi i saktësisë (Accuracy)...")
         
         results = {
             'test_name': 'Accuracy Test',
@@ -73,7 +60,6 @@ class CoreMetricsTester:
         
         for product_id in self.test_products:
             try:
-                # Testo me sistemin hibrid
                 recommendations = self.recommender.get_hybrid_recommendations(product_id, 4)
                 accuracy = self.calculate_accuracy(recommendations)
                 
@@ -96,8 +82,7 @@ class CoreMetricsTester:
                 }
                 results['tests'].append(test_result)
                 print(f"   ❌ {product_id}: Gabim - {str(e)}")
-        
-        # Llogarit statistikat
+   
         successful_tests = [test for test in results['tests'] if test['success']]
         avg_accuracy = np.mean([test['accuracy'] for test in successful_tests]) if successful_tests else 0.0
         
@@ -113,8 +98,7 @@ class CoreMetricsTester:
         return results
     
     def test_precision(self):
-        """Testimi i precision"""
-        print("🧪 Testimi i precision...")
+        print("Testimi i precision...")
         
         results = {
             'test_name': 'Precision Test',
@@ -135,7 +119,7 @@ class CoreMetricsTester:
                 }
                 
                 results['tests'].append(test_result)
-                print(f"   ✅ {product_id}: Precision = {precision:.1f}%")
+                print(f"   {product_id}: Precision = {precision:.1f}%")
                 
             except Exception as e:
                 test_result = {
@@ -145,9 +129,8 @@ class CoreMetricsTester:
                     'success': False
                 }
                 results['tests'].append(test_result)
-                print(f"   ❌ {product_id}: Gabim - {str(e)}")
-        
-        # Llogarit statistikat
+                print(f"   {product_id}: Gabim - {str(e)}")
+      
         successful_tests = [test for test in results['tests'] if test['success']]
         avg_precision = np.mean([test['precision'] for test in successful_tests]) if successful_tests else 0.0
         
@@ -163,8 +146,7 @@ class CoreMetricsTester:
         return results
     
     def test_recall(self):
-        """Testimi i recall"""
-        print("🧪 Testimi i recall...")
+        print("Testimi i recall...")
         
         results = {
             'test_name': 'Recall Test',
@@ -185,7 +167,7 @@ class CoreMetricsTester:
                 }
                 
                 results['tests'].append(test_result)
-                print(f"   ✅ {product_id}: Recall = {recall:.1f}%")
+                print(f"  {product_id}: Recall = {recall:.1f}%")
                 
             except Exception as e:
                 test_result = {
@@ -195,9 +177,8 @@ class CoreMetricsTester:
                     'success': False
                 }
                 results['tests'].append(test_result)
-                print(f"   ❌ {product_id}: Gabim - {str(e)}")
+                print(f"   {product_id}: Gabim - {str(e)}")
         
-        # Llogarit statistikat
         successful_tests = [test for test in results['tests'] if test['success']]
         avg_recall = np.mean([test['recall'] for test in successful_tests]) if successful_tests else 0.0
         
@@ -213,8 +194,7 @@ class CoreMetricsTester:
         return results
     
     def test_f1_score(self):
-        """Testimi i F1-score"""
-        print("🧪 Testimi i F1-score...")
+        print("Testimi i F1-score...")
         
         results = {
             'test_name': 'F1-Score Test',
@@ -239,7 +219,7 @@ class CoreMetricsTester:
                 }
                 
                 results['tests'].append(test_result)
-                print(f"   ✅ {product_id}: F1-Score = {f1_score:.1f}%")
+                print(f"   {product_id}: F1-Score = {f1_score:.1f}%")
                 
             except Exception as e:
                 test_result = {
@@ -249,9 +229,8 @@ class CoreMetricsTester:
                     'success': False
                 }
                 results['tests'].append(test_result)
-                print(f"   ❌ {product_id}: Gabim - {str(e)}")
+                print(f"   {product_id}: Gabim - {str(e)}")
         
-        # Llogarit statistikat
         successful_tests = [test for test in results['tests'] if test['success']]
         avg_f1_score = np.mean([test['f1_score'] for test in successful_tests]) if successful_tests else 0.0
         
@@ -267,11 +246,9 @@ class CoreMetricsTester:
         return results
     
     def run_all_tests(self):
-        """Ekzekuton të gjitha testet"""
-        print("🚀 FILLIMI I TESTEVE TË METRIKAVE KRYESORE")
+        print("FILLIMI I TESTEVE TË METRIKAVE KRYESORE")
         print("=" * 60)
         
-        # Ekzekuto testet
         self.test_accuracy()
         print()
         self.test_precision()
@@ -280,16 +257,13 @@ class CoreMetricsTester:
         print()
         self.test_f1_score()
         print()
-        
-        # Krijo raportin përfundimtar
+
         self.create_final_report()
     
     def create_final_report(self):
-        """Krijon raportin përfundimtar"""
-        print("📊 RAPORTI PËRFUNDIMTAR I METRIKAVE")
+        print("RAPORTI PËRFUNDIMTAR I METRIKAVE")
         print("=" * 50)
         
-        # Llogarit statistikat e përgjithshme
         total_tests = 0
         total_successful = 0
         
@@ -323,17 +297,15 @@ class CoreMetricsTester:
         print(f"   Teste të suksesshme: {total_successful}")
         print(f"   Shkalla e suksesit: {overall_success_rate:.1f}%")
         
-        # Ruaj rezultatet në skedar
         self.save_results_to_file()
     
     def save_results_to_file(self):
-        """Ruan rezultatet në skedar JSON"""
         filename = f"test_results_core_metrics_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(self.results, f, indent=2, ensure_ascii=False)
         
-        print(f"\n💾 Rezultatet u ruajtën në: {filename}")
+        print(f"\n Rezultatet u ruajtën në: {filename}")
 
 if __name__ == "__main__":
     tester = CoreMetricsTester()

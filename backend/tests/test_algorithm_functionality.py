@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-Testet për funksionalitetin e algoritmeve të rekomandimit
-Për temën e masterit: ENHANCING DROPSHIPPING PERFORMANCE THROUGH RECOMMENDATION ENGINES
-"""
-
 import sys
 import os
 import time
@@ -11,7 +6,6 @@ import json
 from datetime import datetime
 from sqlalchemy import create_engine, text
 
-# Shto path-in për të importuar recommendation_model
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from recommendation_model import AdvancedRecommendationEngine
 
@@ -24,7 +18,7 @@ class AlgorithmFunctionalityTester:
         
     def test_content_based_filtering(self):
         """Testimi i Content-based Filtering"""
-        print("🧪 Testimi i Content-based Filtering...")
+        print("Testimi i Content-based Filtering...")
         
         results = {
             'test_name': 'Content-based Filtering',
@@ -47,7 +41,7 @@ class AlgorithmFunctionalityTester:
                 }
                 
                 results['tests'].append(test_result)
-                print(f"   ✅ {product_id}: {len(recommendations)} rekomandime në {end_time - start_time:.3f}s")
+                print(f"   {product_id}: {len(recommendations)} rekomandime në {end_time - start_time:.3f}s")
                 
             except Exception as e:
                 test_result = {
@@ -57,9 +51,8 @@ class AlgorithmFunctionalityTester:
                     'response_time': 0
                 }
                 results['tests'].append(test_result)
-                print(f"   ❌ {product_id}: Gabim - {str(e)}")
+                print(f"   {product_id}: Gabim - {str(e)}")
         
-        # Llogarit statistikat
         successful_tests = sum(1 for test in results['tests'] if test['success'])
         total_tests = len(results['tests'])
         avg_response_time = sum(test['response_time'] for test in results['tests'] if test['success']) / max(successful_tests, 1)
@@ -75,8 +68,7 @@ class AlgorithmFunctionalityTester:
         return results
     
     def test_collaborative_filtering(self):
-        """Testimi i Collaborative Filtering"""
-        print("🧪 Testimi i Collaborative Filtering...")
+        print("Testimi i Collaborative Filtering...")
         
         results = {
             'test_name': 'Collaborative Filtering',
@@ -99,7 +91,7 @@ class AlgorithmFunctionalityTester:
                 }
                 
                 results['tests'].append(test_result)
-                print(f"   ✅ {product_id}: {len(recommendations)} rekomandime në {end_time - start_time:.3f}s")
+                print(f"   {product_id}: {len(recommendations)} rekomandime në {end_time - start_time:.3f}s")
                 
             except Exception as e:
                 test_result = {
@@ -109,9 +101,8 @@ class AlgorithmFunctionalityTester:
                     'response_time': 0
                 }
                 results['tests'].append(test_result)
-                print(f"   ❌ {product_id}: Gabim - {str(e)}")
+                print(f"   {product_id}: Gabim - {str(e)}")
         
-        # Llogarit statistikat
         successful_tests = sum(1 for test in results['tests'] if test['success'])
         total_tests = len(results['tests'])
         avg_response_time = sum(test['response_time'] for test in results['tests'] if test['success']) / max(successful_tests, 1)
@@ -127,8 +118,7 @@ class AlgorithmFunctionalityTester:
         return results
     
     def test_trend_based_filtering(self):
-        """Testimi i Trend-based Filtering"""
-        print("🧪 Testimi i Trend-based Filtering...")
+        print("Testimi i Trend-based Filtering...")
         
         results = {
             'test_name': 'Trend-based Filtering',
@@ -151,7 +141,7 @@ class AlgorithmFunctionalityTester:
                 }
                 
                 results['tests'].append(test_result)
-                print(f"   ✅ {product_id}: {len(recommendations)} rekomandime në {end_time - start_time:.3f}s")
+                print(f"   {product_id}: {len(recommendations)} rekomandime në {end_time - start_time:.3f}s")
                 
             except Exception as e:
                 test_result = {
@@ -161,9 +151,8 @@ class AlgorithmFunctionalityTester:
                     'response_time': 0
                 }
                 results['tests'].append(test_result)
-                print(f"   ❌ {product_id}: Gabim - {str(e)}")
+                print(f"   {product_id}: Gabim - {str(e)}")
         
-        # Llogarit statistikat
         successful_tests = sum(1 for test in results['tests'] if test['success'])
         total_tests = len(results['tests'])
         avg_response_time = sum(test['response_time'] for test in results['tests'] if test['success']) / max(successful_tests, 1)
@@ -179,8 +168,7 @@ class AlgorithmFunctionalityTester:
         return results
     
     def test_hybrid_system(self):
-        """Testimi i sistemit hibrid"""
-        print("🧪 Testimi i sistemit hibrid...")
+        print("Testimi i sistemit hibrid...")
         
         results = {
             'test_name': 'Hybrid System',
@@ -203,7 +191,7 @@ class AlgorithmFunctionalityTester:
                 }
                 
                 results['tests'].append(test_result)
-                print(f"   ✅ {product_id}: {len(recommendations)} rekomandime në {end_time - start_time:.3f}s")
+                print(f"   {product_id}: {len(recommendations)} rekomandime në {end_time - start_time:.3f}s")
                 
             except Exception as e:
                 test_result = {
@@ -213,9 +201,8 @@ class AlgorithmFunctionalityTester:
                     'response_time': 0
                 }
                 results['tests'].append(test_result)
-                print(f"   ❌ {product_id}: Gabim - {str(e)}")
+                print(f"   {product_id}: Gabim - {str(e)}")
         
-        # Llogarit statistikat
         successful_tests = sum(1 for test in results['tests'] if test['success'])
         total_tests = len(results['tests'])
         avg_response_time = sum(test['response_time'] for test in results['tests'] if test['success']) / max(successful_tests, 1)
@@ -231,11 +218,9 @@ class AlgorithmFunctionalityTester:
         return results
     
     def run_all_tests(self):
-        """Ekzekuton të gjitha testet"""
-        print("🚀 FILLIMI I TESTEVE TË FUNKSIONALITETIT TË ALGORITMEVE")
+        print("FILLIMI I TESTEVE TË FUNKSIONALITETIT TË ALGORITMEVE")
         print("=" * 60)
         
-        # Ekzekuto testet
         self.test_content_based_filtering()
         print()
         self.test_collaborative_filtering()
@@ -245,15 +230,12 @@ class AlgorithmFunctionalityTester:
         self.test_hybrid_system()
         print()
         
-        # Krijo raportin përfundimtar
         self.create_final_report()
     
     def create_final_report(self):
-        """Krijon raportin përfundimtar"""
-        print("📊 RAPORTI PËRFUNDIMTAR")
+        print("RAPORTI PËRFUNDIMTAR")
         print("=" * 40)
         
-        # Llogarit statistikat e përgjithshme
         total_tests = 0
         total_successful = 0
         total_response_time = 0
@@ -277,17 +259,15 @@ class AlgorithmFunctionalityTester:
         print(f"   Shkalla e suksesit: {overall_success_rate:.1f}%")
         print(f"   Koha mesatare: {overall_avg_time:.3f}s")
         
-        # Ruaj rezultatet në skedar
         self.save_results_to_file()
     
     def save_results_to_file(self):
-        """Ruan rezultatet në skedar JSON"""
         filename = f"test_results_algorithm_functionality_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(self.results, f, indent=2, ensure_ascii=False)
         
-        print(f"\n💾 Rezultatet u ruajtën në: {filename}")
+        print(f"\n Rezultatet u ruajtën në: {filename}")
 
 if __name__ == "__main__":
     tester = AlgorithmFunctionalityTester()

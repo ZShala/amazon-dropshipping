@@ -228,7 +228,7 @@ class AdvancedRecommendationEngine:
                     "price": float(row.price) if row.price else 0.0,
                     "Rating": float(row.avg_rating),
                     "UserCount": row.user_count,
-                    "similarity_score": float(row.collaborative_score)  # Score dinamik!
+                    "similarity_score": float(row.collaborative_score) 
                 } for row in results]
 
         except Exception as e:
@@ -285,7 +285,7 @@ class AdvancedRecommendationEngine:
                     "Rating": float(row.avg_rating),
                     "ReviewCount": row.review_count,
                     "TrendScore": float(row.trend_score),
-                    "similarity_score": min(float(row.trend_score) / 1000, 1.0)  # Normalize trend score
+                    "similarity_score": min(float(row.trend_score) / 1000, 1.0) 
                 } for row in results]
 
         except Exception as e:
