@@ -1,13 +1,13 @@
 {
   "content_based": {
     "test_name": "Content-based Filtering",
-    "timestamp": "2025-10-05T17:05:26.625903",
+    "timestamp": "2025-10-05T21:50:39.749996",
     "tests": [
       {
         "product_id": "B0009V1YR8",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 1.6012022495269775,
+        "response_time": 0.7220399379730225,
         "recommendations": [
           {
             "ProductId": "B000C1Z5A2",
@@ -35,14 +35,14 @@
         "product_id": "B0043OYFKU",
         "success": false,
         "recommendations_count": 0,
-        "response_time": 0.0055999755859375,
+        "response_time": 0.008324861526489258,
         "recommendations": []
       },
       {
         "product_id": "B0000YUXI0",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 0.8296370506286621,
+        "response_time": 0.6883893013000488,
         "recommendations": [
           {
             "ProductId": "B0006B65PC",
@@ -70,7 +70,7 @@
         "product_id": "B0000020TR",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 1.0059270858764648,
+        "response_time": 0.9934451580047607,
         "recommendations": [
           {
             "ProductId": "B000XB8Y4A",
@@ -98,7 +98,7 @@
         "product_id": "B00000JGVX",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 0.7082087993621826,
+        "response_time": 0.9854950904846191,
         "recommendations": [
           {
             "ProductId": "B000XB8Y4A",
@@ -127,18 +127,18 @@
       "total_tests": 5,
       "successful_tests": 4,
       "success_rate": 80.0,
-      "average_response_time": 1.0362437963485718
+      "average_response_time": 0.8473423719406128
     }
   },
   "collaborative": {
     "test_name": "Collaborative Filtering",
-    "timestamp": "2025-10-05T17:05:30.776681",
+    "timestamp": "2025-10-05T21:50:43.147844",
     "tests": [
       {
         "product_id": "B0009V1YR8",
         "success": true,
         "recommendations_count": 3,
-        "response_time": 0.5398387908935547,
+        "response_time": 0.1682438850402832,
         "recommendations": [
           {
             "ProductId": "B0007CXX82",
@@ -148,7 +148,7 @@
             "price": 4.84,
             "Rating": 4.75,
             "UserCount": 8,
-            "similarity_score": 1.9
+            "similarity_score": 0.8
           },
           {
             "ProductId": "B000VTRJMM",
@@ -158,7 +158,7 @@
             "price": 0.0,
             "Rating": 4.8571,
             "UserCount": 7,
-            "similarity_score": 1.699985
+            "similarity_score": 0.8
           }
         ]
       },
@@ -166,7 +166,7 @@
         "product_id": "B0043OYFKU",
         "success": true,
         "recommendations_count": 2,
-        "response_time": 0.8867840766906738,
+        "response_time": 0.8535928726196289,
         "recommendations": [
           {
             "ProductId": "B002UUT38I",
@@ -176,7 +176,7 @@
             "price": 6.46,
             "Rating": 4.7755,
             "UserCount": 49,
-            "similarity_score": 7.79998333
+            "similarity_score": 0.8
           },
           {
             "ProductId": "B00016XJ4M",
@@ -186,7 +186,7 @@
             "price": 1.11,
             "Rating": 4.8125,
             "UserCount": 16,
-            "similarity_score": 3.08
+            "similarity_score": 0.8
           }
         ]
       },
@@ -194,7 +194,7 @@
         "product_id": "B0000YUXI0",
         "success": true,
         "recommendations_count": 3,
-        "response_time": 0.16970491409301758,
+        "response_time": 0.17218899726867676,
         "recommendations": [
           {
             "ProductId": "B000PI36W6",
@@ -204,7 +204,7 @@
             "price": 1.3,
             "Rating": 4.8333,
             "UserCount": 6,
-            "similarity_score": 1.44999
+            "similarity_score": 0.8
           },
           {
             "ProductId": "B003UH0528",
@@ -214,7 +214,7 @@
             "price": 2.37,
             "Rating": 5.0,
             "UserCount": 3,
-            "similarity_score": 0.75
+            "similarity_score": 0.8
           }
         ]
       },
@@ -222,7 +222,7 @@
         "product_id": "B0000020TR",
         "success": true,
         "recommendations_count": 1,
-        "response_time": 0.0023620128631591797,
+        "response_time": 0.0018811225891113281,
         "recommendations": [
           {
             "ProductId": "B002PBAJ4Y",
@@ -232,7 +232,7 @@
             "price": 0.0,
             "Rating": 5.0,
             "UserCount": 1,
-            "similarity_score": 0.25
+            "similarity_score": 0.8
           }
         ]
       },
@@ -240,7 +240,7 @@
         "product_id": "B00000JGVX",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 0.014197111129760742,
+        "response_time": 0.014555931091308594,
         "recommendations": [
           {
             "ProductId": "B000052ZSS",
@@ -250,7 +250,7 @@
             "price": 1.48,
             "Rating": 5.0,
             "UserCount": 1,
-            "similarity_score": 0.25
+            "similarity_score": 0.8
           },
           {
             "ProductId": "B00005B6ZS",
@@ -260,7 +260,7 @@
             "price": 0.0,
             "Rating": 5.0,
             "UserCount": 1,
-            "similarity_score": 0.25
+            "similarity_score": 0.8
           }
         ]
       }
@@ -269,18 +269,18 @@
       "total_tests": 5,
       "successful_tests": 5,
       "success_rate": 100.0,
-      "average_response_time": 0.3225773811340332
+      "average_response_time": 0.24209256172180177
     }
   },
   "trend_based": {
     "test_name": "Trend-based Filtering",
-    "timestamp": "2025-10-05T17:05:32.389833",
+    "timestamp": "2025-10-05T21:50:44.358428",
     "tests": [
       {
         "product_id": "B0009V1YR8",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 2.100566864013672,
+        "response_time": 1.902113914489746,
         "recommendations": [
           {
             "ProductId": "B0000YUXI0",
@@ -288,9 +288,9 @@
             "ProductTitle": "ILLUMOR ILLUMOR Nail polish Long Lasting Formula, Quick Dry, Smooth Application, Paraben Free, No Harmful Chemical & Vegan (Glided Rose)",
             "ImageURL": "https://m.media-amazon.com/images/I/51PGmJVovMS._V1_FMjpg_UX1000_.jpg",
             "price": 0.98,
-            "Rating": 4.405,
-            "ReviewCount": 2143,
-            "TrendScore": 9439.915,
+            "Rating": 4.8872,
+            "ReviewCount": 1790,
+            "TrendScore": 8748.088,
             "similarity_score": 1.0
           },
           {
@@ -299,9 +299,9 @@
             "ProductTitle": "TENNO All You Need Nail Paint Combo, (Pack of 24) (TFNP241)",
             "ImageURL": "https://m.media-amazon.com/images/I/51YlNfyU-vL._V1_FMjpg_UX1000_.jpg",
             "price": 5.54,
-            "Rating": 4.4223,
-            "ReviewCount": 2041,
-            "TrendScore": 9025.9143,
+            "Rating": 4.7984,
+            "ReviewCount": 1751,
+            "TrendScore": 8401.9984,
             "similarity_score": 1.0
           }
         ]
@@ -310,35 +310,35 @@
         "product_id": "B0043OYFKU",
         "success": false,
         "recommendations_count": 0,
-        "response_time": 0.0018661022186279297,
+        "response_time": 0.02002716064453125,
         "recommendations": []
       },
       {
         "product_id": "B0000YUXI0",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 3.531008720397949,
+        "response_time": 1.6017680168151855,
         "recommendations": [
+          {
+            "ProductId": "B0009V1YR8",
+            "ProductType": "Nail Polish",
+            "ProductTitle": "MyGlamm POPxo Makeup Collection Glossy Finish, Chillin' Mini Nail Kit, Paraben Free, Long Lasting Formula, 5 in 1 Combo",
+            "ImageURL": "https://m.media-amazon.com/images/I/41potV+H87L._V1_FMjpg_UX1000_.jpg",
+            "price": 4.84,
+            "Rating": 4.8179,
+            "ReviewCount": 1790,
+            "TrendScore": 8624.041,
+            "similarity_score": 1.0
+          },
           {
             "ProductId": "B000ZMBSPE",
             "ProductType": "Nail Polish",
             "ProductTitle": "TENNO All You Need Nail Paint Combo, (Pack of 24) (TFNP241)",
             "ImageURL": "https://m.media-amazon.com/images/I/51YlNfyU-vL._V1_FMjpg_UX1000_.jpg",
             "price": 5.54,
-            "Rating": 4.4223,
-            "ReviewCount": 2041,
-            "TrendScore": 9025.9143,
-            "similarity_score": 1.0
-          },
-          {
-            "ProductId": "B000142FVW",
-            "ProductType": "Nail Polish",
-            "ProductTitle": "",
-            "ImageURL": "http://localhost:5001/static/images/product-placeholder.jpg",
-            "price": 3.24,
-            "Rating": 4.4679,
-            "ReviewCount": 1558,
-            "TrendScore": 6960.9882,
+            "Rating": 4.7984,
+            "ReviewCount": 1751,
+            "TrendScore": 8401.9984,
             "similarity_score": 1.0
           }
         ]
@@ -347,7 +347,7 @@
         "product_id": "B0000020TR",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 3.0124778747558594,
+        "response_time": 1.5976841449737549,
         "recommendations": [
           {
             "ProductId": "B0000YUXI0",
@@ -355,20 +355,20 @@
             "ProductTitle": "ILLUMOR ILLUMOR Nail polish Long Lasting Formula, Quick Dry, Smooth Application, Paraben Free, No Harmful Chemical & Vegan (Glided Rose)",
             "ImageURL": "https://m.media-amazon.com/images/I/51PGmJVovMS._V1_FMjpg_UX1000_.jpg",
             "price": 0.98,
-            "Rating": 4.405,
-            "ReviewCount": 2143,
-            "TrendScore": 9439.915,
+            "Rating": 4.8872,
+            "ReviewCount": 1790,
+            "TrendScore": 8748.088,
             "similarity_score": 1.0
           },
           {
-            "ProductId": "B000ZMBSPE",
+            "ProductId": "B0009V1YR8",
             "ProductType": "Nail Polish",
-            "ProductTitle": "TENNO All You Need Nail Paint Combo, (Pack of 24) (TFNP241)",
-            "ImageURL": "https://m.media-amazon.com/images/I/51YlNfyU-vL._V1_FMjpg_UX1000_.jpg",
-            "price": 5.54,
-            "Rating": 4.4223,
-            "ReviewCount": 2041,
-            "TrendScore": 9025.9143,
+            "ProductTitle": "MyGlamm POPxo Makeup Collection Glossy Finish, Chillin' Mini Nail Kit, Paraben Free, Long Lasting Formula, 5 in 1 Combo",
+            "ImageURL": "https://m.media-amazon.com/images/I/41potV+H87L._V1_FMjpg_UX1000_.jpg",
+            "price": 4.84,
+            "Rating": 4.8179,
+            "ReviewCount": 1790,
+            "TrendScore": 8624.041,
             "similarity_score": 1.0
           }
         ]
@@ -377,7 +377,7 @@
         "product_id": "B00000JGVX",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 4.141397953033447,
+        "response_time": 1.5605392456054688,
         "recommendations": [
           {
             "ProductId": "B0000YUXI0",
@@ -385,20 +385,20 @@
             "ProductTitle": "ILLUMOR ILLUMOR Nail polish Long Lasting Formula, Quick Dry, Smooth Application, Paraben Free, No Harmful Chemical & Vegan (Glided Rose)",
             "ImageURL": "https://m.media-amazon.com/images/I/51PGmJVovMS._V1_FMjpg_UX1000_.jpg",
             "price": 0.98,
-            "Rating": 4.405,
-            "ReviewCount": 2143,
-            "TrendScore": 9439.915,
+            "Rating": 4.8872,
+            "ReviewCount": 1790,
+            "TrendScore": 8748.088,
             "similarity_score": 1.0
           },
           {
-            "ProductId": "B000ZMBSPE",
+            "ProductId": "B0009V1YR8",
             "ProductType": "Nail Polish",
-            "ProductTitle": "TENNO All You Need Nail Paint Combo, (Pack of 24) (TFNP241)",
-            "ImageURL": "https://m.media-amazon.com/images/I/51YlNfyU-vL._V1_FMjpg_UX1000_.jpg",
-            "price": 5.54,
-            "Rating": 4.4223,
-            "ReviewCount": 2041,
-            "TrendScore": 9025.9143,
+            "ProductTitle": "MyGlamm POPxo Makeup Collection Glossy Finish, Chillin' Mini Nail Kit, Paraben Free, Long Lasting Formula, 5 in 1 Combo",
+            "ImageURL": "https://m.media-amazon.com/images/I/41potV+H87L._V1_FMjpg_UX1000_.jpg",
+            "price": 4.84,
+            "Rating": 4.8179,
+            "ReviewCount": 1790,
+            "TrendScore": 8624.041,
             "similarity_score": 1.0
           }
         ]
@@ -408,38 +408,38 @@
       "total_tests": 5,
       "successful_tests": 4,
       "success_rate": 80.0,
-      "average_response_time": 3.196362853050232
+      "average_response_time": 1.6655263304710388
     }
   },
   "hybrid": {
     "test_name": "Hybrid System",
-    "timestamp": "2025-10-05T17:05:45.178571",
+    "timestamp": "2025-10-05T21:50:51.040753",
     "tests": [
       {
         "product_id": "B0009V1YR8",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 4.878374338150024,
+        "response_time": 0.6478228569030762,
         "recommendations": [
           {
-            "ProductId": "B0007CXX82",
+            "ProductId": "B000C1Z5A2",
             "ProductType": "Nail Polish",
-            "ProductTitle": "MyGlamm POPxo Makeup Collection Glossy Finish, Chillin' Mini Nail Kit, Paraben Free, Long Lasting Formula, 5 in 1 Combo",
-            "ImageURL": "https://m.media-amazon.com/images/I/41potV+H87L._V1_FMjpg_UX1000_.jpg",
-            "price": 4.84,
-            "Rating": 4.2377,
-            "ReviewCount": 446,
-            "similarity_score": 0.6649999999999999
+            "ProductTitle": "TENNO All You Need Nail Paint Combo, (Pack of 24) (TFNP244)",
+            "ImageURL": "https://m.media-amazon.com/images/I/511xv0yu9ZL._V1_FMjpg_UX1000_.jpg",
+            "price": 5.54,
+            "Rating": 5.0,
+            "ReviewCount": 20,
+            "similarity_score": 0.4
           },
           {
-            "ProductId": "B000VTRJMM",
+            "ProductId": "B000OCFCZC",
             "ProductType": "Nail Polish",
-            "ProductTitle": "Elitty Mad Over Quick Drying, Chip Resistant, Long Lasting Matte Nail Paint Combo with 12 Toxin Free Formula, Infused with Witch Hazel & Vit E, Vegan & Cruelty Free Nail Polish for Teenagers",
-            "ImageURL": "https://m.media-amazon.com/images/I/41KVLcQV2QL._V1_FMjpg_UX1000_.jpg",
-            "price": 0.0,
-            "Rating": 4.5948,
-            "ReviewCount": 116,
-            "similarity_score": 0.59499475
+            "ProductTitle": "Revlon Summer Matte-Ness Nail Enamel - Crimson Matte, 8ml Bottle",
+            "ImageURL": "https://m.media-amazon.com/images/I/31jAo4WM6XL._V1_FMjpg_UX1000_.jpg",
+            "price": 2.77,
+            "Rating": 5.0,
+            "ReviewCount": 20,
+            "similarity_score": 0.4
           }
         ]
       },
@@ -447,7 +447,7 @@
         "product_id": "B0043OYFKU",
         "success": true,
         "recommendations_count": 2,
-        "response_time": 1.5226969718933105,
+        "response_time": 0.7945401668548584,
         "recommendations": [
           {
             "ProductId": "B002UUT38I",
@@ -457,7 +457,7 @@
             "price": 6.46,
             "Rating": 4.3761,
             "ReviewCount": 234,
-            "similarity_score": 2.7299941655
+            "similarity_score": 0.27999999999999997
           },
           {
             "ProductId": "B00016XJ4M",
@@ -467,7 +467,7 @@
             "price": 1.11,
             "Rating": 4.4923,
             "ReviewCount": 845,
-            "similarity_score": 1.0779999999999998
+            "similarity_score": 0.27999999999999997
           }
         ]
       },
@@ -475,18 +475,8 @@
         "product_id": "B0000YUXI0",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 3.044478178024292,
+        "response_time": 1.04734206199646,
         "recommendations": [
-          {
-            "ProductId": "B000PI36W6",
-            "ProductType": "Nail Polish",
-            "ProductTitle": "SUGAR POP Nail Lacquer 10 Call Me Hot (Fuschia Pink) | Dries In 45 Seconds | Chip-Resistant | Glossy Finish | High Shine | Nail Polish For Women, 10 ml",
-            "ImageURL": "https://m.media-amazon.com/images/I/31G99JsKgHL._V1_FMjpg_UX1000_.jpg",
-            "price": 1.3,
-            "Rating": 4.3202,
-            "ReviewCount": 331,
-            "similarity_score": 0.5074964999999999
-          },
           {
             "ProductId": "B0006B65PC",
             "ProductType": "Nail Polish",
@@ -496,6 +486,16 @@
             "Rating": 5.0,
             "ReviewCount": 31,
             "similarity_score": 0.4
+          },
+          {
+            "ProductId": "B000V04ZLE",
+            "ProductType": "Nail Polish",
+            "ProductTitle": "Faces Canada Splash Nail Enamel Floral Dream 56 8ml",
+            "ImageURL": "https://m.media-amazon.com/images/I/31nG-gtTtcL._V1_FMjpg_UX1000_.jpg",
+            "price": 0.97,
+            "Rating": 5.0,
+            "ReviewCount": 18,
+            "similarity_score": 0.4
           }
         ]
       },
@@ -503,7 +503,7 @@
         "product_id": "B0000020TR",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 3.508188247680664,
+        "response_time": 0.7457919120788574,
         "recommendations": [
           {
             "ProductId": "B000XB8Y4A",
@@ -531,7 +531,7 @@
         "product_id": "B00000JGVX",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 2.827641010284424,
+        "response_time": 0.6819870471954346,
         "recommendations": [
           {
             "ProductId": "B000XB8Y4A",
@@ -560,7 +560,7 @@
       "total_tests": 5,
       "successful_tests": 5,
       "success_rate": 100.0,
-      "average_response_time": 3.156275749206543
+      "average_response_time": 0.7834968090057373
     }
   }
 }

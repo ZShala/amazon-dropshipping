@@ -1,7 +1,7 @@
 {
   "individual_algorithms": {
     "test_name": "Individual Algorithms Comparison",
-    "timestamp": "2025-10-05T17:08:16.411533",
+    "timestamp": "2025-10-05T21:51:30.266887",
     "algorithms": {
       "content_based": {
         "test_name": "content_based",
@@ -10,7 +10,7 @@
             "product_id": "B0009V1YR8",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.3677101135253906,
+            "response_time": 0.31377696990966797,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -24,7 +24,7 @@
             "product_id": "B0043OYFKU",
             "success": false,
             "recommendations_count": 0,
-            "response_time": 0.002376079559326172,
+            "response_time": 0.0014879703521728516,
             "metrics": {
               "accuracy": 0.0,
               "precision": 0.0,
@@ -38,7 +38,7 @@
             "product_id": "B0000YUXI0",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.39917612075805664,
+            "response_time": 0.3862419128417969,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -52,7 +52,7 @@
             "product_id": "B0000020TR",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.7962939739227295,
+            "response_time": 0.8068671226501465,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -66,7 +66,7 @@
             "product_id": "B00000JGVX",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.5472240447998047,
+            "response_time": 0.6449878215789795,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -123,7 +123,7 @@
           "total_tests": 5,
           "successful_tests": 4,
           "success_rate": 80.0,
-          "avg_response_time": 0.7776010632514954,
+          "avg_response_time": 0.5379684567451477,
           "avg_accuracy": 100.0,
           "min_accuracy": 100.0,
           "max_accuracy": 100.0,
@@ -151,7 +151,7 @@
             "product_id": "B0009V1YR8",
             "success": true,
             "recommendations_count": 3,
-            "response_time": 0.31682467460632324,
+            "response_time": 0.034355878829956055,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -165,7 +165,7 @@
             "product_id": "B0043OYFKU",
             "success": true,
             "recommendations_count": 2,
-            "response_time": 0.7701950073242188,
+            "response_time": 0.07319808006286621,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -179,7 +179,7 @@
             "product_id": "B0000YUXI0",
             "success": true,
             "recommendations_count": 3,
-            "response_time": 0.16797423362731934,
+            "response_time": 0.029063940048217773,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -193,7 +193,7 @@
             "product_id": "B0000020TR",
             "success": true,
             "recommendations_count": 1,
-            "response_time": 0.002215862274169922,
+            "response_time": 0.0013706684112548828,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -207,7 +207,7 @@
             "product_id": "B00000JGVX",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.011940240859985352,
+            "response_time": 0.0024161338806152344,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -264,7 +264,7 @@
           "total_tests": 5,
           "successful_tests": 5,
           "success_rate": 100.0,
-          "avg_response_time": 0.2538300037384033,
+          "avg_response_time": 0.02808094024658203,
           "avg_accuracy": 100.0,
           "min_accuracy": 100.0,
           "max_accuracy": 100.0,
@@ -292,21 +292,21 @@
             "product_id": "B0009V1YR8",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.9200057983398438,
+            "response_time": 1.5420818328857422,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
               "recall": 100.0,
               "f1_score": 100.0,
               "diversity": 25.0,
-              "avg_rating": 4.3637500000000005
+              "avg_rating": 4.8256250000000005
             }
           },
           {
             "product_id": "B0043OYFKU",
             "success": false,
             "recommendations_count": 0,
-            "response_time": 0.0015490055084228516,
+            "response_time": 0.011812210083007812,
             "metrics": {
               "accuracy": 0.0,
               "precision": 0.0,
@@ -320,42 +320,42 @@
             "product_id": "B0000YUXI0",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.883321762084961,
+            "response_time": 1.5978949069976807,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
               "recall": 100.0,
               "f1_score": 100.0,
               "diversity": 25.0,
-              "avg_rating": 4.362575
+              "avg_rating": 4.8083
             }
           },
           {
             "product_id": "B0000020TR",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.3757150173187256,
+            "response_time": 1.5625982284545898,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
               "recall": 100.0,
               "f1_score": 100.0,
               "diversity": 25.0,
-              "avg_rating": 4.3637500000000005
+              "avg_rating": 4.845
             }
           },
           {
             "product_id": "B00000JGVX",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.7559521198272705,
+            "response_time": 1.5566577911376953,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
               "recall": 100.0,
               "f1_score": 100.0,
               "diversity": 25.0,
-              "avg_rating": 4.3637500000000005
+              "avg_rating": 4.845
             }
           }
         ],
@@ -366,7 +366,7 @@
             "recall": 100.0,
             "f1_score": 100.0,
             "diversity": 25.0,
-            "avg_rating": 4.3637500000000005
+            "avg_rating": 4.8256250000000005
           },
           {
             "accuracy": 0.0,
@@ -382,7 +382,7 @@
             "recall": 100.0,
             "f1_score": 100.0,
             "diversity": 25.0,
-            "avg_rating": 4.362575
+            "avg_rating": 4.8083
           },
           {
             "accuracy": 100.0,
@@ -390,7 +390,7 @@
             "recall": 100.0,
             "f1_score": 100.0,
             "diversity": 25.0,
-            "avg_rating": 4.3637500000000005
+            "avg_rating": 4.845
           },
           {
             "accuracy": 100.0,
@@ -398,14 +398,14 @@
             "recall": 100.0,
             "f1_score": 100.0,
             "diversity": 25.0,
-            "avg_rating": 4.3637500000000005
+            "avg_rating": 4.845
           }
         ],
         "summary": {
           "total_tests": 5,
           "successful_tests": 4,
           "success_rate": 80.0,
-          "avg_response_time": 1.9837486743927002,
+          "avg_response_time": 1.564808189868927,
           "avg_accuracy": 100.0,
           "min_accuracy": 100.0,
           "max_accuracy": 100.0,
@@ -421,16 +421,16 @@
           "avg_diversity": 25.0,
           "min_diversity": 25.0,
           "max_diversity": 25.0,
-          "avg_avg_rating": 4.36345625,
-          "min_avg_rating": 4.362575,
-          "max_avg_rating": 4.3637500000000005
+          "avg_avg_rating": 4.83098125,
+          "min_avg_rating": 4.8083,
+          "max_avg_rating": 4.845
         }
       }
     }
   },
   "hybrid_vs_individual": {
     "test_name": "Hybrid vs Individual Comparison",
-    "timestamp": "2025-10-05T17:08:28.735769",
+    "timestamp": "2025-10-05T21:51:38.833675",
     "comparisons": [
       {
         "product_id": "B0009V1YR8",
@@ -438,7 +438,7 @@
           "content_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.4991798400878906,
+            "response_time": 0.3062119483947754,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -451,7 +451,7 @@
           "collaborative": {
             "success": true,
             "recommendations_count": 3,
-            "response_time": 0.2477262020111084,
+            "response_time": 0.03431510925292969,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -464,27 +464,27 @@
           "trend_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.280214786529541,
+            "response_time": 5.9604644775390625e-06,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
               "recall": 100.0,
               "f1_score": 100.0,
               "diversity": 25.0,
-              "avg_rating": 4.3637500000000005
+              "avg_rating": 4.8256250000000005
             }
           },
           "hybrid": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 5.4567060470581055,
+            "response_time": 0.34226202964782715,
             "metrics": {
-              "accuracy": 75.0,
-              "precision": 75.0,
-              "recall": 75.0,
-              "f1_score": 75.0,
+              "accuracy": 100.0,
+              "precision": 100.0,
+              "recall": 100.0,
+              "f1_score": 100.0,
               "diversity": 25.0,
-              "avg_rating": 4.286
+              "avg_rating": 5.0
             }
           }
         }
@@ -495,7 +495,7 @@
           "content_based": {
             "success": false,
             "recommendations_count": 0,
-            "response_time": 0.02855825424194336,
+            "response_time": 0.0011546611785888672,
             "metrics": {
               "accuracy": 0.0,
               "precision": 0.0,
@@ -508,7 +508,7 @@
           "collaborative": {
             "success": true,
             "recommendations_count": 2,
-            "response_time": 1.3569598197937012,
+            "response_time": 0.07346391677856445,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -521,7 +521,7 @@
           "trend_based": {
             "success": false,
             "recommendations_count": 0,
-            "response_time": 0.0011010169982910156,
+            "response_time": 6.198883056640625e-06,
             "metrics": {
               "accuracy": 0.0,
               "precision": 0.0,
@@ -534,7 +534,7 @@
           "hybrid": {
             "success": true,
             "recommendations_count": 2,
-            "response_time": 0.12177419662475586,
+            "response_time": 0.07718396186828613,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -552,7 +552,7 @@
           "content_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.5356979370117188,
+            "response_time": 0.4518611431121826,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -565,7 +565,7 @@
           "collaborative": {
             "success": true,
             "recommendations_count": 3,
-            "response_time": 0.18944096565246582,
+            "response_time": 0.03268623352050781,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -578,27 +578,27 @@
           "trend_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.8548963069915771,
+            "response_time": 3.814697265625e-06,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
               "recall": 100.0,
               "f1_score": 100.0,
               "diversity": 25.0,
-              "avg_rating": 4.362575
+              "avg_rating": 4.8083
             }
           },
           "hybrid": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.1860780715942383,
+            "response_time": 0.4236009120941162,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
               "recall": 100.0,
               "f1_score": 100.0,
               "diversity": 25.0,
-              "avg_rating": 4.83005
+              "avg_rating": 4.9861
             }
           }
         }
@@ -609,7 +609,7 @@
           "content_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.689849853515625,
+            "response_time": 0.7058858871459961,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -622,7 +622,7 @@
           "collaborative": {
             "success": true,
             "recommendations_count": 1,
-            "response_time": 0.007705211639404297,
+            "response_time": 0.0015578269958496094,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -635,20 +635,20 @@
           "trend_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.9077329635620117,
+            "response_time": 5.9604644775390625e-06,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
               "recall": 100.0,
               "f1_score": 100.0,
               "diversity": 25.0,
-              "avg_rating": 4.3637500000000005
+              "avg_rating": 4.845
             }
           },
           "hybrid": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.4956860542297363,
+            "response_time": 0.6937086582183838,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -666,7 +666,7 @@
           "content_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.7742688655853271,
+            "response_time": 0.6596317291259766,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -679,7 +679,7 @@
           "collaborative": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.2965090274810791,
+            "response_time": 0.00333404541015625,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -692,20 +692,20 @@
           "trend_based": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.0289971828460693,
+            "response_time": 6.9141387939453125e-06,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
               "recall": 100.0,
               "f1_score": 100.0,
               "diversity": 25.0,
-              "avg_rating": 4.3637500000000005
+              "avg_rating": 4.845
             }
           },
           "hybrid": {
             "success": true,
             "recommendations_count": 4,
-            "response_time": 6.297015905380249,
+            "response_time": 0.6525988578796387,
             "metrics": {
               "accuracy": 100.0,
               "precision": 100.0,
@@ -775,28 +775,28 @@
         "avg_diversity": 20.0,
         "min_diversity": 0.0,
         "max_diversity": 25.0,
-        "avg_avg_rating": 3.4907649999999997,
+        "avg_avg_rating": 3.864785,
         "min_avg_rating": 0.0,
-        "max_avg_rating": 4.3637500000000005
+        "max_avg_rating": 4.845
       },
       "hybrid": {
-        "avg_accuracy": 95.0,
-        "min_accuracy": 75.0,
+        "avg_accuracy": 100.0,
+        "min_accuracy": 100.0,
         "max_accuracy": 100.0,
-        "avg_precision": 95.0,
-        "min_precision": 75.0,
+        "avg_precision": 100.0,
+        "min_precision": 100.0,
         "max_precision": 100.0,
-        "avg_recall": 85.0,
+        "avg_recall": 90.0,
         "min_recall": 50.0,
         "max_recall": 100.0,
-        "avg_f1_score": 88.33333333333334,
+        "avg_f1_score": 93.33333333333334,
         "min_f1_score": 66.66666666666667,
         "max_f1_score": 100.0,
         "avg_diversity": 40.0,
         "min_diversity": 25.0,
         "max_diversity": 100.0,
-        "avg_avg_rating": 4.71005,
-        "min_avg_rating": 4.286,
+        "avg_avg_rating": 4.88406,
+        "min_avg_rating": 4.434200000000001,
         "max_avg_rating": 5.0
       }
     }

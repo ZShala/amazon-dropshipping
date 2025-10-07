@@ -10,6 +10,7 @@ from functools import lru_cache
 from sklearn.preprocessing import MinMaxScaler
 from collections import defaultdict
 from datetime import datetime, timedelta
+import time
 
 def get_db():
     try:
@@ -84,11 +85,11 @@ class AdvancedRecommendationEngine:
             stop_words='english'
         )
         self.memory_cache = {}
+        self.trend_cache = {}
+        self.cache_expiry = 300  # 5 minutes cache
 
     def get_similar_products(self, product_id, num_recommendations=4):
         try:
-            print(f"Finding similar products for: {product_id}")
-            
             query = text("""
                 WITH product_info AS (
                     SELECT 
@@ -130,14 +131,11 @@ class AdvancedRecommendationEngine:
                 LIMIT :limit
             """)
 
-            print("Executing query...")
             with self.engine.connect() as conn:
                 results = conn.execute(query, {
                     "product_id": product_id,
                     "limit": num_recommendations * 2
                 }).fetchall()
-                
-                print(f"Found {len(results)} initial results")
 
                 recommended_products = []
                 for row in results:
@@ -157,7 +155,6 @@ class AdvancedRecommendationEngine:
                         print(f"Error processing product {row.ProductId}: {str(e)}")
                         continue
 
-                print(f"Processed {len(recommended_products)} recommendations")
                 return recommended_products[:num_recommendations]
 
         except Exception as e:
@@ -188,21 +185,13 @@ class AdvancedRecommendationEngine:
                         up2.ProductId,
                         COUNT(DISTINCT up2.UserId) as user_count,
                         AVG(up2.Rating) as avg_rating,
-                        -- Collaborative score dinamik bazuar në popullaritet dhe cilësi
-                        CASE 
-                            WHEN COUNT(DISTINCT up2.UserId) >= 20 THEN 
-                                (COUNT(DISTINCT up2.UserId) * AVG(up2.Rating)) / 30.0
-                            WHEN COUNT(DISTINCT up2.UserId) >= 10 THEN 
-                                (COUNT(DISTINCT up2.UserId) * AVG(up2.Rating)) / 25.0
-                            ELSE 
-                                (COUNT(DISTINCT up2.UserId) * AVG(up2.Rating)) / 20.0
-                        END as collaborative_score
+                        0.8 as collaborative_score
                     FROM user_preferences up2
                     JOIN similar_users su ON up2.UserId = su.UserId
                     WHERE up2.ProductId != :product_id
                     GROUP BY up2.ProductId
                     HAVING avg_rating >= 4.0
-                    ORDER BY collaborative_score DESC, user_count DESC, avg_rating DESC
+                    ORDER BY user_count DESC, avg_rating DESC
                     LIMIT :limit
                 )
                 SELECT 
@@ -236,47 +225,46 @@ class AdvancedRecommendationEngine:
             return []
 
     def get_trending_recommendations(self, product_id, num_recommendations=4):
-        """
-        Trend-based filtering adapted for historical dataset (2018-2019).
-        Identifies trending products based on popularity within the dataset period,
-        rather than real-time trends.
-        """
+    
         try:
+            cache_key = f"trend_{product_id}_{num_recommendations}"
+            current_time = time.time()
+            
+            if cache_key in self.trend_cache:
+                cached_data, timestamp = self.trend_cache[cache_key]
+                if current_time - timestamp < self.cache_expiry:
+                    return cached_data
+            
             query = text("""
-                WITH product_category AS (
-                    SELECT ProductType 
-                    FROM products 
-                    WHERE ProductId = :product_id
-                ),
-                trending_products AS (
-                    SELECT 
-                        p.ProductId,
-                        p.ProductType,
-                        p.ProductTitle,
-                        p.ImageURL,
-                        p.price,
-                        COUNT(DISTINCT ab.UserId) as review_count,
-                        AVG(ab.Rating) as avg_rating,
-                        (COUNT(DISTINCT ab.UserId) * AVG(ab.Rating)) as trend_score
-                    FROM products p
-                    JOIN amazon_beauty ab ON p.ProductId = ab.ProductId
-                    JOIN product_category pc ON p.ProductType LIKE CONCAT('%', pc.ProductType, '%')
-                    WHERE p.ProductId != :product_id
-                    GROUP BY p.ProductId, p.ProductType, p.ProductTitle, p.ImageURL, p.price
-                    HAVING avg_rating >= 4.0 AND review_count >= 10
-                    ORDER BY trend_score DESC, review_count DESC, avg_rating DESC
-                    LIMIT :limit
+                SELECT 
+                    p.ProductId,
+                    p.ProductType,
+                    p.ProductTitle,
+                    p.ImageURL,
+                    p.price,
+                    COUNT(DISTINCT ab.UserId) as review_count,
+                    AVG(ab.Rating) as avg_rating,
+                    (COUNT(DISTINCT ab.UserId) * AVG(ab.Rating)) as trend_score
+                FROM products p
+                INNER JOIN amazon_beauty ab ON p.ProductId = ab.ProductId
+                WHERE p.ProductType = (
+                    SELECT ProductType FROM products WHERE ProductId = :product_id
                 )
-                SELECT * FROM trending_products
+                  AND p.ProductId != :product_id
+                  AND ab.Rating >= 4.0
+                GROUP BY p.ProductId, p.ProductType, p.ProductTitle, p.ImageURL, p.price
+                HAVING COUNT(DISTINCT ab.UserId) >= 10
+                ORDER BY trend_score DESC, review_count DESC, avg_rating DESC
+                LIMIT :limit
             """)
-
+            
             with self.engine.connect() as conn:
                 results = conn.execute(query, {
                     "product_id": product_id,
                     "limit": num_recommendations
                 }).fetchall()
 
-                return [{
+                recommendations = [{
                     "ProductId": row.ProductId,
                     "ProductType": row.ProductType,
                     "ProductTitle": row.ProductTitle,
@@ -287,6 +275,9 @@ class AdvancedRecommendationEngine:
                     "TrendScore": float(row.trend_score),
                     "similarity_score": min(float(row.trend_score) / 1000, 1.0) 
                 } for row in results]
+                
+                self.trend_cache[cache_key] = (recommendations, current_time)
+                return recommendations
 
         except Exception as e:
             print(f"Error in trending recommendations: {str(e)}")

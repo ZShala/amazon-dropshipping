@@ -1,8 +1,8 @@
 {
   "test_info": {
     "title": "ENHANCING DROPSHIPPING PERFORMANCE THROUGH RECOMMENDATION ENGINES",
-    "timestamp": "2025-10-05T17:08:59.005510",
-    "total_time": 212.47062182426453,
+    "timestamp": "2025-10-05T21:51:43.298607",
+    "total_time": 63.59431004524231,
     "test_categories": [
       "algorithm_functionality",
       "core_metrics",
@@ -14,13 +14,13 @@
     "algorithm_functionality": {
       "content_based": {
         "test_name": "Content-based Filtering",
-        "timestamp": "2025-10-05T17:05:26.625903",
+        "timestamp": "2025-10-05T21:50:39.749996",
         "tests": [
           {
             "product_id": "B0009V1YR8",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.6012022495269775,
+            "response_time": 0.7220399379730225,
             "recommendations": [
               {
                 "ProductId": "B000C1Z5A2",
@@ -48,14 +48,14 @@
             "product_id": "B0043OYFKU",
             "success": false,
             "recommendations_count": 0,
-            "response_time": 0.0055999755859375,
+            "response_time": 0.008324861526489258,
             "recommendations": []
           },
           {
             "product_id": "B0000YUXI0",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.8296370506286621,
+            "response_time": 0.6883893013000488,
             "recommendations": [
               {
                 "ProductId": "B0006B65PC",
@@ -83,7 +83,7 @@
             "product_id": "B0000020TR",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 1.0059270858764648,
+            "response_time": 0.9934451580047607,
             "recommendations": [
               {
                 "ProductId": "B000XB8Y4A",
@@ -111,7 +111,7 @@
             "product_id": "B00000JGVX",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.7082087993621826,
+            "response_time": 0.9854950904846191,
             "recommendations": [
               {
                 "ProductId": "B000XB8Y4A",
@@ -140,18 +140,18 @@
           "total_tests": 5,
           "successful_tests": 4,
           "success_rate": 80.0,
-          "average_response_time": 1.0362437963485718
+          "average_response_time": 0.8473423719406128
         }
       },
       "collaborative": {
         "test_name": "Collaborative Filtering",
-        "timestamp": "2025-10-05T17:05:30.776681",
+        "timestamp": "2025-10-05T21:50:43.147844",
         "tests": [
           {
             "product_id": "B0009V1YR8",
             "success": true,
             "recommendations_count": 3,
-            "response_time": 0.5398387908935547,
+            "response_time": 0.1682438850402832,
             "recommendations": [
               {
                 "ProductId": "B0007CXX82",
@@ -161,7 +161,7 @@
                 "price": 4.84,
                 "Rating": 4.75,
                 "UserCount": 8,
-                "similarity_score": 1.9
+                "similarity_score": 0.8
               },
               {
                 "ProductId": "B000VTRJMM",
@@ -171,7 +171,7 @@
                 "price": 0.0,
                 "Rating": 4.8571,
                 "UserCount": 7,
-                "similarity_score": 1.699985
+                "similarity_score": 0.8
               }
             ]
           },
@@ -179,7 +179,7 @@
             "product_id": "B0043OYFKU",
             "success": true,
             "recommendations_count": 2,
-            "response_time": 0.8867840766906738,
+            "response_time": 0.8535928726196289,
             "recommendations": [
               {
                 "ProductId": "B002UUT38I",
@@ -189,7 +189,7 @@
                 "price": 6.46,
                 "Rating": 4.7755,
                 "UserCount": 49,
-                "similarity_score": 7.79998333
+                "similarity_score": 0.8
               },
               {
                 "ProductId": "B00016XJ4M",
@@ -199,7 +199,7 @@
                 "price": 1.11,
                 "Rating": 4.8125,
                 "UserCount": 16,
-                "similarity_score": 3.08
+                "similarity_score": 0.8
               }
             ]
           },
@@ -207,7 +207,7 @@
             "product_id": "B0000YUXI0",
             "success": true,
             "recommendations_count": 3,
-            "response_time": 0.16970491409301758,
+            "response_time": 0.17218899726867676,
             "recommendations": [
               {
                 "ProductId": "B000PI36W6",
@@ -217,7 +217,7 @@
                 "price": 1.3,
                 "Rating": 4.8333,
                 "UserCount": 6,
-                "similarity_score": 1.44999
+                "similarity_score": 0.8
               },
               {
                 "ProductId": "B003UH0528",
@@ -227,7 +227,7 @@
                 "price": 2.37,
                 "Rating": 5.0,
                 "UserCount": 3,
-                "similarity_score": 0.75
+                "similarity_score": 0.8
               }
             ]
           },
@@ -235,7 +235,7 @@
             "product_id": "B0000020TR",
             "success": true,
             "recommendations_count": 1,
-            "response_time": 0.0023620128631591797,
+            "response_time": 0.0018811225891113281,
             "recommendations": [
               {
                 "ProductId": "B002PBAJ4Y",
@@ -245,7 +245,7 @@
                 "price": 0.0,
                 "Rating": 5.0,
                 "UserCount": 1,
-                "similarity_score": 0.25
+                "similarity_score": 0.8
               }
             ]
           },
@@ -253,7 +253,7 @@
             "product_id": "B00000JGVX",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 0.014197111129760742,
+            "response_time": 0.014555931091308594,
             "recommendations": [
               {
                 "ProductId": "B000052ZSS",
@@ -263,7 +263,7 @@
                 "price": 1.48,
                 "Rating": 5.0,
                 "UserCount": 1,
-                "similarity_score": 0.25
+                "similarity_score": 0.8
               },
               {
                 "ProductId": "B00005B6ZS",
@@ -273,7 +273,7 @@
                 "price": 0.0,
                 "Rating": 5.0,
                 "UserCount": 1,
-                "similarity_score": 0.25
+                "similarity_score": 0.8
               }
             ]
           }
@@ -282,18 +282,18 @@
           "total_tests": 5,
           "successful_tests": 5,
           "success_rate": 100.0,
-          "average_response_time": 0.3225773811340332
+          "average_response_time": 0.24209256172180177
         }
       },
       "trend_based": {
         "test_name": "Trend-based Filtering",
-        "timestamp": "2025-10-05T17:05:32.389833",
+        "timestamp": "2025-10-05T21:50:44.358428",
         "tests": [
           {
             "product_id": "B0009V1YR8",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.100566864013672,
+            "response_time": 1.902113914489746,
             "recommendations": [
               {
                 "ProductId": "B0000YUXI0",
@@ -301,9 +301,9 @@
                 "ProductTitle": "ILLUMOR ILLUMOR Nail polish Long Lasting Formula, Quick Dry, Smooth Application, Paraben Free, No Harmful Chemical & Vegan (Glided Rose)",
                 "ImageURL": "https://m.media-amazon.com/images/I/51PGmJVovMS._V1_FMjpg_UX1000_.jpg",
                 "price": 0.98,
-                "Rating": 4.405,
-                "ReviewCount": 2143,
-                "TrendScore": 9439.915,
+                "Rating": 4.8872,
+                "ReviewCount": 1790,
+                "TrendScore": 8748.088,
                 "similarity_score": 1.0
               },
               {
@@ -312,9 +312,9 @@
                 "ProductTitle": "TENNO All You Need Nail Paint Combo, (Pack of 24) (TFNP241)",
                 "ImageURL": "https://m.media-amazon.com/images/I/51YlNfyU-vL._V1_FMjpg_UX1000_.jpg",
                 "price": 5.54,
-                "Rating": 4.4223,
-                "ReviewCount": 2041,
-                "TrendScore": 9025.9143,
+                "Rating": 4.7984,
+                "ReviewCount": 1751,
+                "TrendScore": 8401.9984,
                 "similarity_score": 1.0
               }
             ]
@@ -323,35 +323,35 @@
             "product_id": "B0043OYFKU",
             "success": false,
             "recommendations_count": 0,
-            "response_time": 0.0018661022186279297,
+            "response_time": 0.02002716064453125,
             "recommendations": []
           },
           {
             "product_id": "B0000YUXI0",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 3.531008720397949,
+            "response_time": 1.6017680168151855,
             "recommendations": [
+              {
+                "ProductId": "B0009V1YR8",
+                "ProductType": "Nail Polish",
+                "ProductTitle": "MyGlamm POPxo Makeup Collection Glossy Finish, Chillin' Mini Nail Kit, Paraben Free, Long Lasting Formula, 5 in 1 Combo",
+                "ImageURL": "https://m.media-amazon.com/images/I/41potV+H87L._V1_FMjpg_UX1000_.jpg",
+                "price": 4.84,
+                "Rating": 4.8179,
+                "ReviewCount": 1790,
+                "TrendScore": 8624.041,
+                "similarity_score": 1.0
+              },
               {
                 "ProductId": "B000ZMBSPE",
                 "ProductType": "Nail Polish",
                 "ProductTitle": "TENNO All You Need Nail Paint Combo, (Pack of 24) (TFNP241)",
                 "ImageURL": "https://m.media-amazon.com/images/I/51YlNfyU-vL._V1_FMjpg_UX1000_.jpg",
                 "price": 5.54,
-                "Rating": 4.4223,
-                "ReviewCount": 2041,
-                "TrendScore": 9025.9143,
-                "similarity_score": 1.0
-              },
-              {
-                "ProductId": "B000142FVW",
-                "ProductType": "Nail Polish",
-                "ProductTitle": "",
-                "ImageURL": "http://localhost:5001/static/images/product-placeholder.jpg",
-                "price": 3.24,
-                "Rating": 4.4679,
-                "ReviewCount": 1558,
-                "TrendScore": 6960.9882,
+                "Rating": 4.7984,
+                "ReviewCount": 1751,
+                "TrendScore": 8401.9984,
                 "similarity_score": 1.0
               }
             ]
@@ -360,7 +360,7 @@
             "product_id": "B0000020TR",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 3.0124778747558594,
+            "response_time": 1.5976841449737549,
             "recommendations": [
               {
                 "ProductId": "B0000YUXI0",
@@ -368,20 +368,20 @@
                 "ProductTitle": "ILLUMOR ILLUMOR Nail polish Long Lasting Formula, Quick Dry, Smooth Application, Paraben Free, No Harmful Chemical & Vegan (Glided Rose)",
                 "ImageURL": "https://m.media-amazon.com/images/I/51PGmJVovMS._V1_FMjpg_UX1000_.jpg",
                 "price": 0.98,
-                "Rating": 4.405,
-                "ReviewCount": 2143,
-                "TrendScore": 9439.915,
+                "Rating": 4.8872,
+                "ReviewCount": 1790,
+                "TrendScore": 8748.088,
                 "similarity_score": 1.0
               },
               {
-                "ProductId": "B000ZMBSPE",
+                "ProductId": "B0009V1YR8",
                 "ProductType": "Nail Polish",
-                "ProductTitle": "TENNO All You Need Nail Paint Combo, (Pack of 24) (TFNP241)",
-                "ImageURL": "https://m.media-amazon.com/images/I/51YlNfyU-vL._V1_FMjpg_UX1000_.jpg",
-                "price": 5.54,
-                "Rating": 4.4223,
-                "ReviewCount": 2041,
-                "TrendScore": 9025.9143,
+                "ProductTitle": "MyGlamm POPxo Makeup Collection Glossy Finish, Chillin' Mini Nail Kit, Paraben Free, Long Lasting Formula, 5 in 1 Combo",
+                "ImageURL": "https://m.media-amazon.com/images/I/41potV+H87L._V1_FMjpg_UX1000_.jpg",
+                "price": 4.84,
+                "Rating": 4.8179,
+                "ReviewCount": 1790,
+                "TrendScore": 8624.041,
                 "similarity_score": 1.0
               }
             ]
@@ -390,7 +390,7 @@
             "product_id": "B00000JGVX",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 4.141397953033447,
+            "response_time": 1.5605392456054688,
             "recommendations": [
               {
                 "ProductId": "B0000YUXI0",
@@ -398,20 +398,20 @@
                 "ProductTitle": "ILLUMOR ILLUMOR Nail polish Long Lasting Formula, Quick Dry, Smooth Application, Paraben Free, No Harmful Chemical & Vegan (Glided Rose)",
                 "ImageURL": "https://m.media-amazon.com/images/I/51PGmJVovMS._V1_FMjpg_UX1000_.jpg",
                 "price": 0.98,
-                "Rating": 4.405,
-                "ReviewCount": 2143,
-                "TrendScore": 9439.915,
+                "Rating": 4.8872,
+                "ReviewCount": 1790,
+                "TrendScore": 8748.088,
                 "similarity_score": 1.0
               },
               {
-                "ProductId": "B000ZMBSPE",
+                "ProductId": "B0009V1YR8",
                 "ProductType": "Nail Polish",
-                "ProductTitle": "TENNO All You Need Nail Paint Combo, (Pack of 24) (TFNP241)",
-                "ImageURL": "https://m.media-amazon.com/images/I/51YlNfyU-vL._V1_FMjpg_UX1000_.jpg",
-                "price": 5.54,
-                "Rating": 4.4223,
-                "ReviewCount": 2041,
-                "TrendScore": 9025.9143,
+                "ProductTitle": "MyGlamm POPxo Makeup Collection Glossy Finish, Chillin' Mini Nail Kit, Paraben Free, Long Lasting Formula, 5 in 1 Combo",
+                "ImageURL": "https://m.media-amazon.com/images/I/41potV+H87L._V1_FMjpg_UX1000_.jpg",
+                "price": 4.84,
+                "Rating": 4.8179,
+                "ReviewCount": 1790,
+                "TrendScore": 8624.041,
                 "similarity_score": 1.0
               }
             ]
@@ -421,38 +421,38 @@
           "total_tests": 5,
           "successful_tests": 4,
           "success_rate": 80.0,
-          "average_response_time": 3.196362853050232
+          "average_response_time": 1.6655263304710388
         }
       },
       "hybrid": {
         "test_name": "Hybrid System",
-        "timestamp": "2025-10-05T17:05:45.178571",
+        "timestamp": "2025-10-05T21:50:51.040753",
         "tests": [
           {
             "product_id": "B0009V1YR8",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 4.878374338150024,
+            "response_time": 0.6478228569030762,
             "recommendations": [
               {
-                "ProductId": "B0007CXX82",
+                "ProductId": "B000C1Z5A2",
                 "ProductType": "Nail Polish",
-                "ProductTitle": "MyGlamm POPxo Makeup Collection Glossy Finish, Chillin' Mini Nail Kit, Paraben Free, Long Lasting Formula, 5 in 1 Combo",
-                "ImageURL": "https://m.media-amazon.com/images/I/41potV+H87L._V1_FMjpg_UX1000_.jpg",
-                "price": 4.84,
-                "Rating": 4.2377,
-                "ReviewCount": 446,
-                "similarity_score": 0.6649999999999999
+                "ProductTitle": "TENNO All You Need Nail Paint Combo, (Pack of 24) (TFNP244)",
+                "ImageURL": "https://m.media-amazon.com/images/I/511xv0yu9ZL._V1_FMjpg_UX1000_.jpg",
+                "price": 5.54,
+                "Rating": 5.0,
+                "ReviewCount": 20,
+                "similarity_score": 0.4
               },
               {
-                "ProductId": "B000VTRJMM",
+                "ProductId": "B000OCFCZC",
                 "ProductType": "Nail Polish",
-                "ProductTitle": "Elitty Mad Over Quick Drying, Chip Resistant, Long Lasting Matte Nail Paint Combo with 12 Toxin Free Formula, Infused with Witch Hazel & Vit E, Vegan & Cruelty Free Nail Polish for Teenagers",
-                "ImageURL": "https://m.media-amazon.com/images/I/41KVLcQV2QL._V1_FMjpg_UX1000_.jpg",
-                "price": 0.0,
-                "Rating": 4.5948,
-                "ReviewCount": 116,
-                "similarity_score": 0.59499475
+                "ProductTitle": "Revlon Summer Matte-Ness Nail Enamel - Crimson Matte, 8ml Bottle",
+                "ImageURL": "https://m.media-amazon.com/images/I/31jAo4WM6XL._V1_FMjpg_UX1000_.jpg",
+                "price": 2.77,
+                "Rating": 5.0,
+                "ReviewCount": 20,
+                "similarity_score": 0.4
               }
             ]
           },
@@ -460,7 +460,7 @@
             "product_id": "B0043OYFKU",
             "success": true,
             "recommendations_count": 2,
-            "response_time": 1.5226969718933105,
+            "response_time": 0.7945401668548584,
             "recommendations": [
               {
                 "ProductId": "B002UUT38I",
@@ -470,7 +470,7 @@
                 "price": 6.46,
                 "Rating": 4.3761,
                 "ReviewCount": 234,
-                "similarity_score": 2.7299941655
+                "similarity_score": 0.27999999999999997
               },
               {
                 "ProductId": "B00016XJ4M",
@@ -480,7 +480,7 @@
                 "price": 1.11,
                 "Rating": 4.4923,
                 "ReviewCount": 845,
-                "similarity_score": 1.0779999999999998
+                "similarity_score": 0.27999999999999997
               }
             ]
           },
@@ -488,18 +488,8 @@
             "product_id": "B0000YUXI0",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 3.044478178024292,
+            "response_time": 1.04734206199646,
             "recommendations": [
-              {
-                "ProductId": "B000PI36W6",
-                "ProductType": "Nail Polish",
-                "ProductTitle": "SUGAR POP Nail Lacquer 10 Call Me Hot (Fuschia Pink) | Dries In 45 Seconds | Chip-Resistant | Glossy Finish | High Shine | Nail Polish For Women, 10 ml",
-                "ImageURL": "https://m.media-amazon.com/images/I/31G99JsKgHL._V1_FMjpg_UX1000_.jpg",
-                "price": 1.3,
-                "Rating": 4.3202,
-                "ReviewCount": 331,
-                "similarity_score": 0.5074964999999999
-              },
               {
                 "ProductId": "B0006B65PC",
                 "ProductType": "Nail Polish",
@@ -509,6 +499,16 @@
                 "Rating": 5.0,
                 "ReviewCount": 31,
                 "similarity_score": 0.4
+              },
+              {
+                "ProductId": "B000V04ZLE",
+                "ProductType": "Nail Polish",
+                "ProductTitle": "Faces Canada Splash Nail Enamel Floral Dream 56 8ml",
+                "ImageURL": "https://m.media-amazon.com/images/I/31nG-gtTtcL._V1_FMjpg_UX1000_.jpg",
+                "price": 0.97,
+                "Rating": 5.0,
+                "ReviewCount": 18,
+                "similarity_score": 0.4
               }
             ]
           },
@@ -516,7 +516,7 @@
             "product_id": "B0000020TR",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 3.508188247680664,
+            "response_time": 0.7457919120788574,
             "recommendations": [
               {
                 "ProductId": "B000XB8Y4A",
@@ -544,7 +544,7 @@
             "product_id": "B00000JGVX",
             "success": true,
             "recommendations_count": 4,
-            "response_time": 2.827641010284424,
+            "response_time": 0.6819870471954346,
             "recommendations": [
               {
                 "ProductId": "B000XB8Y4A",
@@ -573,18 +573,18 @@
           "total_tests": 5,
           "successful_tests": 5,
           "success_rate": 100.0,
-          "average_response_time": 3.156275749206543
+          "average_response_time": 0.7834968090057373
         }
       }
     },
     "core_metrics": {
       "accuracy": {
         "test_name": "Accuracy Test",
-        "timestamp": "2025-10-05T17:06:00.968445",
+        "timestamp": "2025-10-05T21:50:54.960389",
         "tests": [
           {
             "product_id": "B0009V1YR8",
-            "accuracy": 75.0,
+            "accuracy": 100.0,
             "recommendations_count": 4,
             "success": true
           },
@@ -616,18 +616,18 @@
         "summary": {
           "total_tests": 5,
           "successful_tests": 5,
-          "average_accuracy": 95.0,
-          "min_accuracy": 75.0,
+          "average_accuracy": 100.0,
+          "min_accuracy": 100.0,
           "max_accuracy": 100.0
         }
       },
       "precision": {
         "test_name": "Precision Test",
-        "timestamp": "2025-10-05T17:06:18.365628",
+        "timestamp": "2025-10-05T21:51:04.829612",
         "tests": [
           {
             "product_id": "B0009V1YR8",
-            "precision": 75.0,
+            "precision": 100.0,
             "recommendations_count": 4,
             "success": true
           },
@@ -659,18 +659,18 @@
         "summary": {
           "total_tests": 5,
           "successful_tests": 5,
-          "average_precision": 95.0,
-          "min_precision": 75.0,
+          "average_precision": 100.0,
+          "min_precision": 100.0,
           "max_precision": 100.0
         }
       },
       "recall": {
         "test_name": "Recall Test",
-        "timestamp": "2025-10-05T17:06:35.678872",
+        "timestamp": "2025-10-05T21:51:07.834333",
         "tests": [
           {
             "product_id": "B0009V1YR8",
-            "recall": 75.0,
+            "recall": 100.0,
             "recommendations_count": 4,
             "success": true
           },
@@ -702,20 +702,20 @@
         "summary": {
           "total_tests": 5,
           "successful_tests": 5,
-          "average_recall": 85.0,
+          "average_recall": 90.0,
           "min_recall": 50.0,
           "max_recall": 100.0
         }
       },
       "f1_score": {
         "test_name": "F1-Score Test",
-        "timestamp": "2025-10-05T17:06:54.922217",
+        "timestamp": "2025-10-05T21:51:10.045532",
         "tests": [
           {
             "product_id": "B0009V1YR8",
-            "precision": 75.0,
-            "recall": 75.0,
-            "f1_score": 75.0,
+            "precision": 100.0,
+            "recall": 100.0,
+            "f1_score": 100.0,
             "recommendations_count": 4,
             "success": true
           },
@@ -755,7 +755,7 @@
         "summary": {
           "total_tests": 5,
           "successful_tests": 5,
-          "average_f1_score": 88.33333333333334,
+          "average_f1_score": 93.33333333333334,
           "min_f1_score": 66.66666666666667,
           "max_f1_score": 100.0
         }
@@ -764,145 +764,145 @@
     "performance": {
       "response_time": {
         "test_name": "Response Time Test",
-        "timestamp": "2025-10-05T17:07:07.413111",
+        "timestamp": "2025-10-05T21:51:12.290306",
         "tests": [
           {
             "algorithm": "content_based",
             "product_id": "B0009V1YR8",
-            "response_time": 0.40029478073120117,
+            "response_time": 0.3143160343170166,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "content_based",
             "product_id": "B0043OYFKU",
-            "response_time": 0.007008075714111328,
+            "response_time": 0.0020101070404052734,
             "recommendations_count": 0,
             "success": false
           },
           {
             "algorithm": "content_based",
             "product_id": "B0000YUXI0",
-            "response_time": 0.4289062023162842,
+            "response_time": 0.4058871269226074,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "content_based",
             "product_id": "B0000020TR",
-            "response_time": 1.8008692264556885,
+            "response_time": 1.1074860095977783,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "content_based",
             "product_id": "B00000JGVX",
-            "response_time": 1.5175371170043945,
+            "response_time": 0.6880817413330078,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "collaborative",
             "product_id": "B0009V1YR8",
-            "response_time": 0.6437880992889404,
+            "response_time": 0.04546165466308594,
             "recommendations_count": 3,
             "success": true
           },
           {
             "algorithm": "collaborative",
             "product_id": "B0043OYFKU",
-            "response_time": 1.1826457977294922,
+            "response_time": 0.07877302169799805,
             "recommendations_count": 2,
             "success": true
           },
           {
             "algorithm": "collaborative",
             "product_id": "B0000YUXI0",
-            "response_time": 0.1786191463470459,
+            "response_time": 0.030786991119384766,
             "recommendations_count": 3,
             "success": true
           },
           {
             "algorithm": "collaborative",
             "product_id": "B0000020TR",
-            "response_time": 0.002665996551513672,
+            "response_time": 0.0017321109771728516,
             "recommendations_count": 1,
             "success": true
           },
           {
             "algorithm": "collaborative",
             "product_id": "B00000JGVX",
-            "response_time": 0.013715982437133789,
+            "response_time": 0.003771066665649414,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "trend_based",
             "product_id": "B0009V1YR8",
-            "response_time": 3.158529043197632,
+            "response_time": 1.5866448879241943,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "trend_based",
             "product_id": "B0043OYFKU",
-            "response_time": 0.008821964263916016,
+            "response_time": 0.013746976852416992,
             "recommendations_count": 0,
             "success": false
           },
           {
             "algorithm": "trend_based",
             "product_id": "B0000YUXI0",
-            "response_time": 2.501070022583008,
+            "response_time": 1.5878262519836426,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "trend_based",
             "product_id": "B0000020TR",
-            "response_time": 2.09352707862854,
+            "response_time": 1.5614759922027588,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "trend_based",
             "product_id": "B00000JGVX",
-            "response_time": 3.469507932662964,
+            "response_time": 1.5661299228668213,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "hybrid",
             "product_id": "B0009V1YR8",
-            "response_time": 3.2035560607910156,
+            "response_time": 0.3450617790222168,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "hybrid",
             "product_id": "B0043OYFKU",
-            "response_time": 1.1464800834655762,
+            "response_time": 0.07797574996948242,
             "recommendations_count": 2,
             "success": true
           },
           {
             "algorithm": "hybrid",
             "product_id": "B0000YUXI0",
-            "response_time": 3.2383577823638916,
+            "response_time": 0.4483919143676758,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "hybrid",
             "product_id": "B0000020TR",
-            "response_time": 3.413540840148926,
+            "response_time": 0.6877498626708984,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "hybrid",
             "product_id": "B00000JGVX",
-            "response_time": 3.431627035140991,
+            "response_time": 0.6646230220794678,
             "recommendations_count": 4,
             "success": true
           }
@@ -910,138 +910,138 @@
         "summary": {
           "total_tests": 20,
           "successful_tests": 18,
-          "average_response_time": 1.768068790435791,
-          "min_response_time": 0.002665996551513672,
-          "max_response_time": 3.469507932662964,
-          "std_response_time": 1.2825911556769474
+          "average_response_time": 0.6223430633544922,
+          "min_response_time": 0.0017321109771728516,
+          "max_response_time": 1.5878262519836426,
+          "std_response_time": 0.5855525833003877
         }
       },
       "memory_usage": {
         "test_name": "Memory Usage Test",
-        "timestamp": "2025-10-05T17:07:39.261611",
+        "timestamp": "2025-10-05T21:51:23.512568",
         "tests": [
           {
             "algorithm": "content_based",
             "product_id": "B0009V1YR8",
-            "memory_before": 20.546875,
-            "memory_after": 20.59375,
+            "memory_before": 76.953125,
+            "memory_after": 76.3125,
+            "memory_used": -0.640625,
+            "recommendations_count": 4,
+            "success": true
+          },
+          {
+            "algorithm": "content_based",
+            "product_id": "B0043OYFKU",
+            "memory_before": 76.3125,
+            "memory_after": 76.3125,
+            "memory_used": 0.0,
+            "recommendations_count": 0,
+            "success": false
+          },
+          {
+            "algorithm": "content_based",
+            "product_id": "B0000YUXI0",
+            "memory_before": 76.3125,
+            "memory_after": 76.296875,
+            "memory_used": -0.015625,
+            "recommendations_count": 4,
+            "success": true
+          },
+          {
+            "algorithm": "content_based",
+            "product_id": "B0000020TR",
+            "memory_before": 76.296875,
+            "memory_after": 66.609375,
+            "memory_used": -9.6875,
+            "recommendations_count": 4,
+            "success": true
+          },
+          {
+            "algorithm": "content_based",
+            "product_id": "B00000JGVX",
+            "memory_before": 66.609375,
+            "memory_after": 66.6875,
+            "memory_used": 0.078125,
+            "recommendations_count": 4,
+            "success": true
+          },
+          {
+            "algorithm": "collaborative",
+            "product_id": "B0009V1YR8",
+            "memory_before": 66.828125,
+            "memory_after": 67.0,
+            "memory_used": 0.171875,
+            "recommendations_count": 3,
+            "success": true
+          },
+          {
+            "algorithm": "collaborative",
+            "product_id": "B0043OYFKU",
+            "memory_before": 67.0,
+            "memory_after": 67.03125,
+            "memory_used": 0.03125,
+            "recommendations_count": 2,
+            "success": true
+          },
+          {
+            "algorithm": "collaborative",
+            "product_id": "B0000YUXI0",
+            "memory_before": 67.03125,
+            "memory_after": 67.03125,
+            "memory_used": 0.0,
+            "recommendations_count": 3,
+            "success": true
+          },
+          {
+            "algorithm": "collaborative",
+            "product_id": "B0000020TR",
+            "memory_before": 67.03125,
+            "memory_after": 67.03125,
+            "memory_used": 0.0,
+            "recommendations_count": 1,
+            "success": true
+          },
+          {
+            "algorithm": "collaborative",
+            "product_id": "B00000JGVX",
+            "memory_before": 67.03125,
+            "memory_after": 67.03125,
+            "memory_used": 0.0,
+            "recommendations_count": 4,
+            "success": true
+          },
+          {
+            "algorithm": "trend_based",
+            "product_id": "B0009V1YR8",
+            "memory_before": 67.046875,
+            "memory_after": 67.09375,
             "memory_used": 0.046875,
             "recommendations_count": 4,
             "success": true
           },
           {
-            "algorithm": "content_based",
-            "product_id": "B0043OYFKU",
-            "memory_before": 20.59375,
-            "memory_after": 20.625,
-            "memory_used": 0.03125,
-            "recommendations_count": 0,
-            "success": false
-          },
-          {
-            "algorithm": "content_based",
-            "product_id": "B0000YUXI0",
-            "memory_before": 20.625,
-            "memory_after": 20.46875,
-            "memory_used": -0.15625,
-            "recommendations_count": 4,
-            "success": true
-          },
-          {
-            "algorithm": "content_based",
-            "product_id": "B0000020TR",
-            "memory_before": 20.46875,
-            "memory_after": 20.46875,
-            "memory_used": 0.0,
-            "recommendations_count": 4,
-            "success": true
-          },
-          {
-            "algorithm": "content_based",
-            "product_id": "B00000JGVX",
-            "memory_before": 20.46875,
-            "memory_after": 20.390625,
-            "memory_used": -0.078125,
-            "recommendations_count": 4,
-            "success": true
-          },
-          {
-            "algorithm": "collaborative",
-            "product_id": "B0009V1YR8",
-            "memory_before": 20.40625,
-            "memory_after": 20.21875,
-            "memory_used": -0.1875,
-            "recommendations_count": 3,
-            "success": true
-          },
-          {
-            "algorithm": "collaborative",
-            "product_id": "B0043OYFKU",
-            "memory_before": 20.21875,
-            "memory_after": 16.609375,
-            "memory_used": -3.609375,
-            "recommendations_count": 2,
-            "success": true
-          },
-          {
-            "algorithm": "collaborative",
-            "product_id": "B0000YUXI0",
-            "memory_before": 16.71875,
-            "memory_after": 16.5625,
-            "memory_used": -0.15625,
-            "recommendations_count": 3,
-            "success": true
-          },
-          {
-            "algorithm": "collaborative",
-            "product_id": "B0000020TR",
-            "memory_before": 16.5625,
-            "memory_after": 16.59375,
-            "memory_used": 0.03125,
-            "recommendations_count": 1,
-            "success": true
-          },
-          {
-            "algorithm": "collaborative",
-            "product_id": "B00000JGVX",
-            "memory_before": 16.59375,
-            "memory_after": 16.59375,
-            "memory_used": 0.0,
-            "recommendations_count": 4,
-            "success": true
-          },
-          {
-            "algorithm": "trend_based",
-            "product_id": "B0009V1YR8",
-            "memory_before": 17.921875,
-            "memory_after": 18.0625,
-            "memory_used": 0.140625,
-            "recommendations_count": 4,
-            "success": true
-          },
-          {
             "algorithm": "trend_based",
             "product_id": "B0043OYFKU",
-            "memory_before": 18.0625,
-            "memory_after": 18.453125,
-            "memory_used": 0.390625,
+            "memory_before": 67.09375,
+            "memory_after": 67.09375,
+            "memory_used": 0.0,
             "recommendations_count": 0,
             "success": false
           },
           {
             "algorithm": "trend_based",
             "product_id": "B0000YUXI0",
-            "memory_before": 18.453125,
-            "memory_after": 16.984375,
-            "memory_used": -1.46875,
+            "memory_before": 67.09375,
+            "memory_after": 67.09375,
+            "memory_used": 0.0,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "trend_based",
             "product_id": "B0000020TR",
-            "memory_before": 16.984375,
-            "memory_after": 16.984375,
+            "memory_before": 67.09375,
+            "memory_after": 67.09375,
             "memory_used": 0.0,
             "recommendations_count": 4,
             "success": true
@@ -1049,54 +1049,54 @@
           {
             "algorithm": "trend_based",
             "product_id": "B00000JGVX",
-            "memory_before": 16.984375,
-            "memory_after": 15.375,
-            "memory_used": -1.609375,
+            "memory_before": 67.09375,
+            "memory_after": 67.09375,
+            "memory_used": 0.0,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "hybrid",
             "product_id": "B0009V1YR8",
-            "memory_before": 16.796875,
-            "memory_after": 18.546875,
-            "memory_used": 1.75,
+            "memory_before": 67.09375,
+            "memory_after": 67.375,
+            "memory_used": 0.28125,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "hybrid",
             "product_id": "B0043OYFKU",
-            "memory_before": 18.546875,
-            "memory_after": 18.71875,
-            "memory_used": 0.171875,
+            "memory_before": 67.375,
+            "memory_after": 67.375,
+            "memory_used": 0.0,
             "recommendations_count": 2,
             "success": true
           },
           {
             "algorithm": "hybrid",
             "product_id": "B0000YUXI0",
-            "memory_before": 18.71875,
-            "memory_after": 18.734375,
-            "memory_used": 0.015625,
+            "memory_before": 67.375,
+            "memory_after": 67.484375,
+            "memory_used": 0.109375,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "hybrid",
             "product_id": "B0000020TR",
-            "memory_before": 18.734375,
-            "memory_after": 18.734375,
-            "memory_used": 0.0,
+            "memory_before": 67.484375,
+            "memory_after": 67.515625,
+            "memory_used": 0.03125,
             "recommendations_count": 4,
             "success": true
           },
           {
             "algorithm": "hybrid",
             "product_id": "B00000JGVX",
-            "memory_before": 18.734375,
-            "memory_after": 17.28125,
-            "memory_used": -1.453125,
+            "memory_before": 67.515625,
+            "memory_after": 67.515625,
+            "memory_used": 0.0,
             "recommendations_count": 4,
             "success": true
           }
@@ -1104,16 +1104,16 @@
         "summary": {
           "total_tests": 20,
           "successful_tests": 18,
-          "initial_memory": 20.4375,
-          "average_memory_usage": -0.3645833333333333,
-          "min_memory_usage": -3.609375,
-          "max_memory_usage": 1.75,
-          "std_memory_usage": 1.0723602926359321
+          "initial_memory": 76.9375,
+          "average_memory_usage": -0.5329861111111112,
+          "min_memory_usage": -9.6875,
+          "max_memory_usage": 0.28125,
+          "std_memory_usage": 2.2270536671273624
         }
       },
       "throughput": {
         "test_name": "Throughput Test",
-        "timestamp": "2025-10-05T17:08:04.942214",
+        "timestamp": "2025-10-05T21:51:28.073403",
         "tests": [
           {
             "product_id": "B0009V1YR8",
@@ -1145,15 +1145,15 @@
           "total_tests": 5,
           "successful_tests": 5,
           "total_recommendations": 18,
-          "total_time": 11.463012933731079,
-          "throughput": 1.5702677912046294
+          "total_time": 2.1896088123321533,
+          "throughput": 8.220646491109155
         }
       }
     },
     "comparison": {
       "individual_algorithms": {
         "test_name": "Individual Algorithms Comparison",
-        "timestamp": "2025-10-05T17:08:16.411533",
+        "timestamp": "2025-10-05T21:51:30.266887",
         "algorithms": {
           "content_based": {
             "test_name": "content_based",
@@ -1162,7 +1162,7 @@
                 "product_id": "B0009V1YR8",
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 0.3677101135253906,
+                "response_time": 0.31377696990966797,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1176,7 +1176,7 @@
                 "product_id": "B0043OYFKU",
                 "success": false,
                 "recommendations_count": 0,
-                "response_time": 0.002376079559326172,
+                "response_time": 0.0014879703521728516,
                 "metrics": {
                   "accuracy": 0.0,
                   "precision": 0.0,
@@ -1190,7 +1190,7 @@
                 "product_id": "B0000YUXI0",
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 0.39917612075805664,
+                "response_time": 0.3862419128417969,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1204,7 +1204,7 @@
                 "product_id": "B0000020TR",
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 0.7962939739227295,
+                "response_time": 0.8068671226501465,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1218,7 +1218,7 @@
                 "product_id": "B00000JGVX",
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 1.5472240447998047,
+                "response_time": 0.6449878215789795,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1275,7 +1275,7 @@
               "total_tests": 5,
               "successful_tests": 4,
               "success_rate": 80.0,
-              "avg_response_time": 0.7776010632514954,
+              "avg_response_time": 0.5379684567451477,
               "avg_accuracy": 100.0,
               "min_accuracy": 100.0,
               "max_accuracy": 100.0,
@@ -1303,7 +1303,7 @@
                 "product_id": "B0009V1YR8",
                 "success": true,
                 "recommendations_count": 3,
-                "response_time": 0.31682467460632324,
+                "response_time": 0.034355878829956055,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1317,7 +1317,7 @@
                 "product_id": "B0043OYFKU",
                 "success": true,
                 "recommendations_count": 2,
-                "response_time": 0.7701950073242188,
+                "response_time": 0.07319808006286621,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1331,7 +1331,7 @@
                 "product_id": "B0000YUXI0",
                 "success": true,
                 "recommendations_count": 3,
-                "response_time": 0.16797423362731934,
+                "response_time": 0.029063940048217773,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1345,7 +1345,7 @@
                 "product_id": "B0000020TR",
                 "success": true,
                 "recommendations_count": 1,
-                "response_time": 0.002215862274169922,
+                "response_time": 0.0013706684112548828,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1359,7 +1359,7 @@
                 "product_id": "B00000JGVX",
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 0.011940240859985352,
+                "response_time": 0.0024161338806152344,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1416,7 +1416,7 @@
               "total_tests": 5,
               "successful_tests": 5,
               "success_rate": 100.0,
-              "avg_response_time": 0.2538300037384033,
+              "avg_response_time": 0.02808094024658203,
               "avg_accuracy": 100.0,
               "min_accuracy": 100.0,
               "max_accuracy": 100.0,
@@ -1444,21 +1444,21 @@
                 "product_id": "B0009V1YR8",
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 1.9200057983398438,
+                "response_time": 1.5420818328857422,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
                   "recall": 100.0,
                   "f1_score": 100.0,
                   "diversity": 25.0,
-                  "avg_rating": 4.3637500000000005
+                  "avg_rating": 4.8256250000000005
                 }
               },
               {
                 "product_id": "B0043OYFKU",
                 "success": false,
                 "recommendations_count": 0,
-                "response_time": 0.0015490055084228516,
+                "response_time": 0.011812210083007812,
                 "metrics": {
                   "accuracy": 0.0,
                   "precision": 0.0,
@@ -1472,42 +1472,42 @@
                 "product_id": "B0000YUXI0",
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 1.883321762084961,
+                "response_time": 1.5978949069976807,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
                   "recall": 100.0,
                   "f1_score": 100.0,
                   "diversity": 25.0,
-                  "avg_rating": 4.362575
+                  "avg_rating": 4.8083
                 }
               },
               {
                 "product_id": "B0000020TR",
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 2.3757150173187256,
+                "response_time": 1.5625982284545898,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
                   "recall": 100.0,
                   "f1_score": 100.0,
                   "diversity": 25.0,
-                  "avg_rating": 4.3637500000000005
+                  "avg_rating": 4.845
                 }
               },
               {
                 "product_id": "B00000JGVX",
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 1.7559521198272705,
+                "response_time": 1.5566577911376953,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
                   "recall": 100.0,
                   "f1_score": 100.0,
                   "diversity": 25.0,
-                  "avg_rating": 4.3637500000000005
+                  "avg_rating": 4.845
                 }
               }
             ],
@@ -1518,7 +1518,7 @@
                 "recall": 100.0,
                 "f1_score": 100.0,
                 "diversity": 25.0,
-                "avg_rating": 4.3637500000000005
+                "avg_rating": 4.8256250000000005
               },
               {
                 "accuracy": 0.0,
@@ -1534,7 +1534,7 @@
                 "recall": 100.0,
                 "f1_score": 100.0,
                 "diversity": 25.0,
-                "avg_rating": 4.362575
+                "avg_rating": 4.8083
               },
               {
                 "accuracy": 100.0,
@@ -1542,7 +1542,7 @@
                 "recall": 100.0,
                 "f1_score": 100.0,
                 "diversity": 25.0,
-                "avg_rating": 4.3637500000000005
+                "avg_rating": 4.845
               },
               {
                 "accuracy": 100.0,
@@ -1550,14 +1550,14 @@
                 "recall": 100.0,
                 "f1_score": 100.0,
                 "diversity": 25.0,
-                "avg_rating": 4.3637500000000005
+                "avg_rating": 4.845
               }
             ],
             "summary": {
               "total_tests": 5,
               "successful_tests": 4,
               "success_rate": 80.0,
-              "avg_response_time": 1.9837486743927002,
+              "avg_response_time": 1.564808189868927,
               "avg_accuracy": 100.0,
               "min_accuracy": 100.0,
               "max_accuracy": 100.0,
@@ -1573,16 +1573,16 @@
               "avg_diversity": 25.0,
               "min_diversity": 25.0,
               "max_diversity": 25.0,
-              "avg_avg_rating": 4.36345625,
-              "min_avg_rating": 4.362575,
-              "max_avg_rating": 4.3637500000000005
+              "avg_avg_rating": 4.83098125,
+              "min_avg_rating": 4.8083,
+              "max_avg_rating": 4.845
             }
           }
         }
       },
       "hybrid_vs_individual": {
         "test_name": "Hybrid vs Individual Comparison",
-        "timestamp": "2025-10-05T17:08:28.735769",
+        "timestamp": "2025-10-05T21:51:38.833675",
         "comparisons": [
           {
             "product_id": "B0009V1YR8",
@@ -1590,7 +1590,7 @@
               "content_based": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 0.4991798400878906,
+                "response_time": 0.3062119483947754,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1603,7 +1603,7 @@
               "collaborative": {
                 "success": true,
                 "recommendations_count": 3,
-                "response_time": 0.2477262020111084,
+                "response_time": 0.03431510925292969,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1616,27 +1616,27 @@
               "trend_based": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 2.280214786529541,
+                "response_time": 5.9604644775390625e-06,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
                   "recall": 100.0,
                   "f1_score": 100.0,
                   "diversity": 25.0,
-                  "avg_rating": 4.3637500000000005
+                  "avg_rating": 4.8256250000000005
                 }
               },
               "hybrid": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 5.4567060470581055,
+                "response_time": 0.34226202964782715,
                 "metrics": {
-                  "accuracy": 75.0,
-                  "precision": 75.0,
-                  "recall": 75.0,
-                  "f1_score": 75.0,
+                  "accuracy": 100.0,
+                  "precision": 100.0,
+                  "recall": 100.0,
+                  "f1_score": 100.0,
                   "diversity": 25.0,
-                  "avg_rating": 4.286
+                  "avg_rating": 5.0
                 }
               }
             }
@@ -1647,7 +1647,7 @@
               "content_based": {
                 "success": false,
                 "recommendations_count": 0,
-                "response_time": 0.02855825424194336,
+                "response_time": 0.0011546611785888672,
                 "metrics": {
                   "accuracy": 0.0,
                   "precision": 0.0,
@@ -1660,7 +1660,7 @@
               "collaborative": {
                 "success": true,
                 "recommendations_count": 2,
-                "response_time": 1.3569598197937012,
+                "response_time": 0.07346391677856445,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1673,7 +1673,7 @@
               "trend_based": {
                 "success": false,
                 "recommendations_count": 0,
-                "response_time": 0.0011010169982910156,
+                "response_time": 6.198883056640625e-06,
                 "metrics": {
                   "accuracy": 0.0,
                   "precision": 0.0,
@@ -1686,7 +1686,7 @@
               "hybrid": {
                 "success": true,
                 "recommendations_count": 2,
-                "response_time": 0.12177419662475586,
+                "response_time": 0.07718396186828613,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1704,7 +1704,7 @@
               "content_based": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 0.5356979370117188,
+                "response_time": 0.4518611431121826,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1717,7 +1717,7 @@
               "collaborative": {
                 "success": true,
                 "recommendations_count": 3,
-                "response_time": 0.18944096565246582,
+                "response_time": 0.03268623352050781,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1730,27 +1730,27 @@
               "trend_based": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 1.8548963069915771,
+                "response_time": 3.814697265625e-06,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
                   "recall": 100.0,
                   "f1_score": 100.0,
                   "diversity": 25.0,
-                  "avg_rating": 4.362575
+                  "avg_rating": 4.8083
                 }
               },
               "hybrid": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 2.1860780715942383,
+                "response_time": 0.4236009120941162,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
                   "recall": 100.0,
                   "f1_score": 100.0,
                   "diversity": 25.0,
-                  "avg_rating": 4.83005
+                  "avg_rating": 4.9861
                 }
               }
             }
@@ -1761,7 +1761,7 @@
               "content_based": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 0.689849853515625,
+                "response_time": 0.7058858871459961,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1774,7 +1774,7 @@
               "collaborative": {
                 "success": true,
                 "recommendations_count": 1,
-                "response_time": 0.007705211639404297,
+                "response_time": 0.0015578269958496094,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1787,20 +1787,20 @@
               "trend_based": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 2.9077329635620117,
+                "response_time": 5.9604644775390625e-06,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
                   "recall": 100.0,
                   "f1_score": 100.0,
                   "diversity": 25.0,
-                  "avg_rating": 4.3637500000000005
+                  "avg_rating": 4.845
                 }
               },
               "hybrid": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 2.4956860542297363,
+                "response_time": 0.6937086582183838,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1818,7 +1818,7 @@
               "content_based": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 0.7742688655853271,
+                "response_time": 0.6596317291259766,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1831,7 +1831,7 @@
               "collaborative": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 0.2965090274810791,
+                "response_time": 0.00333404541015625,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1844,20 +1844,20 @@
               "trend_based": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 2.0289971828460693,
+                "response_time": 6.9141387939453125e-06,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
                   "recall": 100.0,
                   "f1_score": 100.0,
                   "diversity": 25.0,
-                  "avg_rating": 4.3637500000000005
+                  "avg_rating": 4.845
                 }
               },
               "hybrid": {
                 "success": true,
                 "recommendations_count": 4,
-                "response_time": 6.297015905380249,
+                "response_time": 0.6525988578796387,
                 "metrics": {
                   "accuracy": 100.0,
                   "precision": 100.0,
@@ -1927,28 +1927,28 @@
             "avg_diversity": 20.0,
             "min_diversity": 0.0,
             "max_diversity": 25.0,
-            "avg_avg_rating": 3.4907649999999997,
+            "avg_avg_rating": 3.864785,
             "min_avg_rating": 0.0,
-            "max_avg_rating": 4.3637500000000005
+            "max_avg_rating": 4.845
           },
           "hybrid": {
-            "avg_accuracy": 95.0,
-            "min_accuracy": 75.0,
+            "avg_accuracy": 100.0,
+            "min_accuracy": 100.0,
             "max_accuracy": 100.0,
-            "avg_precision": 95.0,
-            "min_precision": 75.0,
+            "avg_precision": 100.0,
+            "min_precision": 100.0,
             "max_precision": 100.0,
-            "avg_recall": 85.0,
+            "avg_recall": 90.0,
             "min_recall": 50.0,
             "max_recall": 100.0,
-            "avg_f1_score": 88.33333333333334,
+            "avg_f1_score": 93.33333333333334,
             "min_f1_score": 66.66666666666667,
             "max_f1_score": 100.0,
             "avg_diversity": 40.0,
             "min_diversity": 25.0,
             "max_diversity": 100.0,
-            "avg_avg_rating": 4.71005,
-            "min_avg_rating": 4.286,
+            "avg_avg_rating": 4.88406,
+            "min_avg_rating": 4.434200000000001,
             "max_avg_rating": 5.0
           }
         }
