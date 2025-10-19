@@ -18,7 +18,6 @@ const CategoryFilter = ({ productTypes, selectedType, onTypeSelect, categoryType
                         onClick={() => onTypeSelect(group.name)}
                     >
                         {group.name}
-                        <span className="count">({group.count})</span>
                     </button>
                 ))}
             </div>
