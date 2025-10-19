@@ -86,7 +86,7 @@ class AdvancedRecommendationEngine:
         )
         self.memory_cache = {}
         self.trend_cache = {}
-        self.cache_expiry = 300  # 5 minutes cache
+        self.cache_expiry = 300 
 
     def get_similar_products(self, product_id, num_recommendations=4):
         try:

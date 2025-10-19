@@ -1,13 +1,13 @@
 {
   "content_based": {
     "test_name": "Content-based Filtering",
-    "timestamp": "2025-10-05T21:50:39.749996",
+    "timestamp": "2025-10-19T07:56:42.735358",
     "tests": [
       {
         "product_id": "B0009V1YR8",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 0.7220399379730225,
+        "response_time": 0.8356339931488037,
         "recommendations": [
           {
             "ProductId": "B000C1Z5A2",
@@ -35,14 +35,14 @@
         "product_id": "B0043OYFKU",
         "success": false,
         "recommendations_count": 0,
-        "response_time": 0.008324861526489258,
+        "response_time": 0.008763790130615234,
         "recommendations": []
       },
       {
         "product_id": "B0000YUXI0",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 0.6883893013000488,
+        "response_time": 0.7016100883483887,
         "recommendations": [
           {
             "ProductId": "B0006B65PC",
@@ -70,7 +70,7 @@
         "product_id": "B0000020TR",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 0.9934451580047607,
+        "response_time": 0.9276208877563477,
         "recommendations": [
           {
             "ProductId": "B000XB8Y4A",
@@ -98,7 +98,7 @@
         "product_id": "B00000JGVX",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 0.9854950904846191,
+        "response_time": 0.6392159461975098,
         "recommendations": [
           {
             "ProductId": "B000XB8Y4A",
@@ -127,18 +127,18 @@
       "total_tests": 5,
       "successful_tests": 4,
       "success_rate": 80.0,
-      "average_response_time": 0.8473423719406128
+      "average_response_time": 0.7760202288627625
     }
   },
   "collaborative": {
     "test_name": "Collaborative Filtering",
-    "timestamp": "2025-10-05T21:50:43.147844",
+    "timestamp": "2025-10-19T07:56:45.848460",
     "tests": [
       {
         "product_id": "B0009V1YR8",
         "success": true,
         "recommendations_count": 3,
-        "response_time": 0.1682438850402832,
+        "response_time": 0.42836689949035645,
         "recommendations": [
           {
             "ProductId": "B0007CXX82",
@@ -166,7 +166,7 @@
         "product_id": "B0043OYFKU",
         "success": true,
         "recommendations_count": 2,
-        "response_time": 0.8535928726196289,
+        "response_time": 0.8690078258514404,
         "recommendations": [
           {
             "ProductId": "B002UUT38I",
@@ -194,7 +194,7 @@
         "product_id": "B0000YUXI0",
         "success": true,
         "recommendations_count": 3,
-        "response_time": 0.17218899726867676,
+        "response_time": 0.1776597499847412,
         "recommendations": [
           {
             "ProductId": "B000PI36W6",
@@ -222,7 +222,7 @@
         "product_id": "B0000020TR",
         "success": true,
         "recommendations_count": 1,
-        "response_time": 0.0018811225891113281,
+        "response_time": 0.0021119117736816406,
         "recommendations": [
           {
             "ProductId": "B002PBAJ4Y",
@@ -240,7 +240,7 @@
         "product_id": "B00000JGVX",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 0.014555931091308594,
+        "response_time": 0.013367176055908203,
         "recommendations": [
           {
             "ProductId": "B000052ZSS",
@@ -269,18 +269,18 @@
       "total_tests": 5,
       "successful_tests": 5,
       "success_rate": 100.0,
-      "average_response_time": 0.24209256172180177
+      "average_response_time": 0.29810271263122556
     }
   },
   "trend_based": {
     "test_name": "Trend-based Filtering",
-    "timestamp": "2025-10-05T21:50:44.358428",
+    "timestamp": "2025-10-19T07:56:47.339207",
     "tests": [
       {
         "product_id": "B0009V1YR8",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 1.902113914489746,
+        "response_time": 1.8291771411895752,
         "recommendations": [
           {
             "ProductId": "B0000YUXI0",
@@ -310,14 +310,14 @@
         "product_id": "B0043OYFKU",
         "success": false,
         "recommendations_count": 0,
-        "response_time": 0.02002716064453125,
+        "response_time": 0.009323835372924805,
         "recommendations": []
       },
       {
         "product_id": "B0000YUXI0",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 1.6017680168151855,
+        "response_time": 1.588277816772461,
         "recommendations": [
           {
             "ProductId": "B0009V1YR8",
@@ -347,7 +347,7 @@
         "product_id": "B0000020TR",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 1.5976841449737549,
+        "response_time": 1.696807861328125,
         "recommendations": [
           {
             "ProductId": "B0000YUXI0",
@@ -377,7 +377,7 @@
         "product_id": "B00000JGVX",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 1.5605392456054688,
+        "response_time": 1.564978837966919,
         "recommendations": [
           {
             "ProductId": "B0000YUXI0",
@@ -408,18 +408,18 @@
       "total_tests": 5,
       "successful_tests": 4,
       "success_rate": 80.0,
-      "average_response_time": 1.6655263304710388
+      "average_response_time": 1.66981041431427
     }
   },
   "hybrid": {
     "test_name": "Hybrid System",
-    "timestamp": "2025-10-05T21:50:51.040753",
+    "timestamp": "2025-10-19T07:56:54.028011",
     "tests": [
       {
         "product_id": "B0009V1YR8",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 0.6478228569030762,
+        "response_time": 0.559089183807373,
         "recommendations": [
           {
             "ProductId": "B000C1Z5A2",
@@ -447,7 +447,7 @@
         "product_id": "B0043OYFKU",
         "success": true,
         "recommendations_count": 2,
-        "response_time": 0.7945401668548584,
+        "response_time": 0.7622289657592773,
         "recommendations": [
           {
             "ProductId": "B002UUT38I",
@@ -475,7 +475,7 @@
         "product_id": "B0000YUXI0",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 1.04734206199646,
+        "response_time": 0.602431058883667,
         "recommendations": [
           {
             "ProductId": "B0006B65PC",
@@ -503,7 +503,7 @@
         "product_id": "B0000020TR",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 0.7457919120788574,
+        "response_time": 0.7062840461730957,
         "recommendations": [
           {
             "ProductId": "B000XB8Y4A",
@@ -531,7 +531,7 @@
         "product_id": "B00000JGVX",
         "success": true,
         "recommendations_count": 4,
-        "response_time": 0.6819870471954346,
+        "response_time": 0.6703553199768066,
         "recommendations": [
           {
             "ProductId": "B000XB8Y4A",
@@ -560,7 +560,7 @@
       "total_tests": 5,
       "successful_tests": 5,
       "success_rate": 100.0,
-      "average_response_time": 0.7834968090057373
+      "average_response_time": 0.660077714920044
     }
   }
 }
